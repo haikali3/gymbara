@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dumbbell } from "lucide-react";
 
 // Define an interface for the exercise
 interface Exercise {
@@ -41,7 +42,7 @@ function ExerciseCard({ exercise }: { exercise: Exercise }) {
 
   return (
     <div className="bg-white border border-gray-200 p-4 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-4 sm:gap-6">
-      <h2 className="text-lg font-semibold text-gray-800 text-center sm:text-left">
+      <h2 className="text-lg font-normal text-gray-800 text-center sm:text-left">
         {exercise.name}
       </h2>
       <div className="flex items-center justify-between w-full p-1">
@@ -84,16 +85,12 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pb-20 flex flex-col items-center gap-12 font-sans">
-      <header className="flex items-center justify-center w-full">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col items-center gap-4 font-sans">
+      <header className="flex items-center justify-center w-full relative gap-1">
+        <Dumbbell className="h-5 w-5 text-gray-800" />
+        <h2 className="text-3xl font-semibold text-gray-800 text-center sm:text-left">
+          gymbara
+        </h2>
       </header>
 
       <main className="grid gap-4 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
