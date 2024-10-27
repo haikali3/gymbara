@@ -1,16 +1,10 @@
-import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogHeader } from "@/components/ui/dialog"; // Use your custom dialog component
+import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogHeader, DialogDescription } from "@/components/ui/dialog"; // Use your custom dialog component
 import TimePickerDemo from "./time-picker-demo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function TimePickerDialog() {
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
-
-  const startTimer = () => {
-    setIsTimerRunning(true);
-    // Additional logic to start the timer countdown if needed
-  };
 
   return (
     <Dialog>
@@ -19,13 +13,12 @@ export default function TimePickerDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] justify-center">
         <DialogHeader>
-          <DialogTitle>Set Timer</DialogTitle>
+          <DialogTitle></DialogTitle>
         </DialogHeader>
         {/* Timer */}
         <TimePickerDemo date={date} setDate={setDate} />
-        <Button onClick={startTimer} className="mt-4 w-full">
-          Start
-        </Button>
+        <DialogDescription>
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   );
