@@ -1,8 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gymbara 
+
+A Next.js project bootstrapped with create-next-app, designed for tracking workouts and managing exercise routines.
+
+## Features
+
+- **Custom Timer**
+  - Start, pause, and reset functionality
+  - Zustand state management
+  - Session storage persistence
+  - State retention across page reloads
+
+- **Responsive UI**
+  - Optimized for multiple screen sizes
+  - Flexible layouts and components
+  - Clean typography with Vercel-optimized Geist font
+
+- **Exercise Tracking**
+  - Dynamic exercise cards
+  - Custom weight, sets, and reps tracking
+  - Persistent data storage
+  - Progress tracking capabilities
+
+- **State Management**
+  - Zustand store for global state
+  - Efficient management of timer and workout settings
+  - Cross-component state synchronization
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +40,77 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app.
+
+## Project Structure
+
+```plaintext
+.
+├── app/
+│   ├── page.tsx          # Home page component
+│   ├── layout.tsx        # Main layout component
+│   └── components/       # Reusable components (e.g., Timer, ExerciseCard)
+├── public/               # Static assets
+├── stores/               # Zustand state stores
+├── utils/                # Utility functions
+├── styles/              # Global styles
+├── package.json
+└── README.md
+```
+
+## Configuration
+
+The project uses various configuration files for customization:
+- `next/font` for font optimization
+- `.env` for environment variables
+- `next.config.js` for Next.js settings
+- `tailwind.config.js` for styling (if Tailwind is used)
+
+## Dependencies
+
+- **Next.js**: React framework for server-rendered applications
+- **React**: JavaScript library for building user interfaces
+- **Zustand**: Lightweight state management solution
+- **lucide-react**: Icon library for UI elements
+- **TypeScript**: Static type checking
+
+## Usage
+
+### Timer
+- Start, pause, and reset functionality
+- Session storage for state persistence
+- State retention across page reloads
+
+### Exercise Tracking
+- Add custom weights, sets, and reps
+- Dynamic exercise card components
+- Progress tracking capabilities
+
+### State Management
+- Global state managed with Zustand
+- Extensible state architecture
+- Cross-component state synchronization
+
+## Future Improvements
+
+### Data Management
+- [ ] Backend integration with database support (PostgreSQL)
+- [ ] User authentication system
+- [ ] Persistent workout data storage
+
+### Enhanced Functionality
+- [ ] Dark mode and theme customization
+
+### Technical Enhancements
+- [ ] Progressive Web App (PWA) implementation
+- [ ] Offline functionality
+- [ ] Workout analytics and visualizations
+- [ ] Performance optimizations
+
+## Deployment
+
+Deploy your app to the Vercel Platform with zero configuration. For more information, see the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
+
+## Development
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
