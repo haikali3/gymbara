@@ -1,101 +1,88 @@
-"use client"
-import Image from "next/image";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client";
+import { useRouter } from "next/navigation";
 import { Dumbbell } from "lucide-react";
 
-// Define an interface for the exercise
-interface Exercise {
-  name: string;
-  defaultSets: number;
+interface WorkoutPlan {
+  title: string;
+  description: string;
+  exercises: string[];
+  route: string;
 }
 
-// Stepper component for reps
-function Stepper({ initialCount = 0 }) {
-  const [count, setCount] = useState(initialCount);
-
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count > 0 ? count - 1 : 0);
-
-  return (
-    <div className="flex items-center gap-2">
-      <Button variant="outline" size="sm" onClick={decrement}>-</Button>
-      <span className="text-center w-8">{count}</span>
-      <Button variant="outline" size="sm" onClick={increment}>+</Button>
-    </div>
-  );
-}
-
-// ExerciseCard component
-function ExerciseCard({ exercise }: { exercise: Exercise }) {
-  const [weight, setWeight] = useState(0);
-  const [sets, setSets] = useState(exercise.defaultSets);
-
-  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWeight(Number(e.target.value));
-  };
-
-  const handleSetsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSets(Number(e.target.value));
-  };
-
-  return (
-    <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">
-      <h2 className="text-base  font-normal text-gray-800 text-center sm:text-left">
-        {exercise.name}
-      </h2>
-      <div className="flex items-center justify-between w-full p-2">
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Reps</label>
-          <Stepper />
-        </div>
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Sets</label>
-          <Input
-            type="number"
-            value={sets}
-            onChange={handleSetsChange}
-            className="w-20 p-1 border-gray-300 rounded text-center"
-            min="1"
-          />
-        </div>
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Weight (kg)</label>
-          <Input
-            type="number"
-            value={weight}
-            onChange={handleWeightChange}
-            className="w-20 p-1 border-gray-300 rounded text-center"
-            min="0"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
+// Define workout plans
+const workoutPlans: WorkoutPlan[] = [
+  {
+    title: "Full Body Workout",
+    description: "Full Body - Day 1",
+    exercises: [
+      "Incline Machine Press",
+      "Single-Leg Leg Press (Heavy)",
+      "Single-Leg Leg Press (Back off)",
+      "Pendlay Row",
+      "Glute-Ham Raise",
+      "Spider Curl",
+      "Cable Lateral Raise",
+      "Hanging Leg Raise",
+    ],
+    route: "/workouts/full-body",
+  },
+  {
+    title: "Upper Body Workout",
+    description: "Upper Body - Day 2",
+    exercises: [
+      "2-Grip Pullup",
+      "Weighted Dip (Heavy) (handle: 3 from top, seat: 2 from top, 0 dots available from sit)",
+      "Weighted Dip (Back off)",
+      "Incline Chest-Supported DB Row",
+      "Standing DB Arnold Press",
+      "A1: DB Incline Curl",
+      "A2: DB French Press",
+    ],
+    route: "/workouts/upper-body",
+  },
+  {
+    title: "Lower Body Workout",
+    description: "Lower Body - Day 3",
+    exercises: [
+      "DB Bulgarian Split Squat",
+      "DB Romanian Deadlift",
+      "Goblet Squat",
+      "A1: Leg Press Toe Press",
+      "A2: Machine Crunch",
+    ],
+    route: "/workouts/lower-body",
+  },
+];
 
 export default function Home() {
-  const exercises: Exercise[] = [
-    { name: "Incline Machine Press", defaultSets: 3 },
-    { name: "Single-Leg Leg Press (Heavy)", defaultSets: 4 },
-    { name: "Pendlay Row", defaultSets: 3 },
-    { name: "Glute-Ham Raise", defaultSets: 2 },
-    { name: "Spider Curl", defaultSets: 3 },
-  ];
+  const router = useRouter();
+
+  const navigateToWorkout = (route: string) => {
+    router.push(route);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col items-center gap-4 font-sans">
+    <div className="min-h-screen bg-gray-50 p-4 flex flex-col items-center gap-6 font-sans">
       <header className="flex items-center justify-center w-full relative gap-1">
-        <Dumbbell className="h-5 w-5 text-gray-800" />
-        <h2 className="text-3xl font-semibold text-gray-800 text-center sm:text-left">
-          gymbara
-        </h2>
+        <Dumbbell className="h-6 w-6 text-gray-800" />
+        <h2 className="text-3xl font-semibold text-gray-800">Gymbara</h2>
       </header>
 
-      <main className="grid gap-1 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {exercises.map((exercise, index) => (
-          <ExerciseCard key={index} exercise={exercise} />
+      <main className="grid gap-4 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        {workoutPlans.map((plan, index) => (
+          <div
+            key={index}
+            onClick={() => navigateToWorkout(plan.route)}
+            className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
+          >
+            <h3 className="text-lg font-semibold text-gray-800">{plan.title}</h3>
+            <p className="text-sm text-gray-600">{plan.description}</p>
+            <ul className="mt-2 text-sm text-gray-700 list-disc pl-4">
+              {plan.exercises.map((exercise, i) => (
+                <li key={i}>{exercise}</li>
+              ))}
+            </ul>
+          </div>
         ))}
       </main>
 
