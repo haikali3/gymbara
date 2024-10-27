@@ -12,8 +12,6 @@ import {
 export interface TimePickerInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   picker: TimePickerType;
-  date: Date | undefined;
-  setDate: (date: Date | undefined) => void;
   period?: Period;
   onRightFocus?: () => void;
   onLeftFocus?: () => void;
@@ -30,8 +28,6 @@ const TimePickerInput = React.forwardRef<
       value,
       id,
       name,
-      date = new Date(new Date().setHours(0, 0, 0, 0)),
-      setDate,
       onChange,
       onKeyDown,
       picker,

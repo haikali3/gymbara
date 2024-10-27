@@ -16,7 +16,7 @@ export default function TimePickerDialog() {
           <DialogTitle></DialogTitle>
         </DialogHeader>
         {/* Timer */}
-        <TimePickerDemo date={date} setDate={setDate} />
+        <TimePickerDemo />
         <DialogDescription>
         </DialogDescription>
       </DialogContent>
