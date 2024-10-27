@@ -11,8 +11,8 @@ interface TimePickerDemoProps {
 }
 
 function TimePickerDemo({ date, setDate }: TimePickerDemoProps) {
-  const [minutes, setMinutes] = React.useState(2);
-  const [seconds, setSeconds] = React.useState(30);
+  const [minutes, setMinutes] = React.useState(0);
+  const [seconds, setSeconds] = React.useState(10);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Function to handle the countdown timer

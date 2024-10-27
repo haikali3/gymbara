@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dumbbell } from "lucide-react";
+import TimePickerDialog from "@/components/time-picker-dialog";
 
 // Define an interface for the exercise
 interface Exercise {
@@ -76,6 +77,7 @@ function ExerciseCard({ exercise }: { exercise: Exercise }) {
 }
 
 export default function FullBodyWorkoutPage() {
+
   const exercises: Exercise[] = [
     { name: "Incline Machine Press", defaultSets: 3 },
     { name: "Single-Leg Leg Press (Heavy)", defaultSets: 4 },
@@ -94,6 +96,8 @@ export default function FullBodyWorkoutPage() {
       </header>
 
       <main className="grid gap-1 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        {/* Timer Button with Dialog */}
+        <TimePickerDialog />
         {exercises.map((exercise, index) => (
           <ExerciseCard key={index} exercise={exercise} />
         ))}
@@ -102,6 +106,6 @@ export default function FullBodyWorkoutPage() {
       <footer className="text-center text-gray-500 text-sm mt-8">
         © {new Date().getFullYear()} Gymbara Fitness App. All rights reserved.
       </footer>
-    </div>
+    </div >
   );
 }
