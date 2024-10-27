@@ -93,6 +93,12 @@ The project uses various configuration files for customization:
 
 ## Future Improvements
 
+### Todo
+- [ ] Update more exercises
+- [ ] Change routine after 1 month
+- [ ] Add notes for every exercise
+- [ ] Add Substition for exercise
+
 ### Data Management
 - [ ] Backend integration with database support (PostgreSQL)
 - [ ] User authentication system
