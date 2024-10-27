@@ -31,7 +31,7 @@ const workoutPlans: WorkoutPlan[] = [
     description: "Upper Body - Day 2",
     exercises: [
       "2-Grip Pullup",
-      "Weighted Dip (Heavy) (handle: 3 from top, seat: 2 from top, 0 dots available from sit)",
+      "Weighted Dip (Heavy)",
       "Weighted Dip (Back off)",
       "Incline Chest-Supported DB Row",
       "Standing DB Arnold Press",
