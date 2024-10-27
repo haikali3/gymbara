@@ -20,9 +20,9 @@ function Stepper({ initialCount = 0 }) {
 
   return (
     <div className="flex items-center gap-2">
-      <Button variant="outline" size="sm" onClick={decrement}>-</Button>
-      <span className="text-center w-8">{count}</span>
-      <Button variant="outline" size="sm" onClick={increment}>+</Button>
+      <Button variant="ghost" size="sm" onClick={decrement}>-</Button>
+      <span className="text-center w-10 text-black font-bold text-lg">{count}</span>
+      <Button variant="ghost" size="sm" onClick={increment}>+</Button>
     </div>
   );
 }
@@ -41,33 +41,33 @@ function ExerciseCard({ exercise }: { exercise: Exercise }) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 p-4 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-4 sm:gap-6">
-      <h2 className="text-lg font-normal text-gray-800 text-center sm:text-left">
-        {exercise.name}
+    <div className="bg-white border border-black p-4 w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-4 z-10 relative">
+      <h2 className="text-lg font-bold text-black text-left">
+        {exercise.name.toUpperCase()}
       </h2>
-      <div className="flex items-center justify-between w-full p-1">
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Reps:</label>
+      <div className="flex items-center justify-between w-full">
+        <div className="flex flex-col items-center sm:flex-row gap-2 w-full">
+          <label className="text-sm font-bold text-black">REPS</label>
           <Stepper />
         </div>
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Weight (kg):</label>
-          <Input
-            type="number"
-            value={weight}
-            onChange={handleWeightChange}
-            className="w-20 p-1 border-gray-300 rounded text-center"
-            min="0"
-          />
-        </div>
-        <div className="flex flex-col items-center sm:flex-row gap-2">
-          <label className="text-sm text-gray-600">Sets:</label>
+        <div className="flex flex-col items-center sm:flex-row gap-2 w-full">
+          <label className="text-sm font-bold text-black">SETS</label>
           <Input
             type="number"
             value={sets}
             onChange={handleSetsChange}
-            className="w-20 p-1 border-gray-300 rounded text-center"
+            className="w-16 p-1 text-center border-black border bg-white font-bold"
             min="1"
+          />
+        </div>
+        <div className="flex flex-col items-center sm:flex-row gap-2 w-full">
+          <label className="text-sm font-bold text-black">WEIGHT (KG)</label>
+          <Input
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+            className="w-16 p-1 text-center border-black border bg-white font-bold"
+            min="0"
           />
         </div>
       </div>
@@ -85,22 +85,29 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col items-center gap-4 font-sans">
-      <header className="flex items-center justify-center w-full relative gap-1">
-        <Dumbbell className="h-5 w-5 text-gray-800" />
-        <h2 className="text-3xl font-semibold text-gray-800 text-center sm:text-left">
-          gymbara
-        </h2>
+    <div className="min-h-screen bg-white p-4 flex flex-col items-center gap-4 font-sans relative overflow-hidden">
+
+      {/* Large Background Text */}
+      <div className="absolute inset-0 flex justify-center items-center text-gray-200 font-extrabold text-[15rem] opacity-10 pointer-events-none select-none">
+        GYMBARA
+      </div>
+
+      {/* Header */}
+      <header className="flex items-center justify-center w-full z-10 relative">
+        <Dumbbell className="h-8 w-8 text-black" />
+        <h1 className="text-4xl font-extrabold text-black ml-2">GYMBARA</h1>
       </header>
 
-      <main className="grid gap-4 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+      {/* Main Content */}
+      <main className="grid gap-4 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3 z-10 relative">
         {exercises.map((exercise, index) => (
           <ExerciseCard key={index} exercise={exercise} />
         ))}
       </main>
 
-      <footer className="text-center text-gray-500 text-sm mt-8">
-        © {new Date().getFullYear()} Your Fitness App. All rights reserved.
+      {/* Footer */}
+      <footer className="text-center text-black text-xs font-bold border-t-2 border-black mt-8 w-full py-2 z-10 relative">
+        © {new Date().getFullYear()} GYMBARA FITNESS APP. ALL RIGHTS RESERVED.
       </footer>
     </div>
   );
