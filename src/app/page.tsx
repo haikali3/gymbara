@@ -9,7 +9,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 p-4 flex flex-col items-center gap-6 font-sans">
       <header className="flex items-center justify-center w-full relative gap-1">
         <Dumbbell className="h-6 w-6 text-gray-800" />
-        <h2 className="text-3xl font-semibold text-gray-800">Gymbara Fitness</h2>
+        <h2 className="text-3xl font-semibold text-gray-800">gymbara</h2>
       </header>
 
       <main className="w-full max-w-5xl">

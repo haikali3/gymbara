@@ -1,0 +1,148 @@
+{
+  "workouts": [
+    {
+      "week": "WEEK5 - WEEK8",
+      "type": "FULL BODY",
+      "exercises": [
+        {
+          "name": "Incline Machine Press",
+          "warmUpSets": "1 - 2",
+          "workingSets": 2,
+          "reps": "8 - 10",
+          "load": "63.6 x 5",
+          "RPE": "9 - 10",
+          "rest": "~2 MINS",
+          "substitutionOptions": [
+            "Incline Smith Machine Press",
+            "Incline DB Press"
+          ],
+          "notes": "45° incline, focus on squeezing your chest."
+        },
+        {
+          "name": "Single-Leg Leg Press (Heavy)",
+          "warmUpSets": "2 - 3",
+          "workingSets": 1,
+          "reps": "6 - 8 per leg",
+          "load": "54.5kg x 8",
+          "RPE": "8 - 9",
+          "rest": "~3 MINS",
+          "substitutionOptions": [
+            "Machine Squat",
+            "Hack Squat"
+          ],
+          "notes": "High and wide foot positioning, start with weaker leg."
+        },
+        {
+          "name": "Single-Leg Leg Press (Back off)",
+          "warmUpSets": 0,
+          "workingSets": 1,
+          "reps": "10 - 12 per leg",
+          "load": "36.6kg x 12",
+          "RPE": "8 - 9",
+          "rest": "~3 MINS",
+          "substitutionOptions": [
+            "Machine Squat",
+            "Hack Squat"
+          ],
+          "notes": "High and wide foot positioning, start with weaker leg."
+        },
+        {
+          "name": "Pendlay Row",
+          "warmUpSets": 2,
+          "workingSets": 2,
+          "reps": "8 - 10",
+          "load": "68kg x 10",
+          "RPE": "9 - 10",
+          "rest": "~2 MINS",
+          "substitutionOptions": [
+            "T-Bar Row",
+            "Seated Cable Row"
+          ],
+          "notes": "Initiate the movement by squeezing your shoulder blades together, pull to your lower chest, avoid using momentum."
+        },
+        {
+          "name": "Glute-Ham Raise",
+          "warmUpSets": 1,
+          "workingSets": 1,
+          "reps": "10 - 12",
+          "load": "",
+          "RPE": 10,
+          "rest": "~1.5 MINS",
+          "substitutionOptions": [
+            "Nordic Ham Curl",
+            "Lying Leg Curl"
+          ],
+          "notes": "Keep your hips straight, do Nordic ham curls if no GHR machine."
+        }
+      ]
+    },
+    {
+      "week": "WEEK5 - WEEK8",
+      "type": "UPPER",
+      "exercises": [
+        {
+          "name": "2-Grip Pullup",
+          "warmUpSets": "1 - 2",
+          "workingSets": 2,
+          "reps": "8 - 10",
+          "load": "63kg x 10",
+          "RPE": "9 - 10",
+          "rest": "~3 MINS",
+          "substitutionOptions": [
+            "Machine Pulldown",
+            "2-Grip Lat Pulldown"
+          ],
+          "notes": "First set 1.5x shoulder width grip. Second set 1.0x shoulder width grip."
+        },
+        {
+          "name": "Weighted Dip (Heavy)",
+          "warmUpSets": "2-3",
+          "workingSets": 1,
+          "reps": "6 - 8",
+          "load": "68kg x 8",
+          "RPE": "8 - 9",
+          "rest": "~3 MINS",
+          "substitutionOptions": [
+            "Machine Chest Press",
+            "Flat DB Press"
+          ],
+          "notes": "Tuck your elbows at 45°, lean your torso forward 15°, shoulder width or slightly wider grip."
+        }
+      ]
+    },
+    {
+      "week": "WEEK5 - WEEK8",
+      "type": "LOWER",
+      "exercises": [
+        {
+          "name": "DB Bulgarian Split Squat",
+          "warmUpSets": 2,
+          "workingSets": 3,
+          "reps": "10 - 12",
+          "load": "",
+          "RPE": "8 - 9",
+          "rest": "~2 MINS",
+          "substitutionOptions": [
+            "Goblet Squat",
+            "Leg Press Toe Press"
+          ],
+          "notes": "Start with your weaker leg. Squat deep."
+        },
+        {
+          "name": "DB Romanian Deadlift",
+          "warmUpSets": 2,
+          "workingSets": 2,
+          "reps": "10 - 12",
+          "load": "",
+          "RPE": "8 - 9",
+          "rest": "~2 MINS",
+          "substitutionOptions": [
+            "Romanian Deadlift",
+            "45° Hyperextension"
+          ],
+          "notes": "Emphasize the stretch in your hamstrings, prevent your lower back from rounding."
+        }
+      ]
+    }
+  ]
+}
