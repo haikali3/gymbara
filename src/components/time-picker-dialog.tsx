@@ -2,14 +2,15 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogHeader, Dialog
 import TimePickerDemo from "./time-picker-demo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Clock } from "lucide-react";
 
 export default function TimePickerDialog() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Timer</Button>
+        <Button variant="outline">
+          <Clock />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] justify-center">
         <DialogHeader>

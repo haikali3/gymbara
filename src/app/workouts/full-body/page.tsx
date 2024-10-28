@@ -1,9 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, ChevronLeft } from "lucide-react";
 import TimePickerDialog from "@/components/time-picker-dialog";
 
 // Define an interface for the exercise
@@ -77,27 +78,33 @@ function ExerciseCard({ exercise }: { exercise: Exercise }) {
 }
 
 export default function FullBodyWorkoutPage() {
+  const router = useRouter();
 
   const exercises: Exercise[] = [
-    { name: "Incline Machine Press", defaultSets: 3 },
-    { name: "Single-Leg Leg Press (Heavy)", defaultSets: 4 },
+    { name: "Incline Machine Press", defaultSets: 1 },
+    { name: "Single-Leg Leg Press (Heavy)", defaultSets: 2 },
+    { name: "Single-Leg Leg Press (Back off)", defaultSets: 1 },
     { name: "Pendlay Row", defaultSets: 3 },
     { name: "Glute-Ham Raise", defaultSets: 2 },
-    { name: "Spider Curl", defaultSets: 3 },
+    { name: "Spider Curl", defaultSets: 2 },
+    { name: "Cable Lateral Raise", defaultSets: 2 },
+    { name: "Hanging Leg Raise", defaultSets: 2 },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col items-center gap-4 font-sans">
       <header className="flex items-center justify-center w-full relative gap-1">
         <Dumbbell className="h-5 w-5 text-gray-800" />
-        <h2 className="text-3xl font-semibold text-gray-800 text-center">
-          Full Body Workout
+        <h2 className="pl-2 text-3xl font-semibold text-gray-800 text-center">
+          full body
         </h2>
       </header>
 
       <main className="grid gap-1 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-1">
-        <div>
-
+        <div className="flex items-center justify-between pb-1">
+          <Button onClick={() => router.back()} size="icon">
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
           {/* Timer Button with Dialog */}
           <TimePickerDialog />
         </div>

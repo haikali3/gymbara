@@ -95,6 +95,7 @@ The project uses various configuration files for customization:
 
 ### Todo
 - [ ] Update more exercises
+- [ ] Add info for exercise on each card
 - [ ] Change routine after 1 month
 - [ ] Add notes for every exercise
 - [ ] Add Substition for exercise
