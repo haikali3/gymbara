@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Dumbbell } from "lucide-react";
+import Footer from "../components/_layout/footer";
 
 export default function Home() {
   const router = useRouter();
@@ -45,10 +46,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-
-      <footer className="text-center text-gray-500 text-sm mt-8">
-        © {new Date().getFullYear()} Gymbara Fitness App. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   );
 }

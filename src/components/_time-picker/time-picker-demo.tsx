@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { TimePickerInput } from "@/components/time-picker-input";
+import { TimePickerInput } from "@/components/_time-picker/time-picker-input";
 import { Play, Pause } from "lucide-react"; // Import Play and Pause icons
 import useTimerStore from "@/stores/timerStore";
 
