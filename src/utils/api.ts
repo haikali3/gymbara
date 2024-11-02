@@ -7,7 +7,7 @@ export async function fetchWorkoutSections() {
   return await response.json();
 }
 
-export async function fetchWorkoutList(workoutSectionId) {
+export async function fetchWorkoutList(workoutSectionId: number) {
   const response = await fetch(
     `${BASE_URL}/workout-sections/list?workout_section_id=${workoutSectionId}`
   );
@@ -15,7 +15,7 @@ export async function fetchWorkoutList(workoutSectionId) {
   return await response.json();
 }
 
-export async function fetchWorkoutDetails(workoutSectionId) {
+export async function fetchWorkoutDetails(workoutSectionId: number) {
   const response = await fetch(
     `${BASE_URL}/workout-sections/details?workout_section_id=${workoutSectionId}`
   );

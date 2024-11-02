@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { TimePickerInput } from "@/components/time-picker-input";
 import { Play, Pause } from "lucide-react"; // Import Play and Pause icons
-import useTimerStore from "@/lib/stores/timerStore";
+import useTimerStore from "@/stores/timerStore";
 
 function TimePickerDemo() {
   const { minutes, seconds, isRunning, startTimer, pauseTimer, setMinutes, setSeconds } = useTimerStore();
