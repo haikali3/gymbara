@@ -1,7 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Footer from "../components/_layout/footer";
-import { Accessibility, ChartNoAxesCombined, CircleUserRound, Dumbbell, LineChart, User } from "lucide-react";
+import {
+  Accessibility,
+  ChartNoAxesCombined,
+  ChevronRight,
+  CircleUserRound,
+  Dumbbell,
+  Lock
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const router = useRouter();
@@ -15,44 +23,53 @@ export default function Home() {
         </h2>
       </div>
 
-      <main className="flex-grow w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-2">
+      <main className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-2">
         <div
-          onClick={() => router.push("/workouts")}
-          className="bg-white border border-gray-200 rounded-lg col-span-2 shadow-md cursor-pointer hover:shadow-lg p-4"
+          className="flex-grow bg-white border border-gray-200 rounded-lg col-span-2 shadow-md cursor-pointer hover:shadow-lg p-4"
         >
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center pb-2">
             <Accessibility className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Workouts</h3>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 pb-2">
             Explore various workout plans for different fitness goals.
           </p>
+          <Button onClick={() => router.push("/workouts")} >
+            Let's get started
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
 
         <div
-          onClick={() => router.push("/progress")}
           className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
         >
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center pb-2">
             <ChartNoAxesCombined className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Progress</h3>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 pb-2">
             Track your fitness journey with detailed workout logs.
           </p>
+          <Button disabled onClick={() => router.push("/progress")} >
+            <Lock className="h-4 w-4" />
+            Soon!
+          </Button>
         </div>
 
         <div
-          onClick={() => router.push("/profile")}
           className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
         >
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center pb-2">
             <CircleUserRound className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 pb-2">
             Customize your settings and view personal stats.
           </p>
+          <Button disabled onClick={() => router.push("/profile")} >
+            <Lock className="h-4 w-4" />
+            Soon!
+          </Button>
         </div>
       </main>
 

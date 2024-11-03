@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Dumbbell } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
 
