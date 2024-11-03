@@ -2,19 +2,11 @@
 import React, { useState } from 'react';
 import Stepper from './stepper';
 import { Input } from './ui/input';
-
-interface Exercise {
-  name: string;
-  defaultSets: number;
-}
-
-interface ExerciseCardProps {
-  exercise: Exercise;
-}
+import { ExerciseCardProps } from "@/app/types/type";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   const [weight, setWeight] = useState(0);
-  const [sets, setSets] = useState(exercise.defaultSets);
+  const [sets, setSets] = useState(exercise.working_sets);
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWeight(Number(e.target.value));
