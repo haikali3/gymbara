@@ -1,13 +1,28 @@
+'use client'
 import ExerciseCard from "@/components/exercise-card";
 import Header from "../../../components/_layout/header";
 import Footer from "../../../components/_layout/footer";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 interface Exercise {
   name: string;
   defaultSets: number;
 }
 
-async function FullBodyWorkoutPage() {
+interface WorkoutSectionsList {
+  name: string;
+  warmup_sets: number;
+  working_sets: number;
+  reps: string;
+  load: number;
+  rpe: string;
+  rest_time: string;
+}
+
+
+function FullBodyWorkoutPage() {
+  const url = `/api/workout-sections/details?workout_section_id=1`;
   const exercises: Exercise[] = [
     { name: "Incline Machine Press", defaultSets: 1 },
     { name: "Single-Leg Leg Press (Heavy)", defaultSets: 2 },
@@ -19,13 +34,17 @@ async function FullBodyWorkoutPage() {
     { name: "Hanging Leg Raise", defaultSets: 2 },
   ];
 
-  // const workoutSections = await fetchWorkoutSections();
 
-  // const exercisesMock = workoutSections.map((section: Section[]) => ({
-  //   name: section,
-  //   defaultSets: 2, // Default value or fetch as per API structure
-  // }));
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ['name'],
+    queryFn: () => fetch(url).then((res) =>
+      res.json()
+    ),
+  });
 
+  console.log(data);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data</div>;
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title={"full body"} />

@@ -1,69 +1,31 @@
+// store/workoutStore.ts
 import { create } from 'zustand';
-import { fetchWorkoutSections, fetchWorkoutList, fetchWorkoutDetails } from '../utils/api';
-
-interface WorkoutSection {
-  id: number;
-  name: string;
-}
-
-interface WorkoutDetail {
-  name: string;
-  warmup_sets: number;
-  working_sets: number;
-  reps: string;
-  load: number;
-  rpe: string;
-  rest_time: string;
-}
+import { WorkoutSectionList } from '../utils/types'; // Adjust the path as necessary
 
 interface WorkoutStore {
-  workoutSections: WorkoutSection[];
-  workoutList: WorkoutDetail[];
-  workoutDetails: WorkoutDetail[];
+  exercises: WorkoutSection[];
   loading: boolean;
   error: string | null;
-
-  fetchSections: () => Promise<void>;
-  fetchList: (workoutSectionId: number) => Promise<void>;
-  fetchDetails: (workoutSectionId: number) => Promise<void>;
+  fetchWorkoutSectionsList: () => Promise<void>;
 }
 
-const useTimerStore = create<WorkoutStore>((set) => ({
-  workoutSections: [],
-  workoutList: [],
-  workoutDetails: [],
+export const useWorkoutStore = create<WorkoutStore>((set) => ({
+  exercises: [],
   loading: false,
   error: null,
-
-  fetchSections: async () => {
+  fetchWorkoutSectionsList: async () => {
     set({ loading: true, error: null });
     try {
-      const data = await fetchWorkoutSections();
-      set({ workoutSections: data, loading: false });
-    } catch (error) {
-      set({ error: (error as Error).message, loading: false });
-    }
-  },
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/workout-sections/list`); // Adjust the endpoint accordingly
 
-  fetchList: async (workoutSectionId: number) => {
-    set({ loading: true, error: null });
-    try {
-      const data = await fetchWorkoutList(workoutSectionId);
-      set({ workoutList: data, loading: false });
-    } catch (error) {
-      set({ error: (error as Error).message, loading: false });
-    }
-  },
+      if (!response.ok) {
+        throw new Error('Failed to fetch workout sections');
+      }
 
-  fetchDetails: async (workoutSectionId: number) => {
-    set({ loading: true, error: null });
-    try {
-      const data = await fetchWorkoutDetails(workoutSectionId);
-      set({ workoutDetails: data, loading: false });
+      const data: WorkoutSection[] = await response.json();
+      set({ exercises: data, loading: false });
     } catch (error) {
-      set({ error: (error as Error).message, loading: false });
+      set({ error: error instanceof Error ? error.message : 'Unknown error', loading: false });
     }
   },
 }));
-
-export default useTimerStore;
