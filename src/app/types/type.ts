@@ -8,7 +8,7 @@ export interface ExerciseCardProps {
 }
 
 export interface ExerciseDetails {
-  exercise_name: string;
+  name: string;
   warmup_sets: number;
   working_sets: number;
   reps: string;

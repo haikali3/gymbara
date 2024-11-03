@@ -22,3 +22,4 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
   if (!response.ok) throw new Error('Failed to fetch workout details');
   return await response.json();
 }
+

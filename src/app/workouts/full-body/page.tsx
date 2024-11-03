@@ -5,18 +5,18 @@ import Footer from "../../../components/_layout/footer";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseDetails } from "@/app/types/type";
+import { fetchWorkoutDetails } from "@/utils/api";
 
 
 
 function FullBodyWorkoutPage() {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/workout-sections/details?workout_section_id=1`;
 
-  const { data, isLoading, isError, isSuccess } = useQuery<ExerciseDetails[]>({
+  const { data, isLoading, isError } = useQuery<ExerciseDetails[]>({
     queryKey: ['workoutSections'],
-    queryFn: () => fetch(url).then((res) => res.json()),
+    queryFn: () => fetchWorkoutDetails(1),
   });
 
-  // console.log(data[1].name);
+  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
@@ -27,10 +27,7 @@ function FullBodyWorkoutPage() {
         {data?.map((exercise: ExerciseDetails, index: number) => (
           <ExerciseCard
             key={index}
-            exercise={{
-              name: exercise.exercise_name, // Use "exercise_name" from API data
-              working_sets: exercise.working_sets, // Use `working_sets` as `defaultSets`
-            }}
+            exercise={exercise}
           />
         ))}
       </div>
