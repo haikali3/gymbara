@@ -6,8 +6,6 @@ import { ExerciseCardProps } from "@/app/types/type";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   const [weight, setWeight] = useState(0);
-  // const [sets, setSets] = useState(exercise.working_sets);
-
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWeight(Number(e.target.value));
   };
