@@ -28,8 +28,8 @@ async function FullBodyWorkoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
-      <Header />
-      <div className="grid gap-1 w-full grid-cols-1 md:grid-cols-1">
+      <Header title={"full body"} />
+      <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-1">
         {exercises.map((exercise, index) => (
           <ExerciseCard key={index} exercise={exercise} />
         ))}
