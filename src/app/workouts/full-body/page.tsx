@@ -14,7 +14,6 @@ function FullBodyWorkoutPage() {
     queryFn: () => fetchWorkoutDetails(1),
   });
 
-  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
@@ -29,8 +28,11 @@ function FullBodyWorkoutPage() {
           />
         ))}
       </div>
+      <div className="pt-2">
+      </div>
+      {/* TODO: Add submit function */}
       <Button>
-        Done
+        Finish Workout
       </Button>
       <Footer />
     </div >

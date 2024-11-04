@@ -59,9 +59,13 @@ const useTimerStore = create<TimerState>((set) => {
     set({ isRunning: false });
   };
 
-  // Load values from sessionStorage or set defaults, respecting max limits
-  const initialMinutes = Math.min(Number(sessionStorage.getItem("timerMinutes")) || DEFAULT_MINUTES, MAX_MINUTES);
-  const initialSeconds = Math.min(Number(sessionStorage.getItem("timerSeconds")) || DEFAULT_SECONDS, MAX_SECONDS);
+  // Load values from sessionStorage or set defaults, respecting max limits (client-side only)
+  const initialMinutes = typeof window !== "undefined" && sessionStorage.getItem("timerMinutes")
+    ? Math.min(Number(sessionStorage.getItem("timerMinutes")), MAX_MINUTES)
+    : DEFAULT_MINUTES;
+  const initialSeconds = typeof window !== "undefined" && sessionStorage.getItem("timerSeconds")
+    ? Math.min(Number(sessionStorage.getItem("timerSeconds")), MAX_SECONDS)
+    : DEFAULT_SECONDS;
 
   return {
     minutes: initialMinutes,
