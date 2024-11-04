@@ -18,7 +18,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
         {exercise.name || "Missing Exercise Name"}
       </h2>
       <div className="flex items-center justify-between w-full p-2">
-        <div className="flex flex-col items-center sm:flex-row gap-1">
+        <div className="flex flex-col items-center  gap-1">
           <label className="text-sm text-gray-600">Sets</label>
           <Input
             type="number"
@@ -28,11 +28,11 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
             disabled
           />
         </div>
-        <div className="flex flex-col items-center sm:flex-row gap-1">
+        <div className="flex flex-col items-center  gap-1">
           <label className="text-sm text-gray-600">Reps</label>
           <Stepper />
         </div>
-        <div className="flex flex-col items-center sm:flex-row gap-1">
+        <div className="flex flex-col items-center  gap-1">
           <label className="text-sm text-gray-600">Weight</label>
           <Input
             type="number"

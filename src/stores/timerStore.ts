@@ -11,9 +11,11 @@ interface TimerState {
   resetTimer: () => void;
 }
 
-// Set default initial timer values
+// Set default initial timer values and limits
 const DEFAULT_MINUTES = 2;
 const DEFAULT_SECONDS = 30;
+const MAX_MINUTES = 10;
+const MAX_SECONDS = 59;
 
 const useTimerStore = create<TimerState>((set) => {
   let timerInterval: NodeJS.Timeout | null = null;
@@ -31,12 +33,14 @@ const useTimerStore = create<TimerState>((set) => {
             return { minutes: DEFAULT_MINUTES, seconds: DEFAULT_SECONDS, isRunning: false };
           }
 
-          const newSeconds = state.seconds > 0 ? state.seconds - 1 : 59;
+          const newSeconds = state.seconds > 0 ? state.seconds - 1 : MAX_SECONDS;
           const newMinutes = state.seconds === 0 ? state.minutes - 1 : state.minutes;
 
-          // Save updated time to sessionStorage
-          sessionStorage.setItem("timerMinutes", String(newMinutes));
-          sessionStorage.setItem("timerSeconds", String(newSeconds));
+          // Save updated time to sessionStorage (client-side only)
+          if (typeof window !== "undefined") {
+            sessionStorage.setItem("timerMinutes", String(newMinutes));
+            sessionStorage.setItem("timerSeconds", String(newSeconds));
+          }
 
           return {
             minutes: newMinutes < 0 ? 0 : newMinutes,
@@ -55,9 +59,9 @@ const useTimerStore = create<TimerState>((set) => {
     set({ isRunning: false });
   };
 
-  // Load values from sessionStorage or set defaults
-  const initialMinutes = Number(sessionStorage.getItem("timerMinutes")) || DEFAULT_MINUTES;
-  const initialSeconds = Number(sessionStorage.getItem("timerSeconds")) || DEFAULT_SECONDS;
+  // Load values from sessionStorage or set defaults, respecting max limits
+  const initialMinutes = Math.min(Number(sessionStorage.getItem("timerMinutes")) || DEFAULT_MINUTES, MAX_MINUTES);
+  const initialSeconds = Math.min(Number(sessionStorage.getItem("timerSeconds")) || DEFAULT_SECONDS, MAX_SECONDS);
 
   return {
     minutes: initialMinutes,
@@ -66,17 +70,25 @@ const useTimerStore = create<TimerState>((set) => {
     startTimer,
     pauseTimer,
     setMinutes: (minutes) => {
-      sessionStorage.setItem("timerMinutes", String(minutes));
-      set({ minutes });
+      const validMinutes = Math.min(minutes, MAX_MINUTES);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("timerMinutes", String(validMinutes));
+      }
+      set({ minutes: validMinutes });
     },
     setSeconds: (seconds) => {
-      sessionStorage.setItem("timerSeconds", String(seconds));
-      set({ seconds });
+      const validSeconds = Math.min(seconds, MAX_SECONDS);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("timerSeconds", String(validSeconds));
+      }
+      set({ seconds: validSeconds });
     },
     resetTimer: () => {
-      // Reset to default values and clear sessionStorage
-      sessionStorage.setItem("timerMinutes", String(DEFAULT_MINUTES));
-      sessionStorage.setItem("timerSeconds", String(DEFAULT_SECONDS));
+      // Reset to default values and clear sessionStorage (client-side only)
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("timerMinutes", String(DEFAULT_MINUTES));
+        sessionStorage.setItem("timerSeconds", String(DEFAULT_SECONDS));
+      }
       if (timerInterval) clearInterval(timerInterval);
       set({ minutes: DEFAULT_MINUTES, seconds: DEFAULT_SECONDS, isRunning: false });
     },

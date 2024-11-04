@@ -2,12 +2,10 @@
 import ExerciseCard from "@/components/exercise-card";
 import Header from "../../../components/_layout/header";
 import Footer from "../../../components/_layout/footer";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseDetails } from "@/app/types/type";
 import { fetchWorkoutDetails } from "@/utils/api";
-
-
+import { Button } from "@/components/ui/button";
 
 function FullBodyWorkoutPage() {
 
@@ -31,6 +29,9 @@ function FullBodyWorkoutPage() {
           />
         ))}
       </div>
+      <Button>
+        Done
+      </Button>
       <Footer />
     </div >
   );
