@@ -22,9 +22,9 @@ const workoutPlans: WorkoutPlan[] = [
       "Single-Leg Leg Press (Back off)",
       "Pendlay Row",
       "Glute-Ham Raise",
-      "Spider Curl",
-      "Cable Lateral Raise",
-      "Hanging Leg Raise",
+      // "Spider Curl",
+      // "Cable Lateral Raise",
+      // "Hanging Leg Raise",
     ],
     route: "/workouts/full-body",
   },
@@ -37,8 +37,8 @@ const workoutPlans: WorkoutPlan[] = [
       "Weighted Dip (Back off)",
       "Incline Chest-Supported DB Row",
       "Standing DB Arnold Press",
-      "A1: DB Incline Curl",
-      "A2: DB French Press",
+      // "A1: DB Incline Curl",
+      // "A2: DB French Press",
     ],
     route: "/workouts/upper-body",
   },
@@ -62,6 +62,8 @@ export default function Workout() {
   const navigateToWorkout = (route: string) => {
     router.push(route);
   };
+
+  //TODO: fetch the card from backend from WorkoutSections Table
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
