@@ -7,13 +7,16 @@ import { ExerciseDetails } from "@/app/types/type";
 import { fetchWorkoutDetails } from "@/utils/api";
 import { Button } from "@/components/ui/button";
 import ExerciseCardSkeleton from "@/components/exercise-card-skeleton";
+import ExerciseCardError from "@/components/exercise-card-error";
 
 function FullBodyWorkoutPage() {
 
-  const { data, isLoading, isError } = useQuery<ExerciseDetails[]>({
+  const { data, isLoading, isError, refetch } = useQuery<ExerciseDetails[]>({
     queryKey: ['workoutSections'],
-    queryFn: () => fetchWorkoutDetails(1),
+    queryFn: () => fetchWorkoutDetails(1), //dynamic 1,2,3
   });
+
+  console.log(isError);
 
 
   return (
@@ -21,7 +24,7 @@ function FullBodyWorkoutPage() {
       <Header title={"full body"} />
       <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-1">
         {isLoading && <ExerciseCardSkeleton />}
-        {isError && <div className="p-4 bg-red-100 text-red-700 rounded">Error loading data</div>}
+        {isError && <ExerciseCardError onRetry={refetch} />}
         {data?.map((exercise: ExerciseDetails, index: number) => (
           <ExerciseCard
             key={index}
