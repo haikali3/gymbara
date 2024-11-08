@@ -16,3 +16,13 @@ export interface ExerciseDetails {
   rpe: string;
   rest_time: string;
 }
+
+export interface UserDetails {
+  id: string;
+  email: string;
+  verified_email: boolean;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+}

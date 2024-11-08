@@ -4,7 +4,7 @@ import Header from "../../../components/_layout/header";
 import Footer from "../../../components/_layout/footer";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseDetails } from "@/app/types/type";
-import { fetchWorkoutDetails } from "@/utils/api";
+import { fetchWorkoutDetails } from "@/utils/services/api";
 import { Button } from "@/components/ui/button";
 import ExerciseCardSkeleton from "@/components/exercise-card-skeleton";
 import ExerciseCardError from "@/components/exercise-card-error";

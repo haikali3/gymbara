@@ -1,4 +1,4 @@
-// utils/api.js
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function fetchWorkoutSections() {
@@ -23,3 +23,22 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
   return await response.json();
 }
 
+export async function fetchUserDetails() {
+  try {
+    // The credentials option ensures the browser sends cookies with the request
+    const response = await fetch(`${BASE_URL}/api/user-info`, {
+      method: 'GET',
+      credentials: 'include', // Include cookies in the request
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user details');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    throw error;
+  }
+}
