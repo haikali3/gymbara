@@ -61,13 +61,6 @@ export default function Home() {
                   <p className="text-sm text-gray-600">{data.email}</p>
                 </div>
               </div>
-              <div className="flex justify-between">
-
-                {/* TODO: fIxx logout button  */}
-                <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/logout`)}>
-                  Logout
-                </Button>
-              </div>
             </div>
           ) : (
             <div>
@@ -111,8 +104,8 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Explore various workout plans for different fitness goals.
           </p>
-          <Button onClick={() => router.push("/workouts")} >
-            Let's get started
+          <Button onClick={() => router.push("/workouts")} className="w-full">
+            Start now!
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
