@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Dumbbell } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Header from "@/components/_layout/header";
+import Footer from "@/components/_layout/footer";
 
 interface WorkoutPlan {
   title: string;
@@ -21,9 +22,9 @@ const workoutPlans: WorkoutPlan[] = [
       "Single-Leg Leg Press (Back off)",
       "Pendlay Row",
       "Glute-Ham Raise",
-      "Spider Curl",
-      "Cable Lateral Raise",
-      "Hanging Leg Raise",
+      // "Spider Curl",
+      // "Cable Lateral Raise",
+      // "Hanging Leg Raise",
     ],
     route: "/workouts/full-body",
   },
@@ -36,8 +37,8 @@ const workoutPlans: WorkoutPlan[] = [
       "Weighted Dip (Back off)",
       "Incline Chest-Supported DB Row",
       "Standing DB Arnold Press",
-      "A1: DB Incline Curl",
-      "A2: DB French Press",
+      // "A1: DB Incline Curl",
+      // "A2: DB French Press",
     ],
     route: "/workouts/upper-body",
   },
@@ -62,21 +63,12 @@ export default function Workout() {
     router.push(route);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col items-center gap-4 font-sans">
-      <header className="flex items-center justify-center w-full relative gap-1">
-        <Dumbbell className="h-6 w-6 text-gray-800" />
-        <h2 className="pl-1 text-3xl font-semibold text-gray-800 text-center">
-          workouts
-        </h2>
-      </header>
+  //TODO: fetch the card from backend from WorkoutSections Table
 
+  return (
+    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
+      <Header title={"workout"} />
       <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        <div className="flex items-center justify-between pb-1">
-          <Button onClick={() => router.back()} size="icon">
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-        </div>
         {workoutPlans.map((plan, index) => (
           <div
             key={index}
@@ -93,10 +85,7 @@ export default function Workout() {
           </div>
         ))}
       </main>
-
-      <footer className="text-center text-gray-500 text-sm mt-8">
-        © {new Date().getFullYear()} Gymbara Fitness App. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   );
 }
