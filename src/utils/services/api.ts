@@ -25,10 +25,10 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
 
 export async function fetchUserDetails() {
   try {
-    // The credentials option ensures the browser sends cookies with the request
+    // browser sends cookies with req
     const response = await fetch(`${BASE_URL}/api/user-info`, {
       method: 'GET',
-      credentials: 'include', // Include cookies in the request
+      credentials: 'include',
     });
 
     if (!response.ok) {
