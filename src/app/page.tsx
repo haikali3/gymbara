@@ -45,34 +45,45 @@ export default function Home() {
       </div>
 
       <main className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-2">
-        {isLoggedIn && data ? (
-          <div className="flex-grow col-span-2 bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col items-center">
-            <div className="flex flex-row items-center justify-center">
-              <img
-                src={data.picture}
-                alt="User Profile"
-                className="rounded-full w-10 h-10"
-              />
-              <div className="flex flex-col pl-4">
-                <h3 className="text-lg font-semibold text-gray-800">{data.name}</h3>
-                <p className="text-sm text-gray-600">{data.email}</p>
+        <div className="flex-grow bg-white border border-gray-200 rounded-lg col-span-2 shadow-md hover:shadow-lg p-4">
+          {isLoggedIn && data ? (
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex items-center">
+                <div>
+                  <img
+                    src={data.picture}
+                    alt="User Profile"
+                    className="rounded-full w-10 h-10"
+                  />
+                </div>
+                <div className="flex flex-col pl-4">
+                  <h3 className="text-lg font-semibold text-gray-800">{data.name}</h3>
+                  <p className="text-sm text-gray-600">{data.email}</p>
+                </div>
+              </div>
+              <div className="flex justify-between">
+
+                {/* TODO: fIxx logout button  */}
+                <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/logout`)}>
+                  Logout
+                </Button>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex-grow bg-white border border-gray-200 rounded-lg col-span-2 shadow-md hover:shadow-lg p-4">
-            <div className="flex gap-1 items-center pb-2">
-              <CircleUserRound className="h-5 w-5 text-gray-800" />
-              <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
+          ) : (
+            <div>
+              <div className="flex gap-1 items-center pb-2">
+                <CircleUserRound className="h-5 w-5 text-gray-800" />
+                <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
+              </div>
+              <p className="text-sm text-gray-600 pb-2">
+                Customize your settings and view personal stats.
+              </p>
+              <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`)}>
+                Google Sign-in
+              </Button>
             </div>
-            <p className="text-sm text-gray-600 pb-2">
-              Customize your settings and view personal stats.
-            </p>
-            <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`)}>
-              Google Sign-in
-            </Button>
-          </div>
-        )}
+          )}
+        </div>
 
         <div
           className="bg-white border border-gray-200 rounded-lg shadow-md er hover:shadow-lg p-4"
