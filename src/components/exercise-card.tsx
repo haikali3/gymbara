@@ -10,7 +10,6 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     setWeight(Number(e.target.value));
   };
 
-  // console.log('Exercise:', exercise);
 
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">

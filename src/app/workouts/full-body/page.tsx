@@ -16,9 +16,6 @@ function FullBodyWorkoutPage() {
     queryFn: () => fetchWorkoutDetails(1), //dynamic 1,2,3
   });
 
-  console.log(isError);
-
-
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title={"full body"} />

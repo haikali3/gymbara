@@ -1,3 +1,4 @@
+// eslint-next-line @next/next/no-img-element
 "use client";
 import { useRouter } from "next/navigation";
 import Footer from "../components/_layout/footer";
@@ -14,13 +15,14 @@ import { UserDetails } from "./types/type";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserDetails } from "@/utils/services/api";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Check if the user is logged in using TanStack Query v5
-  const { data, isLoading, isError, refetch } = useQuery<UserDetails>({
+  const { data, isLoading, isError} = useQuery<UserDetails>({
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
     enabled: !isLoggedIn, // Only run the query if the user is not already logged in
@@ -32,8 +34,6 @@ export default function Home() {
   } else if (isError && isLoggedIn) {
     setIsLoggedIn(false);
   }
-
-  // console.log(data?.picture)
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
@@ -50,10 +50,12 @@ export default function Home() {
             <div className="flex flex-row items-center justify-between">
               <div className="flex items-center">
                 <div>
-                  <img
+                  <Image
                     src={data.picture}
                     alt="User Profile"
-                    className="rounded-full w-10 h-10"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
                   />
                 </div>
                 <div className="flex flex-col pl-4">
@@ -69,7 +71,7 @@ export default function Home() {
                 <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
               </div>
               <p className="text-sm text-gray-600 pb-2">
-                Customize your settings and view personal stats.
+                Sign in to access your profile and save your workout progress.
               </p>
               <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`)}>
                 Google Sign-in
@@ -104,7 +106,11 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Explore various workout plans for different fitness goals.
           </p>
-          <Button onClick={() => router.push("/workouts")} className="w-full">
+          <Button 
+            onClick={() => router.push("/workouts")} 
+            className="w-full"
+            disabled={!isLoggedIn && isLoading}
+          >
             Start now!
             <ChevronRight className="h-4 w-4" />
           </Button>
