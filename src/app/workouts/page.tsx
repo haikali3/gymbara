@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Dumbbell } from "lucide-react";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
 
@@ -15,7 +14,7 @@ interface WorkoutPlan {
 const workoutPlans: WorkoutPlan[] = [
   {
     title: "Full Body Workout",
-    description: "Full Body - Day 1",
+    description: "Day 1",
     exercises: [
       "Incline Machine Press",
       "Single-Leg Leg Press (Heavy)",
@@ -30,7 +29,7 @@ const workoutPlans: WorkoutPlan[] = [
   },
   {
     title: "Upper Body Workout",
-    description: "Upper Body - Day 2",
+    description: "Day 2",
     exercises: [
       "2-Grip Pullup",
       "Weighted Dip (Heavy)",
@@ -44,7 +43,7 @@ const workoutPlans: WorkoutPlan[] = [
   },
   {
     title: "Lower Body Workout",
-    description: "Lower Body - Day 3",
+    description: "Day 3",
     exercises: [
       "DB Bulgarian Split Squat",
       "DB Romanian Deadlift",
@@ -56,15 +55,15 @@ const workoutPlans: WorkoutPlan[] = [
   },
 ];
 
+
+
 export default function Workout() {
   const router = useRouter();
-
   const navigateToWorkout = (route: string) => {
     router.push(route);
   };
 
-  //TODO: fetch the card from backend from WorkoutSections Table
-
+  //TODO: make the list of workout plans only Title and Description , 1,2,3 but include Days in front end
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />

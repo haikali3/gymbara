@@ -21,14 +21,12 @@ export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check if the user is logged in using TanStack Query v5
   const { data, isLoading, isError} = useQuery<UserDetails>({
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
-    enabled: !isLoggedIn, // Only run the query if the user is not already logged in
+    enabled: !isLoggedIn, //run the query if the user is not already logged in
   });
 
-  // Update the login state based on the query result
   if (data && !isLoggedIn) {
     setIsLoggedIn(true);
   } else if (isError && isLoggedIn) {
