@@ -7,6 +7,12 @@ export interface ExerciseCardProps {
   exercise: Exercise;
 }
 
+export interface ExerciseList {
+  id: number; //1,2,3
+  name: string; //Full Body, Upper Body, Lower Body
+  route: string; //full-body, upper-body, lower-body
+}
+
 export interface ExerciseDetails {
   name: string;
   warmup_sets: number;

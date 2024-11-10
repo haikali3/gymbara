@@ -2,6 +2,9 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
+import { fetchWorkoutSections } from "@/utils/services/api";
+import { useQuery } from "@tanstack/react-query";
+import { ExerciseList } from "../types/type";
 
 interface WorkoutPlan {
   title: string;
@@ -55,15 +58,24 @@ const workoutPlans: WorkoutPlan[] = [
   },
 ];
 
-
-
 export default function Workout() {
   const router = useRouter();
   const navigateToWorkout = (route: string) => {
     router.push(route);
   };
 
-  //TODO: make the list of workout plans only Title and Description , 1,2,3 but include Days in front end
+  const { data, isLoading, isError } = useQuery<ExerciseList[]>({
+    queryKey: ["exerciseList"],
+    queryFn: fetchWorkoutSections,
+    enabled: true,
+  });
+  console.log(data)
+
+  //TODO: Remove hard coded card and fetch the proper data from backend
+  //TODO: Add a loading state
+  //TODO: Add an error state
+  //TODO: Add a retry button
+
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />
@@ -82,6 +94,19 @@ export default function Workout() {
               ))}
             </ul>
           </div>
+        ))}
+        {isLoading && <div>Loading...</div>}
+        {isError && <div>Error loading workout plans(i have a skill issue)</div>}
+        {data?.map((section: ExerciseList, index: number) => (
+          <div 
+            key={index} 
+            className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
+            onClick={() => navigateToWorkout(`/workouts/${section.route}`)}
+          >
+            <h3 className="text-lg font-semibold text-gray-800">{section.name} Workout</h3>
+            <p className="text-sm text-gray-600">Day {section.id}</p>
+          </div>
+          // TODO section.id -> route
         ))}
       </main>
       <Footer />
