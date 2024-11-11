@@ -27,7 +27,7 @@ export default function Workout() {
     isError: workoutListError,
   } = useQuery<ExerciseList[]>({
     queryKey: ["exerciseList", workoutSectionsData?.map(section => section.id)],
-    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 1),
+    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 1), //this will cause an error if workoutSectionsData is null
     enabled: !!workoutSectionsData,
   });
   console.log(workoutListData)
