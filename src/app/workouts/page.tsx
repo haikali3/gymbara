@@ -46,7 +46,7 @@ export default function Workout() {
         {workoutSectionsData?.map((section: WorkoutSections, index: number) => (
           <div 
             key={index} 
-            className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
+            className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4"
           >
             <h3 className="text-lg font-semibold text-gray-800">{section.name} Workout</h3>
             <p className="text-sm text-gray-600">Day {section.id}</p>
