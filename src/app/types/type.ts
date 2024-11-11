@@ -7,10 +7,21 @@ export interface ExerciseCardProps {
   exercise: Exercise;
 }
 
-export interface ExerciseList {
+export interface WorkoutSections {
   id: number; //1,2,3
   name: string; //Full Body, Upper Body, Lower Body
   route: string; //full-body, upper-body, lower-body
+}
+
+export interface ExerciseList {
+  name: string;
+  // TODO: later refine this and remove all other fields
+  warmup_sets: number;
+  working_sets: number;
+  reps: string;
+  load: number;
+  rpe: string;
+  rest_time: string;
 }
 
 export interface ExerciseDetails {

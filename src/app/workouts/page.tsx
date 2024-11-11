@@ -2,9 +2,9 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
-import { fetchWorkoutSections } from "@/utils/services/api";
+import { fetchWorkoutList, fetchWorkoutSections } from "@/utils/services/api";
 import { useQuery } from "@tanstack/react-query";
-import { ExerciseList } from "../types/type";
+import { ExerciseList, WorkoutSections } from '../types/type';
 
 interface WorkoutPlan {
   title: string;
@@ -64,16 +64,29 @@ export default function Workout() {
     router.push(route);
   };
 
-  const { data, isLoading, isError } = useQuery<ExerciseList[]>({
-    queryKey: ["exerciseList"],
+  const {
+    data: workoutSectionsData,
+    isLoading: workouSectionsLoading,
+    isError: workoutSectionsError,
+  } = useQuery<WorkoutSections[]>({
+    queryKey: ["workoutSections"],
     queryFn: fetchWorkoutSections,
-    enabled: true,
   });
-  console.log(data)
+  const {
+    data: workoutListData,
+    isLoading: workoutListLoading,
+    isError: workoutListError,
+  } = useQuery<ExerciseList[]>({
+    queryKey: ["exerciseList", workoutSectionsData?.map(section => section.id)],
+    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 1), // Ensure this fetches ExerciseList data dynamically
+    enabled: !!workoutSectionsData, // Only run query if workoutSectionsData is available
+  });
+  console.log(workoutSectionsData)
+  console.log(workoutListData)
 
   //TODO: Remove hard coded card and fetch the proper data from backend
-  //TODO: Add a loading state
-  //TODO: Add an error state
+  //TODO: Add a loading card
+  //TODO: Add an error card
   //TODO: Add a retry button
 
   return (
@@ -95,9 +108,9 @@ export default function Workout() {
             </ul>
           </div>
         ))}
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>Error loading workout plans(i have a skill issue)</div>}
-        {data?.map((section: ExerciseList, index: number) => (
+        {workouSectionsLoading && <div>Loading...</div>}
+        {workoutSectionsError && <div>Error loading workout plans(i have a skill issue)</div>}
+        {workoutSectionsData?.map((section: WorkoutSections, index: number) => (
           <div 
             key={index} 
             className="bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg p-4"
@@ -105,8 +118,18 @@ export default function Workout() {
           >
             <h3 className="text-lg font-semibold text-gray-800">{section.name} Workout</h3>
             <p className="text-sm text-gray-600">Day {section.id}</p>
+          {/* Display exercises if needed */}
+          <ul className="mt-2 text-sm text-gray-700 list-disc pl-4">
+            {workoutListLoading && <div>Loading...</div>}
+            {workoutListError && <div>Error loading workout list</div>}
+            {Array.isArray(workoutListData) &&
+              workoutListData
+                .map((workoutList, i) => (
+                  <li key={i}>{workoutList.name}</li>
+                ))}
+          </ul> 
           </div>
-          // TODO section.id -> route
+          // TODO add workout list
         ))}
       </main>
       <Footer />
