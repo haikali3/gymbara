@@ -20,7 +20,6 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
         <div className="flex flex-col items-center  gap-1">
           <label className="text-sm text-gray-600">Sets</label>
           <Input
-            type="number"
             value={exercise.working_sets}
             className="w-20 p-1 border-gray-300 rounded text-center"
             min="1"
@@ -34,7 +33,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
         <div className="flex flex-col items-center  gap-1">
           <label className="text-sm text-gray-600">Weight</label>
           <Input
-            type="number"
+            type="number" //it add stepper, find way to fix it
             value={weight}
             onChange={handleWeightChange}
             className="w-20 p-1 border-gray-300 rounded text-center"
