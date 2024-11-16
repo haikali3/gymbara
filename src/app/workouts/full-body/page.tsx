@@ -12,7 +12,7 @@ import ExerciseCardError from "@/components/exercise-card-error";
 function FullBodyWorkoutPage() {
   const { data, isLoading, isError, refetch } = useQuery<ExerciseDetails[]>({
     queryKey: ['workoutSections', 1],
-    queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3 sections
+    queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3 
   });
 
   return (
