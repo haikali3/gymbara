@@ -14,6 +14,7 @@ export interface WorkoutSections {
 }
 
 export interface ExerciseList {
+  id: number;
   name: string;
   // TODO: later refine this and remove all other fields
   warmup_sets: number;

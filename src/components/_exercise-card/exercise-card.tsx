@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import Stepper from './stepper';
-import { Input } from './ui/input';
+import Stepper from '../stepper';
+import { Input } from '../ui/input';
 import { ExerciseCardProps } from "@/app/types/type";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {

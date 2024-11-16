@@ -5,7 +5,9 @@ import Footer from "@/components/_layout/footer";
 import { fetchWorkoutList, fetchWorkoutSections } from "@/utils/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseList, WorkoutSections } from '../types/type';
-import { Button } from "@/components/ui/button";
+import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
+import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
+import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";
 
 export default function Workout() {
   const router = useRouter();
@@ -15,8 +17,9 @@ export default function Workout() {
 
   const {
     data: workoutSectionsData,
-    isLoading: workouSectionsLoading,
+    isLoading: workoutSectionsLoading,
     isError: workoutSectionsError,
+    refetch: refetchWorkoutSections,
   } = useQuery<WorkoutSections[]>({
     queryKey: ["workoutSections"],
     queryFn: fetchWorkoutSections,
@@ -27,7 +30,7 @@ export default function Workout() {
     isError: workoutListError,
   } = useQuery<ExerciseList[]>({
     queryKey: ["exerciseList", workoutSectionsData?.map(section => section.id)],
-    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 1), //this will cause an error if workoutSectionsData is null
+    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 2), //this will cause an error if workoutSectionsData is null
     enabled: !!workoutSectionsData,
   });
   console.log(workoutListData)
@@ -41,33 +44,33 @@ export default function Workout() {
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />
       <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {workouSectionsLoading && <div>Loading...</div>}
-        {workoutSectionsError && <div>Error loading workout plans(i have a skill issue)</div>}
+        {/* Loading state */}
+        {workoutSectionsLoading && (
+          <>
+            <WorkoutSectionLoading />  
+            <WorkoutSectionLoading />  
+          </>
+        )}
+        
+        {/* Error state */}
+        {workoutSectionsError && (
+          <WorkoutSectionError 
+            errorMessage="Failed to load workout sections. Please try again."
+            onRetry={refetchWorkoutSections}
+          />
+        )}
+        
+        {/* Success State */}
         {workoutSectionsData?.map((section: WorkoutSections, index: number) => (
-          <div 
-            key={index} 
-            className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4"
-          >
-            <h3 className="text-lg font-semibold text-gray-800">{section.name} Workout</h3>
-            <p className="text-sm text-gray-600">Day {section.id}</p>
-          {/* Display exercises if needed */}
-          <ul className="my-2 text-sm text-gray-700 list-disc pl-4">
-            {workoutListLoading && <div>Loading...</div>}
-            {workoutListError && <div>Error loading workout list</div>}
-            {Array.isArray(workoutListData) &&
-              workoutListData
-                .map((workoutList, i) => (
-                  <li key={i}>{workoutList.name}</li>
-                ))}
-          </ul> 
-          <Button 
-            className="w-full"
-            onClick={() => navigateToWorkout(`/workouts/${section.route}`)}
-          >
-            Start Exercise
-          </Button>
-          </div>
-          // TODO add workout list
+          <WorkoutSectionCard
+            key={section.id}
+            section={section}
+            index={index}
+            workoutListData={workoutListData}
+            workoutListLoading={workoutListLoading}
+            workoutListError={workoutListError}
+            navigateToWorkout={navigateToWorkout}
+        />
         ))}
       </main>
       <Footer />
