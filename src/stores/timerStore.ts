@@ -37,7 +37,8 @@ const useTimerStore = create<TimerState>((set) => {
           const newMinutes = state.seconds === 0 ? state.minutes - 1 : state.minutes;
 
           // Save updated time to sessionStorage (client-side only)
-          if (typeof window !== "undefined") {
+          // ! hydration error typeof window !== "undefined"
+          if (typeof window !== "undefined") { 
             sessionStorage.setItem("timerMinutes", String(newMinutes));
             sessionStorage.setItem("timerSeconds", String(newSeconds));
           }

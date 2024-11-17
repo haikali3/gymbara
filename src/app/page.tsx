@@ -21,14 +21,12 @@ export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check if the user is logged in using TanStack Query v5
   const { data, isLoading, isError} = useQuery<UserDetails>({
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
-    enabled: !isLoggedIn, // Only run the query if the user is not already logged in
+    enabled: !isLoggedIn, //run the query if the user is not already logged in
   });
 
-  // Update the login state based on the query result
   if (data && !isLoggedIn) {
     setIsLoggedIn(true);
   } else if (isError && isLoggedIn) {
@@ -44,8 +42,8 @@ export default function Home() {
         </h2>
       </div>
 
-      <main className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-2">
-        <div className="flex-grow bg-white border border-gray-200 rounded-lg col-span-2 shadow-md hover:shadow-lg p-4">
+      <main className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-2 gap-2 grid-rows-[auto]">
+        <div className="bg-white border border-gray-200 rounded-lg col-span-2 shadow-md hover:shadow-lg p-4">
           {isLoggedIn && data ? (
             <div className="flex flex-row items-center justify-between">
               <div className="flex items-center">
@@ -97,7 +95,7 @@ export default function Home() {
         </div>
 
         <div
-          className="bg-white border border-gray-200 rounded-lg shadow-md er hover:shadow-lg p-4 row-span-2"
+          className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4 row-span-2"
         >
           <div className="flex gap-1 items-center pb-2">
             <Accessibility className="h-5 w-5 text-gray-800" />
@@ -109,7 +107,7 @@ export default function Home() {
           <Button 
             onClick={() => router.push("/workouts")} 
             className="w-full"
-            disabled={!isLoggedIn && isLoading}
+            disabled={!isLoggedIn || isLoading}
           >
             Start now!
             <ChevronRight className="h-4 w-4" />
@@ -117,7 +115,7 @@ export default function Home() {
         </div>
 
         <div
-          className="flex-grow bg-white border border-gray-200 rounded-lg shadow-md er hover:shadow-lg p-4"
+          className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4"
         >
           <div className="flex gap-1 items-center pb-2">
             <CircleUserRound className="h-5 w-5 text-gray-800" />

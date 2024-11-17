@@ -30,7 +30,9 @@ export async function fetchUserDetails() {
       method: 'GET',
       credentials: 'include',
     });
-
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please log in');
+    }
     if (!response.ok) {
       throw new Error('Failed to fetch user details');
     }

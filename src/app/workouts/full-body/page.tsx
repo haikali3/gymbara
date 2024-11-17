@@ -1,19 +1,18 @@
 'use client'
-import ExerciseCard from "@/components/exercise-card";
+import ExerciseCard from "@/components/_exercise-card/exercise-card";
 import Header from "../../../components/_layout/header";
 import Footer from "../../../components/_layout/footer";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseDetails } from "@/app/types/type";
 import { fetchWorkoutDetails } from "@/utils/services/api";
 import { Button } from "@/components/ui/button";
-import ExerciseCardSkeleton from "@/components/exercise-card-skeleton";
-import ExerciseCardError from "@/components/exercise-card-error";
+import ExerciseCardSkeleton from "@/components/_exercise-card/exercise-card-skeleton";
+import ExerciseCardError from "@/components/_exercise-card/exercise-card-error";
 
 function FullBodyWorkoutPage() {
-
   const { data, isLoading, isError, refetch } = useQuery<ExerciseDetails[]>({
-    queryKey: ['workoutSections'],
-    queryFn: () => fetchWorkoutDetails(1), //dynamic 1,2,3
+    queryKey: ['workoutSections', 1],
+    queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3 
   });
 
   return (
