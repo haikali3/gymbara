@@ -34,7 +34,7 @@ const WorkoutSectionCard: React.FC<WorkoutSectionProps> = ({
         <div className="text-red-600 text-sm">Error loading workout list.</div>
       )}
       {Array.isArray(workoutListData) &&
-        workoutListData.map((workoutList) => (
+        workoutListData.map((workoutList) => ( //! later fix unique key
           <li key={workoutList.id}>{workoutList.name}</li>
         ))}
     </ul>

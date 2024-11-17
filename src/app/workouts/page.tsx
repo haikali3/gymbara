@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
 import { fetchWorkoutList, fetchWorkoutSections } from "@/utils/services/api";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { ExerciseList, WorkoutSections } from '../types/type';
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
@@ -30,15 +30,31 @@ export default function Workout() {
     isError: workoutListError,
   } = useQuery<ExerciseList[]>({
     queryKey: ["exerciseList", workoutSectionsData?.map(section => section.id)],
-    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 2), //this will cause an error if workoutSectionsData is null
+    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 2), //TODO: make this dynamic and not only fetch 1st list
     enabled: !!workoutSectionsData,
   });
-  console.log(workoutListData)
 
-  //TODO: Remove hard coded card and fetch the proper data from backend
-  //TODO: Add a loading card
-  //TODO: Add an error card
-  //TODO: Add a retry button
+  // console.log({ sectiondata: workoutSectionsData, listdata: workoutListData});
+
+  const workoutSectionId = workoutSectionsData?.map(section => section.id) || [];
+  // console.log({ workoutSectionId: workoutSectionId });
+
+  const workoutLists = useQueries({
+  queries: workoutSectionId.map((workouSectionId) => ({
+    queryKey: ["exerciseList", workouSectionId], // Unique key for each section
+    queryFn: () => fetchWorkoutList(workouSectionId), // workoutsectionId = [1,2,3]
+    enabled: !!workoutSectionsData, //not null and true
+  })),
+});
+
+console.log(
+  workoutLists.map(({ data, isLoading, isError }, index) => ({
+    sectionId: workoutSectionId[index], // The ID of the workout section
+    data, // The fetched data for this section
+    isLoading, // Loading state for this section
+    isError, // Error state for this section
+  }))
+);  
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
