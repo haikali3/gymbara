@@ -51,3 +51,27 @@ export async function fetchUserDetails() {
     throw error;
   }
 }
+
+export async function fetchWorkoutSectionsWithExercises(workoutSectionIds: number[]) {
+  try {
+    // Converts the workoutSectionIds array into a query string (?workout_section_ids=1&workout_section_ids=2).
+    const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
+
+    const response = await fetch(`${BASE_URL}/workout-sections/exercises?${queryParams}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please log in');
+    }
+    if (!response.ok) {
+      throw new Error('Failed to fetch workouts sections with exercises');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching workouts sections with exercises', error);
+    throw error;
+  }
+}
