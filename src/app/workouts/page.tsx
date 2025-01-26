@@ -7,8 +7,8 @@ import {
   fetchWorkoutSections,
   fetchWorkoutSectionsWithExercises,
 } from "@/utils/services/api";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import { ExerciseList, WorkoutSections } from "../types/type";
+import { useQuery } from "@tanstack/react-query";
+import { WorkoutSections } from "../types/type";
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
 import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";
