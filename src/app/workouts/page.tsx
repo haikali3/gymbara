@@ -20,40 +20,22 @@ export default function Workout() {
   };
 
   const {
-    data: workoutSectionsData,
-    isLoading: workoutSectionsLoading,
-    isError: workoutSectionsError,
-    refetch: refetchWorkoutSections,
-  } = useQuery<WorkoutSections[]>({
-    queryKey: ["workoutSections"],
-    queryFn: fetchWorkoutSections,
-  });
-  const {
-    data: workoutListData,
-    isLoading: workoutListLoading,
-    isError: workoutListError,
-  } = useQuery<ExerciseList[]>({
-    queryKey: [
-      "exerciseList",
-      workoutSectionsData?.map((section) => section.id),
-    ],
-    queryFn: () => fetchWorkoutList(workoutSectionsData?.[0]?.id || 1), //TODO: make this dynamic and not only fetch 1st list
-    enabled: !!workoutSectionsData,
-  });
-
-  const { data, isLoading, isError } = useQuery({
+    data: workoutSectionsExercisesData,
+    isLoading: workoutSectionsExercisesLoading,
+    isError: workoutSectionsExercisesError,
+    refetch: workoutSectionsExercisesRefetch,
+  } = useQuery({
     queryKey: ["workoutSectionsWithExercises"],
     queryFn: () => fetchWorkoutSectionsWithExercises([1, 2, 3]),
+    //make queryFn dynamic later if workout has 3,4,5 days
   });
-
-  console.log(data);
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />
       <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {/* Loading state */}
-        {workoutSectionsLoading && (
+        {workoutSectionsExercisesLoading && (
           <>
             <WorkoutSectionLoading />
             <WorkoutSectionLoading />
@@ -61,25 +43,27 @@ export default function Workout() {
         )}
 
         {/* Error state */}
-        {workoutSectionsError && (
+        {workoutSectionsExercisesError && (
           <WorkoutSectionError
             errorMessage="Failed to load workout sections. Please try again."
-            onRetry={refetchWorkoutSections}
+            onRetry={workoutSectionsExercisesRefetch}
           />
         )}
 
         {/* Success State */}
-        {workoutSectionsData?.map((section: WorkoutSections, index: number) => (
-          <WorkoutSectionCard
-            key={section.id}
-            section={section}
-            index={index}
-            workoutListData={workoutListData}
-            workoutListLoading={workoutListLoading}
-            workoutListError={workoutListError}
-            navigateToWorkout={navigateToWorkout}
-          />
-        ))}
+        {workoutSectionsExercisesData?.map(
+          (section: WorkoutSections, index: number) => (
+            <WorkoutSectionCard
+              key={section.id}
+              section={section}
+              index={index}
+              workoutListData={section.exercises}
+              workoutSectionsExercisesLoading={workoutSectionsExercisesLoading}
+              workoutSectionsExercisesError={workoutSectionsExercisesError}
+              navigateToWorkout={navigateToWorkout}
+            />
+          )
+        )}
       </main>
       <Footer />
     </div>

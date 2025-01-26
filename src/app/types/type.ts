@@ -11,6 +11,7 @@ export interface WorkoutSections {
   id: number; //1,2,3
   name: string; //Full Body, Upper Body, Lower Body
   route: string; //full-body, upper-body, lower-body
+  exercises: ExerciseList[];
 }
 
 export interface ExerciseList {
