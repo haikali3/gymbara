@@ -1,0 +1,30 @@
+import { create } from "zustand";
+
+type ExerciseData = {
+  exercise_id: number;
+  custom_reps?: number;
+  custom_load?: number;
+};
+
+type WorkoutState = {
+  section_id: number;
+  user_email: string;
+  exercises: ExerciseData[];
+  updateExercise: (exercise_id: number, updates: Partial<ExerciseData>) => void;
+};
+
+export const useWorkoutStore = create<WorkoutState>((set) => ({
+  section_id: 1,
+  user_email: "manfdvcl9@gmail.com",
+  exercises: [],
+  updateExercise: (exercise_id, updates) =>
+    set((state) => {
+      const updatedExercises = state.exercises.some((ex) => ex.exercise_id === exercise_id)
+        ? state.exercises.map((ex) =>
+            ex.exercise_id === exercise_id ? { ...ex, ...updates } : ex
+          )
+        : [...state.exercises, { exercise_id, ...updates }];
+
+      return { exercises: updatedExercises };
+    }),
+}));

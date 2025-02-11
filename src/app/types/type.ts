@@ -1,6 +1,9 @@
 export interface Exercise {
+  id: number; // match zustand store updates
   name: string;
   working_sets: number;
+  custom_reps?: number;
+  custom_load?: number;
 }
 
 export interface ExerciseCardProps {
