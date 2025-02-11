@@ -11,9 +11,10 @@ type WorkoutState = {
   user_email: string;
   exercises: ExerciseData[];
   updateExercise: (exercise_id: number, updates: Partial<ExerciseData>) => void;
+  initializeExercises: (newExercises: ExerciseData[]) => void;
 };
 
-export const useWorkoutStore = create<WorkoutState>((set) => ({
+export const useWorkoutStore = create<WorkoutState>((set, get) => ({
   section_id: 1,
   user_email: "manfdvcl9@gmail.com",
   exercises: [],
@@ -27,4 +28,12 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
 
       return { exercises: updatedExercises };
     }),
+
+  //init store with fetched exercises
+  initializeExercises: (newExercises) => {
+    const currentExercises = get().exercises;
+    if (currentExercises.length === 0) {
+      set({ exercises: newExercises });
+    }
+  }
 }));

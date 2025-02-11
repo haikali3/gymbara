@@ -7,23 +7,29 @@ import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   const { updateExercise } = useWorkoutStore();
+
+  // get existing reps/load values from zustand
   const [weight, setWeight] = useState(exercise.custom_load || 0);
   const [reps, setReps] = useState(exercise.custom_reps || 0);
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     setWeight(value);
-    updateExercise(exercise.id, { custom_load: value });
+    updateExercise(exercise.exercise_id, { custom_load: value });
   };
 
   const handleRepsChange = (value: number) => {
     setReps(value);
-    updateExercise(exercise.id, { custom_reps: value });
+    updateExercise(exercise.exercise_id, { custom_reps: value });
   };
 
+  // On mount, sync Zustand with component state
   useEffect(() => {
-    updateExercise(exercise.id, { custom_load: weight, custom_reps: reps });
-  }, [weight, reps]);
+    updateExercise(exercise.exercise_id, {
+      custom_load: weight,
+      custom_reps: reps,
+    });
+  }, []);
 
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">

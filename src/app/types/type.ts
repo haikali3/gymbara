@@ -1,5 +1,5 @@
 export interface Exercise {
-  id: number; // match zustand store updates
+  exercise_id: number; // match zustand store updates
   name: string;
   working_sets: number;
   custom_reps?: number;
@@ -28,7 +28,9 @@ export interface ExerciseList {
   rest_time: string;
 }
 
-export interface ExerciseDetails extends ExerciseList {}
+export interface ExerciseDetails extends ExerciseList {
+  exercise_id: number;
+}
 export interface UserDetails {
   id: string;
   email: string;
