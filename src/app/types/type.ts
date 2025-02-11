@@ -20,7 +20,6 @@ export interface WorkoutSections {
 export interface ExerciseList {
   id: number;
   name: string;
-  // TODO: later refine this and remove all other fields
   warmup_sets: number;
   working_sets: number;
   reps: string;
@@ -29,16 +28,7 @@ export interface ExerciseList {
   rest_time: string;
 }
 
-export interface ExerciseDetails {
-  name: string;
-  warmup_sets: number;
-  working_sets: number;
-  reps: string;
-  load: number;
-  rpe: string;
-  rest_time: string;
-}
-
+export interface ExerciseDetails extends ExerciseList {}
 export interface UserDetails {
   id: string;
   email: string;
