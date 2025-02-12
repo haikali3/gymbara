@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import TanstackProvider from "@/providers/tanstack-provider";
 
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -27,12 +26,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* React Scan */}
+      {/* <head>
+        <script
+          crossOrigin="anonymous"
+          src="//unpkg.com/react-scan/dist/auto.global.js"
+        />
+      </head> */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TanstackProvider>
-          {children}
-        </TanstackProvider>
+        <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>
   );

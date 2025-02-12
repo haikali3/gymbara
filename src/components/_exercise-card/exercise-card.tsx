@@ -32,11 +32,11 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     ExerciseName: exercise.name,
     RepsAdded: reps,
   });
-  console.log({
-    ExerciseID: exercise.id,
-    ExerciseName: exercise.name,
-    WeightAdded: weight,
-  });
+  // console.log({
+  //   ExerciseID: exercise.id,
+  //   ExerciseName: exercise.name,
+  //   WeightAdded: weight,
+  // });
 
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">
