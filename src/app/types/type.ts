@@ -1,5 +1,5 @@
 export interface Exercise {
-  exercise_id: number; // match zustand store updates
+  id: number;
   name: string;
   working_sets: number;
   custom_reps?: number;

@@ -8,9 +8,7 @@ import { useWorkoutStore } from "@/stores/useWorkoutStore";
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   const { updateExercise, exercises } = useWorkoutStore();
 
-  const exerciseData = exercises.find(
-    (ex) => ex.exercise_id === exercise.exercise_id
-  );
+  const exerciseData = exercises.find((ex) => ex.exercise_id === exercise.id);
 
   // Get weight and reps directly from the store
   const weight = exerciseData?.custom_load ?? 0;
@@ -18,20 +16,25 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    updateExercise(exercise.exercise_id, { custom_load: value });
+    updateExercise(exercise.id, { custom_load: value });
   };
 
   const handleRepsChange = (value: number) => {
-    updateExercise(exercise.exercise_id, { custom_reps: value });
+    updateExercise(exercise.id, { custom_reps: value });
   };
 
-  // On mount, sync Zustand with component state
   useEffect(() => {
-    updateExercise(exercise.exercise_id, {
+    console.log("Updating exercise:", exercise.id, {
+      custom_load: weight,
+      custom_reps: reps,
+    });
+    updateExercise(exercise.id, {
       custom_load: weight,
       custom_reps: reps,
     });
   }, []);
+
+  console.log(reps);
 
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">
@@ -50,7 +53,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
         </div>
         <div className="flex flex-col items-center gap-1">
           <label className="text-sm text-gray-600">Reps</label>
-          <Stepper value={reps} onChange={handleRepsChange} />
+          <Stepper id={exercise.id} value={reps} onChange={handleRepsChange} />
         </div>
         <div className="flex flex-col items-center gap-1">
           <label className="text-sm text-gray-600">Weight</label>
