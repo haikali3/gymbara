@@ -6,10 +6,12 @@ import { ExerciseCardProps } from "@/app/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
+  // this cause render all lmaooooo...
   // const { updateExercise, exercises } = useWorkoutStore();
   // const exerciseData = exercises.find((ex) => ex.exercise_id === exercise.id);
 
   const updateExercise = useWorkoutStore((state) => state.updateExercise);
+
   const exerciseData = useWorkoutStore((state) =>
     state.exercises.find((ex) => ex.exercise_id === exercise.id)
   );
