@@ -10,9 +10,8 @@ type ExerciseData = {
 type WorkoutState = {
   section_id: number;
   user_email?: string;
-  exercises: ExerciseData[];
+  exercises: { [key: number]: ExerciseData[]};
   updateExercise: (exercise_id: number, updates: Partial<ExerciseData>) => void;
-  initializeExercises: (newExercises: ExerciseData[]) => void;
 };
 
 const storage: PersistStorage<WorkoutState> = {
@@ -30,30 +29,24 @@ const storage: PersistStorage<WorkoutState> = {
 
 export const useWorkoutStore = create(
   persist<WorkoutState>(
-    (set, get) => ({
+    (set) => ({
       section_id: 1,
-      // no need email
       user_email: "manfdvcl9@gmail.com",
-      exercises: [],
+      exercises: {},
       updateExercise: (exercise_id, updates) =>
-        set((state) => {
-          const updatedExercises = state.exercises.some((ex) => ex.exercise_id === exercise_id)
-            ? state.exercises.map((ex) =>
-                ex.exercise_id === exercise_id ? { ...ex, ...updates } : ex
-              )
-            : [...state.exercises, { exercise_id, ...updates }];
-          return { exercises: updatedExercises };
-        }),
-      initializeExercises: (newExercises) => {
-        const currentExercises = get().exercises;
-        if (currentExercises.length === 0) {
-          set({ exercises: newExercises });
-        }
-      },
+        set((state) => ({
+          exercises: {
+            ...state.exercises,
+            [exercise_id]: {
+              ...(state.exercises[exercise_id] || { exercise_id }),
+              ...updates,
+            },
+          },
+        })),
     }),
     {
-      name: "workout-storage", // Unique name for localStorage
-      storage, // Use the defined storage
+      name: "workout-storage",
+      storage,
     }
   )
 );
