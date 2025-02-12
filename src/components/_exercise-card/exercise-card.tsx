@@ -6,9 +6,13 @@ import { ExerciseCardProps } from "@/app/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
-  const { updateExercise, exercises } = useWorkoutStore();
+  // const { updateExercise, exercises } = useWorkoutStore();
+  // const exerciseData = exercises.find((ex) => ex.exercise_id === exercise.id);
 
-  const exerciseData = exercises.find((ex) => ex.exercise_id === exercise.id);
+  const updateExercise = useWorkoutStore((state) => state.updateExercise);
+  const exerciseData = useWorkoutStore((state) =>
+    state.exercises.find((ex) => ex.exercise_id === exercise.id)
+  );
 
   // Get weight and reps directly from the store
   const weight = exerciseData?.custom_load ?? 10;
@@ -23,20 +27,16 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     updateExercise(exercise.id, { custom_reps: value });
   };
 
-  // // dont use useeffect.
-  // useEffect(() => {
-  //   console.log("Updating exercise:", exercise.id, {
-  //     custom_load: weight,
-  //     custom_reps: reps,
-  //   });
-  //   updateExercise(exercise.id, {
-  //     custom_load: weight,
-  //     custom_reps: reps,
-  //   });
-  // }, []);
-
-  //should only onChange 1 exercise id only instead of all
-  console.log(reps);
+  console.log({
+    ExerciseID: exercise.id,
+    ExerciseName: exercise.name,
+    RepsAdded: reps,
+  });
+  console.log({
+    ExerciseID: exercise.id,
+    ExerciseName: exercise.name,
+    WeightAdded: weight,
+  });
 
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">
