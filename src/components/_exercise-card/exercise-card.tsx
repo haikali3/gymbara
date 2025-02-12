@@ -27,6 +27,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     updateExercise(exercise.id, { custom_reps: value });
   };
 
+  // click on stepper and handle input value change
   console.log({
     ExerciseID: exercise.id,
     ExerciseName: exercise.name,
