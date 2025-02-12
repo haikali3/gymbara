@@ -11,8 +11,8 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   const exerciseData = exercises.find((ex) => ex.exercise_id === exercise.id);
 
   // Get weight and reps directly from the store
-  const weight = exerciseData?.custom_load ?? 0;
-  const reps = exerciseData?.custom_reps ?? 0;
+  const weight = exerciseData?.custom_load ?? 10;
+  const reps = exerciseData?.custom_reps ?? 10;
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -23,6 +23,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     updateExercise(exercise.id, { custom_reps: value });
   };
 
+  // dont use useeffect.
   useEffect(() => {
     console.log("Updating exercise:", exercise.id, {
       custom_load: weight,
@@ -34,6 +35,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     });
   }, []);
 
+  //should only onChange 1 exercise id only instead of all
   console.log(reps);
 
   return (
@@ -53,7 +55,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
         </div>
         <div className="flex flex-col items-center gap-1">
           <label className="text-sm text-gray-600">Reps</label>
-          <Stepper id={exercise.id} value={reps} onChange={handleRepsChange} />
+          <Stepper value={reps} onChange={handleRepsChange} />
         </div>
         <div className="flex flex-col items-center gap-1">
           <label className="text-sm text-gray-600">Weight</label>
