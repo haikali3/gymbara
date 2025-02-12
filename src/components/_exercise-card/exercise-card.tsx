@@ -23,17 +23,17 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     updateExercise(exercise.id, { custom_reps: value });
   };
 
-  // dont use useeffect.
-  useEffect(() => {
-    console.log("Updating exercise:", exercise.id, {
-      custom_load: weight,
-      custom_reps: reps,
-    });
-    updateExercise(exercise.id, {
-      custom_load: weight,
-      custom_reps: reps,
-    });
-  }, []);
+  // // dont use useeffect.
+  // useEffect(() => {
+  //   console.log("Updating exercise:", exercise.id, {
+  //     custom_load: weight,
+  //     custom_reps: reps,
+  //   });
+  //   updateExercise(exercise.id, {
+  //     custom_load: weight,
+  //     custom_reps: reps,
+  //   });
+  // }, []);
 
   //should only onChange 1 exercise id only instead of all
   console.log(reps);
