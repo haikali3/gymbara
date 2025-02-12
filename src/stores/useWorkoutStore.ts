@@ -32,6 +32,7 @@ export const useWorkoutStore = create(
   persist<WorkoutState>(
     (set, get) => ({
       section_id: 1,
+      // no need email
       user_email: "manfdvcl9@gmail.com",
       exercises: [],
       updateExercise: (exercise_id, updates) =>
