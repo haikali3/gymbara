@@ -52,12 +52,15 @@ export default function FullBodyWorkoutPage() {
           <ExerciseCard key={index} exercise={exercise} />
         ))}
       </div>
-      <div className="pt-2"></div>
-      {/* TODO: Add submit function */}
-      <Button onClick={handleSubmitWorkout}>Submit Workout</Button>
-      <Button variant="secondary" onClick={handleResetWorkout}>
-        Reset Workout
-      </Button>
+      <div className="pt-2" />
+      <div className="flex justify-center">
+        <div className="flex gap-2 max-w-md">
+          <Button variant="outline" onClick={handleResetWorkout}>
+            Clear Workout
+          </Button>
+          <Button onClick={handleSubmitWorkout}>Submit Workout</Button>
+        </div>
+      </div>
       <Footer />
     </div>
   );
