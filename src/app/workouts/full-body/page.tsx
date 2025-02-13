@@ -19,11 +19,18 @@ export default function FullBodyWorkoutPage() {
     queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3
   });
 
-  // it only catter for new changes instead of all submit
-  // ! handle where user submit default values
   const handleSubmitWorkout = async () => {
     const { section_id, exercises } = useWorkoutStore.getState();
-    const exerciseArray = Object.values(exercises).flat();
+    const exerciseArrayFromStore = Object.values(exercises).flat();
+
+    let exerciseArray = exerciseArrayFromStore;
+    if (exerciseArrayFromStore.length === 0 && data) {
+      exerciseArray = data.map((ex) => ({
+        exercise_id: ex.id,
+        custom_reps: 10, //default reps
+        custom_load: 0, //default weight
+      }));
+    }
 
     try {
       const result = await submitUserExerciseDetails(section_id, exerciseArray);
@@ -54,6 +61,7 @@ export default function FullBodyWorkoutPage() {
         ))}
       </div>
       <div className="pt-2" />
+      {/* make this sticky at the bottom of phone screen to improve UIUX */}
       <div className="flex justify-center">
         <div className="flex gap-2 max-w-md">
           <Button variant="outline" onClick={handleResetWorkout}>
