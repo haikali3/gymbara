@@ -30,7 +30,7 @@ const storage: PersistStorage<WorkoutState> = {
 export const useWorkoutStore = create(
   persist<WorkoutState>(
     (set) => ({
-      section_id: 1,
+      section_id: 1, //later make this section id dynamic based on route or tanstack query
       exercises: {},
       updateExercise: (exercise_id, updates) =>
         set((state) => ({

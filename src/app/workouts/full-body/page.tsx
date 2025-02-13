@@ -19,7 +19,7 @@ export default function FullBodyWorkoutPage() {
     queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3
   });
 
-  // it works!!!! but find a way for zustand to reset/create/delete workout
+  //
   const handleSubmitWorkout = async () => {
     const { section_id, exercises } = useWorkoutStore.getState();
     const exerciseArray = Object.values(exercises).flat();
@@ -30,6 +30,16 @@ export default function FullBodyWorkoutPage() {
     } catch (error) {
       console.error("Error submitting workout:", error);
     }
+  };
+
+  const handleResetWorkout = () => {
+    // clear persisted state from storage
+    useWorkoutStore.persist.clearStorage();
+    // reset in memory state to your initial values
+    useWorkoutStore.setState({
+      section_id: 1,
+      exercises: {},
+    });
   };
 
   return (
@@ -44,7 +54,10 @@ export default function FullBodyWorkoutPage() {
       </div>
       <div className="pt-2"></div>
       {/* TODO: Add submit function */}
-      <Button onClick={handleSubmitWorkout}>Finish Workout</Button>
+      <Button onClick={handleSubmitWorkout}>Submit Workout</Button>
+      <Button variant="secondary" onClick={handleResetWorkout}>
+        Reset Workout
+      </Button>
       <Footer />
     </div>
   );
