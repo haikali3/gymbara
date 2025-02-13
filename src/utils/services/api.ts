@@ -75,3 +75,37 @@ export async function fetchWorkoutSectionsWithExercises(workoutSectionIds: numbe
     throw error;
   }
 }
+
+export async function submitUserExerciseDetails(workoutSectionId: number, exercises: { exercise_id: number; custom_reps?: number; custom_load?: number }[]) {
+  try {
+    const requestBody = {
+      section_id: workoutSectionId,
+      exercises: exercises.map(({ exercise_id, custom_reps, custom_load }) => ({
+        exercise_id,
+        custom_reps: custom_reps ?? 0, // Default if undefined
+        custom_load: custom_load ?? 0, // Default if undefined
+      })),
+    };
+
+    const response = await fetch(`${BASE_URL}/workout-sections/user-exercise-details`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please log in');
+    }
+    if (!response.ok) {
+      throw new Error(`Failed to submit user exercise details: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error submitting user exercise details:', error);
+    throw error;
+  }
+}
