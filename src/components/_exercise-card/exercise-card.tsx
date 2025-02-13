@@ -14,8 +14,9 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
   });
 
   // Get weight and reps directly from the store
-  const weight = exerciseData?.custom_load ?? 10;
   const reps = exerciseData?.custom_reps ?? 10;
+  // TODO: backend can handle 0 weight
+  const weight = exerciseData?.custom_load ?? 0;
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
