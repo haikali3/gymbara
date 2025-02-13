@@ -19,7 +19,7 @@ export default function FullBodyWorkoutPage() {
     queryFn: () => fetchWorkoutDetails(1), //TODO: make it dynamic for 1,2,3
   });
 
-  //
+  // why it doesnt submit to 10
   const handleSubmitWorkout = async () => {
     const { section_id, exercises } = useWorkoutStore.getState();
     const exerciseArray = Object.values(exercises).flat();
