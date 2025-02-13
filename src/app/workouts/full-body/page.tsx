@@ -20,7 +20,6 @@ export default function FullBodyWorkoutPage() {
   });
 
   // it only catter for new changes instead of all submit
-  // ! handle where user submit default values
   const handleSubmitWorkout = async () => {
     const { section_id, exercises } = useWorkoutStore.getState();
     const exerciseArray = Object.values(exercises).flat();
