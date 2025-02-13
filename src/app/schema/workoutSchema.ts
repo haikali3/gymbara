@@ -9,3 +9,5 @@ export const workoutSchema = z.object({
     })
   ),
 });
+
+export type WorkoutFormValues = z.infer<typeof workoutSchema>;
