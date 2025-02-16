@@ -62,12 +62,14 @@ export default function FullBodyWorkoutPage() {
       </div>
       <div className="pt-2" />
       {/* make this sticky at the bottom of phone screen to improve UIUX */}
-      <div className="flex justify-center">
-        <div className="flex gap-2 max-w-md">
-          <Button variant="outline" onClick={handleResetWorkout}>
-            Clear Workout
-          </Button>
-          <Button onClick={handleSubmitWorkout}>Submit Workout</Button>
+      <div className="sticky bottom-0 bg-gray-50 p-6">
+        <div className="flex justify-center">
+          <div className="flex gap-2 max-w-md">
+            <Button variant="outline" onClick={handleResetWorkout}>
+              Clear Workout
+            </Button>
+            <Button onClick={handleSubmitWorkout}>Submit Workout</Button>
+          </div>
         </div>
       </div>
       <Footer />
