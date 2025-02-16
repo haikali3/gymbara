@@ -113,6 +113,7 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
                           onChange={field.onChange}
                           className="w-20 p-1 border-gray-300 rounded text-center"
                           min="0"
+                          step="any"
                         />
                       </FormControl>
                       <FormMessage className="text-center" />
