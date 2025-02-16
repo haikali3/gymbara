@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Stepper from "../stepper";
 import { Input } from "../ui/input";
 import { ExerciseCardProps } from "@/app/types/type";
