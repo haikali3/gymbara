@@ -6,7 +6,7 @@ import { ExerciseDetails } from "@/app/types/type";
 import { fetchWorkoutDetails } from "@/utils/services/api";
 import ExerciseCardSkeleton from "@/components/_exercise-card/exercise-card-skeleton";
 import ExerciseCardError from "@/components/_exercise-card/exercise-card-error";
-import WorkoutForm from "@/components/_workout-form/workout-form-card";
+import ExerciseForm from "@/components/_exercise-card/exercise-form-card";
 
 export default function FullBodyWorkoutPage() {
   const { data, isLoading, isError, refetch } = useQuery<ExerciseDetails[]>({
@@ -20,10 +20,8 @@ export default function FullBodyWorkoutPage() {
       <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-1">
         {isLoading && <ExerciseCardSkeleton />}
         {isError && <ExerciseCardError onRetry={refetch} />}
-        {data && <WorkoutForm exercises={data} />}
+        {data && <ExerciseForm exercises={data} />}
       </div>
-      <div className="pt-2" />
-      {/* make this sticky at the bottom of phone screen to improve UIUX */}
       <Footer />
     </div>
   );

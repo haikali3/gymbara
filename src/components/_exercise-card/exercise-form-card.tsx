@@ -18,11 +18,11 @@ import { submitUserExerciseDetails } from "@/utils/services/api";
 import { ExerciseDetails } from "@/app/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
-type WorkoutFormCardProps = {
+type ExerciseFormCardProps = {
   exercises: ExerciseDetails[];
 };
 
-export default function WorkoutForm({ exercises }: WorkoutFormCardProps) {
+export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
   // Compute default values using the passed-in exercises data.
   const defaultValues: WorkoutFormValues = {
     exercises: exercises.map((ex) => ({
@@ -60,11 +60,11 @@ export default function WorkoutForm({ exercises }: WorkoutFormCardProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         {exercises.map((exercise, index: number) => (
           <div
             key={exercise.id}
-            className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6"
+            className="bg-white border border-gray-200 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2"
           >
             <h2 className="text-base font-normal text-gray-800 text-center pt-1">
               {exercise.name || "Missing Exercise Name"}
@@ -111,6 +111,7 @@ export default function WorkoutForm({ exercises }: WorkoutFormCardProps) {
                           type="number"
                           value={field.value}
                           onChange={field.onChange}
+                          // onChange={(e) => field.onChange(Number(e.target.value))}
                           className="w-20 p-1 border-gray-300 rounded text-center"
                           min="0"
                         />
@@ -123,7 +124,7 @@ export default function WorkoutForm({ exercises }: WorkoutFormCardProps) {
             </div>
           </div>
         ))}
-        <div className="sticky bottom-0 bg-gray-50 p-6">
+        <div className="sticky bottom-0 bg-gray-50 p-2">
           <div className="flex justify-center">
             <div className="flex gap-2 max-w-md">
               <Button variant="outline" onClick={handleResetWorkout}>
