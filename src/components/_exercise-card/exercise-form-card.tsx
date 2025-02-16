@@ -28,7 +28,7 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
     exercises: exercises.map((ex) => ({
       exercise_id: ex.id,
       custom_reps: 10,
-      custom_load: 0, // 0 will trigger a validation error until a valid weight (> 0) is entered.
+      custom_load: 10,
     })),
   };
 
@@ -86,14 +86,14 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
                   control={form.control}
                   name={`exercises.${index}.custom_reps`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col items-center">
                       <FormControl>
                         <Stepper
                           value={field.value}
                           onChange={field.onChange}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-center" />
                     </FormItem>
                   )}
                 />
@@ -105,18 +105,17 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
                   control={form.control}
                   name={`exercises.${index}.custom_load`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col items-center">
                       <FormControl>
                         <Input
                           type="number"
                           value={field.value}
                           onChange={field.onChange}
-                          // onChange={(e) => field.onChange(Number(e.target.value))}
                           className="w-20 p-1 border-gray-300 rounded text-center"
                           min="0"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-center" />
                     </FormItem>
                   )}
                 />
