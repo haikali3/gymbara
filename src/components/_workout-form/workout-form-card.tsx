@@ -4,42 +4,35 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { workoutSchema, WorkoutFormValues } from "@/app/schema/workoutSchema";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
-  FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { useQuery } from "@tanstack/react-query";
-import {
-  fetchWorkoutDetails,
-  submitUserExerciseDetails,
-} from "@/utils/services/api";
-import ExerciseCardSkeleton from "../_exercise-card/exercise-card-skeleton";
-import ExerciseCardError from "../_exercise-card/exercise-card-error";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Stepper from "../stepper";
+import { submitUserExerciseDetails } from "@/utils/services/api";
+import { ExerciseDetails } from "@/app/types/type";
+import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
-export default function WorkoutForm() {
-  // Fetch the exercise details (assuming each exercise has an "id" and "name")
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["workoutSections", 1],
-    queryFn: () => fetchWorkoutDetails(1),
-  });
+type WorkoutFormCardProps = {
+  exercises: ExerciseDetails[];
+};
 
-  // Compute default form values directly from the query data.
-  // This example defaults to 10 reps and 0 weight (which will trigger a validation error until a valid weight is entered).
+export default function WorkoutForm({ exercises }: WorkoutFormCardProps) {
+  // Compute default values using the passed-in exercises data.
   const defaultValues: WorkoutFormValues = {
-    exercises: data.map((ex: any) => ({
+    exercises: exercises.map((ex) => ({
       exercise_id: ex.id,
       custom_reps: 10,
-      custom_load: 0,
+      custom_load: 0, // 0 will trigger a validation error until a valid weight (> 0) is entered.
     })),
   };
 
-  // Initialize the form with the computed default values.
+  // Initialize the form with our schema and default values.
   const form = useForm<WorkoutFormValues>({
     resolver: zodResolver(workoutSchema),
     defaultValues,
@@ -54,52 +47,92 @@ export default function WorkoutForm() {
     }
   };
 
-  if (isLoading) return <ExerciseCardSkeleton />;
-  if (isError) return <ExerciseCardError onRetry={refetch} />;
+  const handleResetWorkout = () => {
+    // Clear persisted state from storage and reset the in-memory state.
+    useWorkoutStore.persist.clearStorage();
+    useWorkoutStore.setState({
+      section_id: 1,
+      exercises: {},
+    });
+    // Optionally, reset the form to its default values:
+    form.reset(defaultValues);
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {form.watch("exercises").map((exercise, index) => (
-          <div key={exercise.exercise_id} className="border p-4 rounded">
-            <h3 className="mb-2 font-semibold">
-              Exercise {exercise.exercise_id}
-            </h3>
-
-            <FormField
-              control={form.control}
-              name={`exercises.${index}.custom_load`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Enter weight"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name={`exercises.${index}.custom_reps`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Reps</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Enter reps" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        {exercises.map((exercise, index: number) => (
+          <div
+            key={exercise.id}
+            className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6"
+          >
+            <h2 className="text-base font-normal text-gray-800 text-center pt-1">
+              {exercise.name || "Missing Exercise Name"}
+            </h2>
+            <div className="flex items-center justify-between w-full p-2">
+              {/* Sets (display only) */}
+              <div className="flex flex-col items-center gap-1">
+                <label className="text-sm text-gray-600">Sets</label>
+                <Input
+                  value={exercise.working_sets}
+                  className="w-20 p-1 border-gray-300 rounded text-center"
+                  disabled
+                />
+              </div>
+              {/* Reps input with Stepper */}
+              <div className="flex flex-col items-center gap-1">
+                <label className="text-sm text-gray-600">Reps</label>
+                <FormField
+                  control={form.control}
+                  name={`exercises.${index}.custom_reps`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Stepper
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* Weight input */}
+              <div className="flex flex-col items-center gap-1">
+                <label className="text-sm text-gray-600">Weight</label>
+                <FormField
+                  control={form.control}
+                  name={`exercises.${index}.custom_load`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="w-20 p-1 border-gray-300 rounded text-center"
+                          min="0"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
         ))}
-        <Button type="submit">Submit Workout</Button>
+        <div className="sticky bottom-0 bg-gray-50 p-6">
+          <div className="flex justify-center">
+            <div className="flex gap-2 max-w-md">
+              <Button variant="outline" onClick={handleResetWorkout}>
+                Clear Workout
+              </Button>
+              <Button type="submit">Submit Workout</Button>
+            </div>
+          </div>
+        </div>
       </form>
     </Form>
   );
