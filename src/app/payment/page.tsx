@@ -20,6 +20,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { pricingPlans } from "./pricing-plans";
+import { toast } from "@/hooks/use-toast";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -31,12 +32,34 @@ export default function PaymentPage() {
   });
 
   const handleSubscribe = async () => {
+    if (!user?.email) {
+      toast({
+        title: "Error",
+        description: "User's email is missing.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Redirecting to payment...",
+      description: "Please wait while we redirect you.",
+    });
+
     try {
-      const { url } = await createStripeCheckoutSession();
-      window.location.href = url;
+      const res = await createStripeCheckoutSession(user.email);
+      window.location.href = res.url;
+      toast({
+        title: "Success",
+        description: "Redirecting to payment page.",
+        variant: "default",
+      });
     } catch (error) {
-      alert("Payment initiation failed. Please try again.");
-      console.error(error);
+      toast({
+        title: "Error",
+        description: "Payment initiation failed.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -87,7 +110,7 @@ export default function PaymentPage() {
                 className="w-full"
                 variant={plan.buttonVariant}
                 disabled={plan.buttonDisabled}
-                onClick={plan.onClick}
+                onClick={plan.id === "pro" ? handleSubscribe : plan.onClick}
               >
                 {plan.buttonText}
               </Button>
