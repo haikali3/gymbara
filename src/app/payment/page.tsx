@@ -54,10 +54,10 @@ export default function PaymentPage() {
         description: "Redirecting to payment page.",
         variant: "default",
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error",
-        description: "Payment initiation failed.",
+        description: error?.message || "Payment initiation failed.",
         variant: "destructive",
       });
     }

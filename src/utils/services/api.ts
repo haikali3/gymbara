@@ -121,7 +121,8 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
   });
 
   if (!res.ok) {
-    throw new Error("Failed to initiate Stripe Checkout session");
+    const message = await res.text(); // Read error body as string
+    throw new Error(message || "Failed to initiate Stripe Checkout");
   }
 
   return res.json(); // returns { url }
