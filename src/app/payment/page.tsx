@@ -19,6 +19,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { pricingPlans } from "./pricing-plans";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -44,139 +45,55 @@ export default function PaymentPage() {
       <Header title="gymbara" />
 
       <div className="grid gap-8 md:grid-cols-3 lg:gap-10 max-w-6xl mx-auto px-4">
-        {/* Free Plan */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle className="text-xl">Free</CardTitle>
-            <CardDescription>Perfect for getting started</CardDescription>
-            <div className="mt-4">
-              <span className="text-3xl font-bold">0 MYR</span>
-              <span className="text-muted-foreground ml-1">/month</span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex-1">
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>5 projects</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Up to 10 users</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Basic analytics</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>48-hour support response time</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="w-full">
-              Get Started
-            </Button>
-          </CardFooter>
-        </Card>
+        {pricingPlans.map((plan) => (
+          <Card
+            key={plan.id}
+            className={`flex flex-col relative ${
+              plan.isPopular ? "border-primary" : ""
+            }`}
+          >
+            {plan.highlight && (
+              <div className="absolute -top-3 left-0 right-0 flex justify-center">
+                <span className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
+                  {plan.highlight}
+                </span>
+              </div>
+            )}
 
-        {/* Pro Plan */}
-        <Card className="flex flex-col relative border-primary">
-          <div className="absolute -top-4 left-0 right-0 flex justify-center">
-            <span className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
-              Most Popular
-            </span>
-          </div>
-          <CardHeader>
-            <CardTitle className="text-xl">Pro</CardTitle>
-            <CardDescription>Perfect for small teams</CardDescription>
-            <div className="mt-4">
-              <span className="text-3xl font-bold">29MYR</span>
-              <span className="text-muted-foreground ml-1">/month</span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex-1">
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Unlimited projects</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Up to 50 users</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Advanced analytics</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>24-hour support response time</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Custom integrations</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>API access</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Subscribe Now</Button>
-          </CardFooter>
-        </Card>
+            <CardHeader>
+              <CardTitle className="text-xl">{plan.title}</CardTitle>
+              <CardDescription>{plan.description}</CardDescription>
+              <div className="mt-4">
+                <span className="text-3xl font-bold">{plan.price}</span>
+                <span className="text-muted-foreground ml-1">
+                  {plan.priceSuffix}
+                </span>
+              </div>
+            </CardHeader>
 
-        {/* Enterprise Plan */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle className="text-xl">Enterprise</CardTitle>
-            <CardDescription>For large organizations</CardDescription>
-            <div className="mt-4">
-              <span className="text-3xl font-bold">$99</span>
-              <span className="text-muted-foreground ml-1">/month</span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex-1">
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Unlimited everything</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Unlimited users</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Premium analytics</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>1-hour support response time</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Advanced security</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Dedicated account manager</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="mr-2 h-4 w-4 text-primary" />
-                <span>Custom training</span>
-              </li>
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="w-full" disabled>
-              Contact Sales
-            </Button>
-          </CardFooter>
-        </Card>
+            <CardContent className="flex-1">
+              <ul className="space-y-2 text-sm">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className="flex items-center">
+                    <Check className="mr-2 h-4 w-4 text-primary" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+
+            <CardFooter>
+              <Button
+                className="w-full"
+                variant={plan.buttonVariant}
+                disabled={plan.buttonDisabled}
+                onClick={plan.onClick}
+              >
+                {plan.buttonText}
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
 
       <Footer />
