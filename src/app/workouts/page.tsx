@@ -30,6 +30,8 @@ export default function Workout() {
     //make queryFn dynamic later if workout has 3,4,5 days
   });
 
+  console.table(workoutSectionsExercisesData);
+
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />

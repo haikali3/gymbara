@@ -8,7 +8,7 @@ import {
   ChevronRight,
   CircleUserRound,
   Dumbbell,
-  Lock
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UserDetails } from "./types/type";
@@ -21,7 +21,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { data, isLoading, isError} = useQuery<UserDetails>({
+  const { data, isLoading, isError } = useQuery<UserDetails>({
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
     enabled: !isLoggedIn, //run the query if the user is not already logged in
@@ -57,7 +57,9 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col pl-4">
-                  <h3 className="text-lg font-semibold text-gray-800">{data.name}</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {data.name}
+                  </h3>
                   <p className="text-sm text-gray-600">{data.email}</p>
                 </div>
               </div>
@@ -71,16 +73,20 @@ export default function Home() {
               <p className="text-sm text-gray-600 pb-2">
                 Sign in to access your profile and save your workout progress.
               </p>
-              <Button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`)}>
+              <Button
+                onClick={() =>
+                  router.push(
+                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`
+                  )
+                }
+              >
                 Google Sign-in
               </Button>
             </div>
           )}
         </div>
 
-        <div
-          className="bg-white border border-gray-200 rounded-lg shadow-md er hover:shadow-lg p-4"
-        >
+        <div className="bg-white border border-gray-200 rounded-lg shadow-md er hover:shadow-lg p-4">
           <div className="flex gap-1 items-center pb-2">
             <ChartNoAxesCombined className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Progress</h3>
@@ -88,15 +94,13 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Track your fitness journey with detailed workout logs.
           </p>
-          <Button disabled onClick={() => router.push("/progress")} >
+          <Button disabled onClick={() => router.push("/progress")}>
             <Lock className="h-4 w-4" />
             Soon!
           </Button>
         </div>
 
-        <div
-          className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4 row-span-2"
-        >
+        <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4 row-span-2">
           <div className="flex gap-1 items-center pb-2">
             <Accessibility className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Workouts</h3>
@@ -104,8 +108,8 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Explore various workout plans for different fitness goals.
           </p>
-          <Button 
-            onClick={() => router.push("/workouts")} 
+          <Button
+            onClick={() => router.push("/workouts")}
             className="w-full"
             disabled={!isLoggedIn || isLoading}
           >
@@ -114,9 +118,7 @@ export default function Home() {
           </Button>
         </div>
 
-        <div
-          className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4"
-        >
+        <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
           <div className="flex gap-1 items-center pb-2">
             <CircleUserRound className="h-5 w-5 text-gray-800" />
             <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
@@ -124,7 +126,7 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Customize your settings and view personal stats.
           </p>
-          <Button disabled onClick={() => router.push("/profile")} >
+          <Button disabled onClick={() => router.push("/profile")}>
             <Lock className="h-4 w-4" />
             Soon!
           </Button>
