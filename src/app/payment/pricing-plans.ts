@@ -35,7 +35,7 @@ export const pricingPlans: PricingPlan[] = [
     title: "Pro",
     description:
       "Unlock all workouts, track your progress, and build strength. Perfect for committed gym-goers and fitness lovers.",
-    price: "11.99 MYR",
+    price: "10.00 MYR",
     priceSuffix: "/month",
     features: [
       "Access all workout programs",
