@@ -127,3 +127,17 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
 
   return res.json(); // returns { url }
 }
+
+export const fetchUserSubscription = async (): Promise<{
+  expiration_date: string | number | Date; url?: string; is_active: boolean 
+}> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/get-subscription`, {
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    return { is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
+  }
+
+  return res.json(); // returns { url }
+};
