@@ -109,3 +109,21 @@ export async function submitUserExerciseDetails(workoutSectionId: number, exerci
     throw error;
   }
 }
+
+export async function createStripeCheckoutSession(email: string): Promise<{ url: string }> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/checkout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email }),
+  });
+
+  if (!res.ok) {
+    const message = await res.text(); // Read error body as string
+    throw new Error(message || "Failed to initiate Stripe Checkout");
+  }
+
+  return res.json(); // returns { url }
+}

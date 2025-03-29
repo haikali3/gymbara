@@ -19,7 +19,7 @@ const WorkoutSectionCard: React.FC<WorkoutSectionProps> = ({
   navigateToWorkout,
 }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4 flex flex-col ">
       <h3 className="text-lg font-semibold text-gray-800">
         {section.name} Workout
       </h3>
@@ -44,12 +44,14 @@ const WorkoutSectionCard: React.FC<WorkoutSectionProps> = ({
             ) => <li key={workoutList.id}>{workoutList.name}</li>
           )}
       </ul>
-      <Button
-        className="w-full"
-        onClick={() => navigateToWorkout(`/workouts/${section.route}`)}
-      >
-        Start Exercise
-      </Button>
+      <div className="mt-auto">
+        <Button
+          className="w-full"
+          onClick={() => navigateToWorkout(`/workouts/${section.route}`)}
+        >
+          Start Exercise
+        </Button>
+      </div>
     </div>
   );
 };

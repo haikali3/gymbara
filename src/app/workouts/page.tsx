@@ -27,7 +27,6 @@ export default function Workout() {
   } = useQuery({
     queryKey: ["workoutSectionsWithExercises"],
     queryFn: () => fetchWorkoutSectionsWithExercises([1, 2, 3]),
-    //make queryFn dynamic later if workout has 3,4,5 days
   });
 
   return (
