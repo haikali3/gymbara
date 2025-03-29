@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Footer from "../components/_layout/footer";
 import {
   Accessibility,
+  BadgeCheck,
   ChartNoAxesCombined,
   ChevronRight,
   CircleUserRound,
@@ -13,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { UserDetails } from "./types/type";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserDetails } from "@/utils/services/api";
+import { fetchUserDetails, fetchUserSubscription } from "@/utils/services/api";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -25,6 +26,12 @@ export default function Home() {
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
     enabled: !isLoggedIn, //run the query if the user is not already logged in
+  });
+
+  const { data: subscription, isLoading: loadingSub } = useQuery({
+    queryKey: ["userSubscription"],
+    queryFn: fetchUserSubscription,
+    enabled: isLoggedIn,
   });
 
   if (data && !isLoggedIn) {
@@ -120,16 +127,48 @@ export default function Home() {
 
         <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
           <div className="flex gap-1 items-center pb-2">
-            <CircleUserRound className="h-5 w-5 text-gray-800" />
-            <h3 className="text-lg font-semibold text-gray-800">Profile</h3>
+            <BadgeCheck className="h-5 w-5 text-gray-800" />
+            <h3 className="text-lg font-semibold text-gray-800">
+              Subscription
+            </h3>
           </div>
-          <p className="text-sm text-gray-600 pb-2">
-            Customize your settings and view personal stats.
-          </p>
-          <Button disabled onClick={() => router.push("/profile")}>
-            <Lock className="h-4 w-4" />
-            Soon!
-          </Button>
+
+          {loadingSub ? (
+            <p className="text-sm text-gray-600">
+              Checking subscription status...
+            </p>
+          ) : subscription?.is_active ? (
+            <>
+              <p className="text-sm text-green-600 font-medium pb-2">
+                Active until{" "}
+                {new Date(subscription.expiration_date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  }
+                )}
+              </p>
+              <Button
+                onClick={() => router.push("/payment")}
+                className="w-full"
+              >
+                Manage Plan
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-gray-600 pb-1">
+                You're not subscribed to a premium plan.
+              </p>
+              <Button onClick={() => router.push("/payment")}>
+                Subscribe Now
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </>
+          )}
         </div>
       </main>
 

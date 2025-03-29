@@ -25,53 +25,49 @@ export default function PaymentSuccessPage() {
   const [isVerifying, setIsVerifying] = useState(true);
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
 
-  // https://chatgpt.com/c/67e67ab5-f284-8009-8304-a6c492b289d7
-
   useEffect(() => {
-    const verifySession = async () => {
-      if (!sessionId) {
-        toast({
-          title: "Missing session ID",
-          description: "Could not verify your payment.",
-          variant: "destructive",
-        });
-        setIsVerifying(false);
-        return;
-      }
+    if (!sessionId) {
+      toast({
+        title: "Missing session ID",
+        description: "Could not verify your payment.",
+        variant: "destructive",
+      });
+      setIsVerifying(false);
+      return;
+    }
 
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/verify-session?session_id=${sessionId}`,
-          {
-            credentials: "include",
-          }
-        );
-
-        if (!res.ok) {
-          const message = await res.text();
-          throw new Error(message);
-        }
-
-        const data = await res.json();
-        setOrderDetails(data);
-
-        toast({
-          title: "Payment successful",
-          description: "Welcome to Gymbara Premium!",
-        });
-      } catch (error: any) {
-        toast({
-          title: "Payment verification failed",
-          description: error?.message || "Something went wrong.",
-          variant: "destructive",
-        });
-      } finally {
-        setIsVerifying(false);
-      }
-    };
-
-    verifySession();
+    verifyCheckoutSession(sessionId);
   }, [sessionId]);
+
+  const verifyCheckoutSession = async (sessionId: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/verify-session?session_id=${sessionId}`,
+        { credentials: "include" }
+      );
+
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message);
+      }
+
+      const data = await res.json();
+      setOrderDetails(data);
+
+      toast({
+        title: "Payment successful",
+        description: "Welcome to Gymbara Premium!",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Payment verification failed",
+        description: error?.message || "Something went wrong.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsVerifying(false);
+    }
+  };
 
   console.log(orderDetails);
 
