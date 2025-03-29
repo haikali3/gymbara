@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -17,12 +17,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { OrderDetails } from "@/app/types/payment-type";
 
 export default function PaymentSuccessPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [isVerifying, setIsVerifying] = useState(true);
+  const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
 
   // https://chatgpt.com/c/67e67ab5-f284-8009-8304-a6c492b289d7
 
@@ -51,6 +52,9 @@ export default function PaymentSuccessPage() {
           throw new Error(message);
         }
 
+        const data = await res.json();
+        setOrderDetails(data);
+
         toast({
           title: "Payment successful",
           description: "Welcome to Gymbara Premium!",
@@ -68,6 +72,8 @@ export default function PaymentSuccessPage() {
 
     verifySession();
   }, [sessionId]);
+
+  console.log(orderDetails);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -88,57 +94,62 @@ export default function PaymentSuccessPage() {
             </p>
           </div>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
-              {/* <CardDescription>Order #{orderDetails.orderId}</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
+          {orderDetails && (
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle>Order Summary</CardTitle>
+                <CardDescription>Order #{orderDetails.orderId}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Receipt className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Date</span>
+                    </div>
+                    <span className="text-sm">{orderDetails.date}</span>
+                  </div>
+                  <Separator />
+                  {orderDetails.items.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start justify-between"
+                    >
+                      <div className="space-y-1">
+                        <p className="font-medium">{item.name}</p>
+                      </div>
+                      <span>{item.price}</span>
+                    </div>
+                  ))}
+                  <Separator />
+                  <div className="flex items-center justify-between font-medium">
+                    <span>Total</span>
+                    <span>{orderDetails.total}</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <div className="flex items-center justify-between w-full text-sm">
+                  <div className="flex items-center gap-2">
+                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <span>Estimated delivery</span>
+                  </div>
+                  <span className="font-medium">
+                    Digital delivery - Immediate
+                  </span>
+                </div>
+                <div className="flex items-center justify-between w-full text-sm">
                   <div className="flex items-center gap-2">
                     <Receipt className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm font-medium">Date</span>
+                    <span>Receipt</span>
                   </div>
-                  {/* <span className="text-sm">{orderDetails.date}</span> */}
+                  <Button variant="link" className="p-0 h-auto">
+                    View receipt
+                  </Button>
                 </div>
-                <Separator />
-                {/* {orderDetails.items.map((item, index) => (
-                <div key={index} className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <p className="font-medium">{item.name}</p>
-                  </div>
-                  <span>{item.price}</span>
-                </div>
-              ))} */}
-                <Separator />
-                <div className="flex items-center justify-between font-medium">
-                  <span>Total</span>
-                  {/* <span>{orderDetails.total}</span> */}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <div className="flex items-center justify-between w-full text-sm">
-                <div className="flex items-center gap-2">
-                  <Package className="h-4 w-4 text-muted-foreground" />
-                  <span>Estimated delivery</span>
-                </div>
-                <span className="font-medium">
-                  Digital delivery - Immediate
-                </span>
-              </div>
-              <div className="flex items-center justify-between w-full text-sm">
-                <div className="flex items-center gap-2">
-                  <Receipt className="h-4 w-4 text-muted-foreground" />
-                  <span>Receipt</span>
-                </div>
-                <Button variant="link" className="p-0 h-auto">
-                  View receipt
-                </Button>
-              </div>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="outline" asChild className="gap-2 w-full">
