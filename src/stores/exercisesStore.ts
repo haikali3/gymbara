@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ExerciseDetails } from "@/app/types/type";
+import { ExerciseDetails } from "@/types/type";
 
 interface ExercisesStore {
   exercises?: ExerciseDetails[];

@@ -3,7 +3,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { workoutSchema, WorkoutFormValues } from "@/app/schema/workoutSchema";
+import { workoutSchema, WorkoutFormValues } from "@/schema/workoutSchema";
 import {
   Form,
   FormField,
@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Stepper from "../stepper";
 import { submitUserExerciseDetails } from "@/utils/services/api";
-import { ExerciseDetails } from "@/app/types/type";
+import { ExerciseDetails } from "@/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 type ExerciseFormCardProps = {

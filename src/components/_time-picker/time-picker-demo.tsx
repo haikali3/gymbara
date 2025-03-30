@@ -8,7 +8,15 @@ import { Play, Pause } from "lucide-react"; // Import Play and Pause icons
 import useTimerStore from "@/stores/timerStore";
 
 function TimePickerDemo() {
-  const { minutes, seconds, isRunning, startTimer, pauseTimer, setMinutes, setSeconds } = useTimerStore();
+  const {
+    minutes,
+    seconds,
+    isRunning,
+    startTimer,
+    pauseTimer,
+    setMinutes,
+    setSeconds,
+  } = useTimerStore();
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMinutes(Number(e.target.value));
@@ -22,7 +30,9 @@ function TimePickerDemo() {
     <div className="flex items-center gap-4">
       <div className="flex items-end gap-2">
         <div className="grid gap-1 text-center">
-          <Label htmlFor="minutes" className="text-xs">Minutes</Label>
+          <Label htmlFor="minutes" className="text-xs">
+            Minutes
+          </Label>
           <TimePickerInput
             picker="minutes"
             value={String(minutes).padStart(2, "0")}
@@ -31,7 +41,9 @@ function TimePickerDemo() {
           />
         </div>
         <div className="grid gap-1 text-center">
-          <Label htmlFor="seconds" className="text-xs">Seconds</Label>
+          <Label htmlFor="seconds" className="text-xs">
+            Seconds
+          </Label>
           <TimePickerInput
             picker="seconds"
             value={String(seconds).padStart(2, "0")}
@@ -40,7 +52,10 @@ function TimePickerDemo() {
           />
         </div>
       </div>
-      <Button onClick={isRunning ? pauseTimer : startTimer} className="w-full mt-4">
+      <Button
+        onClick={isRunning ? pauseTimer : startTimer}
+        className="w-full mt-4"
+      >
         {isRunning ? <Pause /> : <Play />} {/* Conditional rendering of icon */}
         {isRunning ? "Pause" : "Start"}
       </Button>

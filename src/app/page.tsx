@@ -12,33 +12,19 @@ import {
   Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { UserDetails } from "./types/type";
+import { UserDetails } from "../types/type";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserDetails, fetchUserSubscription } from "@/utils/services/api";
 import { useState } from "react";
 import Image from "next/image";
+import { SubscriptionCard } from "@/components/_subscription-card/subscription-card";
+import { useSubscription } from "./hooks/useSubscription";
+import { useAuth } from "./hooks/useAuth";
 
 export default function Home() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const { data, isLoading, isError } = useQuery<UserDetails>({
-    queryKey: ["userDetails"],
-    queryFn: fetchUserDetails,
-    enabled: !isLoggedIn, //run the query if the user is not already logged in
-  });
-
-  const { data: subscription, isLoading: loadingSub } = useQuery({
-    queryKey: ["userSubscription"],
-    queryFn: fetchUserSubscription,
-    enabled: isLoggedIn,
-  });
-
-  if (data && !isLoggedIn) {
-    setIsLoggedIn(true);
-  } else if (isError && isLoggedIn) {
-    setIsLoggedIn(false);
-  }
+  const { user, isLoggedIn, isLoading } = useAuth();
+  const { subscription, isLoading: loadingSub } = useSubscription(isLoggedIn);
 
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
@@ -51,12 +37,12 @@ export default function Home() {
 
       <main className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-2 gap-2 grid-rows-[auto]">
         <div className="bg-white border border-gray-200 rounded-lg col-span-2 shadow-md hover:shadow-lg p-4">
-          {isLoggedIn && data ? (
+          {isLoggedIn && user ? (
             <div className="flex flex-row items-center justify-between">
               <div className="flex items-center">
                 <div>
                   <Image
-                    src={data.picture}
+                    src={user.picture}
                     alt="User Profile"
                     width={40}
                     height={40}
@@ -65,9 +51,9 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col pl-4">
                   <h3 className="text-lg font-semibold text-gray-800">
-                    {data.name}
+                    {user.name}
                   </h3>
-                  <p className="text-sm text-gray-600">{data.email}</p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
                 </div>
               </div>
             </div>
@@ -125,51 +111,12 @@ export default function Home() {
           </Button>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
-          <div className="flex gap-1 items-center pb-2">
-            <BadgeCheck className="h-5 w-5 text-gray-800" />
-            <h3 className="text-lg font-semibold text-gray-800">
-              Subscription
-            </h3>
-          </div>
-
-          {loadingSub ? (
-            <p className="text-sm text-gray-600">
-              Checking subscription status...
-            </p>
-          ) : subscription?.is_active ? (
-            <>
-              <p className="text-sm text-green-600 font-medium pb-2">
-                Active until{" "}
-                {new Date(subscription.expiration_date).toLocaleDateString(
-                  "en-GB",
-                  {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  }
-                )}
-              </p>
-              <Button
-                onClick={() => router.push("/payment")}
-                className="w-full"
-              >
-                Manage Plan
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </>
-          ) : (
-            <>
-              <p className="text-sm text-gray-600 pb-1">
-                You're not subscribed to a premium plan.
-              </p>
-              <Button onClick={() => router.push("/payment")}>
-                Subscribe Now
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </>
-          )}
-        </div>
+        {/* Subscription Card */}
+        <SubscriptionCard
+          isLoggedIn={isLoggedIn}
+          loadingSub={loadingSub}
+          subscription={subscription}
+        />
       </main>
 
       <Footer />
