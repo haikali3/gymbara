@@ -9,3 +9,9 @@ export interface OrderDetails {
   items: OrderItem[];
   total: string;
 }
+
+export type Subscription = {
+  expiration_date: string | number | Date;
+  url?: string;
+  is_active: boolean;
+};

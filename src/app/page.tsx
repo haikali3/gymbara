@@ -12,10 +12,6 @@ import {
   Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { UserDetails } from "../types/type";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUserDetails, fetchUserSubscription } from "@/utils/services/api";
-import { useState } from "react";
 import Image from "next/image";
 import { SubscriptionCard } from "@/components/_subscription-card/subscription-card";
 import { useSubscription } from "./hooks/useSubscription";

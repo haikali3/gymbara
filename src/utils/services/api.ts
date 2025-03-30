@@ -1,4 +1,4 @@
-import { OrderDetails } from "@/types/payment-type";
+import { OrderDetails, Subscription } from "@/types/payment-type";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -130,9 +130,7 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
   return res.json();
 }
 
-export async function fetchUserSubscription(): Promise<{
-  expiration_date: string | number | Date; url?: string; is_active: boolean
-}> {
+export async function fetchUserSubscription(): Promise<Subscription> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/get-subscription`, {
     credentials: "include",
   });
@@ -150,7 +148,7 @@ export async function fetchVerifySession(sessionId: string): Promise<OrderDetail
     { credentials: "include" }
   );
 
-  if(!res.ok){
+  if (!res.ok) {
     const message = await res.text();
     throw new Error(message);
   }
