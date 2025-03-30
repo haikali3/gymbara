@@ -17,7 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { OrderDetails } from "@/app/types/payment-type";
+import { OrderDetails } from "@/types/payment-type";
 
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
@@ -72,7 +72,7 @@ export default function PaymentSuccessPage() {
   console.log(orderDetails);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title="gymbara" />
 
       <main className="flex-1 flex items-center justify-center">

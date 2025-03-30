@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { ExerciseList, WorkoutSections } from "@/app/types/type";
+import { ExerciseList, WorkoutSections } from "@/types/type";
 
 interface WorkoutSectionProps {
   index: number;

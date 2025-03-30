@@ -2,13 +2,9 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
-import {
-  fetchWorkoutList,
-  fetchWorkoutSections,
-  fetchWorkoutSectionsWithExercises,
-} from "@/utils/services/api";
+import { fetchWorkoutSectionsWithExercises } from "@/utils/services/api";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { ExerciseList, WorkoutSections } from "../types/type";
+import { ExerciseList, WorkoutSections } from "../../types/type";
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
 import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";

@@ -2,7 +2,7 @@
 import React from "react";
 import Stepper from "../stepper";
 import { Input } from "../ui/input";
-import { ExerciseCardProps } from "@/app/types/type";
+import { ExerciseCardProps } from "@/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {

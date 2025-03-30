@@ -6,7 +6,7 @@ import {
   fetchUserDetails,
   createStripeCheckoutSession,
 } from "@/utils/services/api";
-import { UserDetails } from "@/app/types/type";
+import { UserDetails } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
@@ -64,7 +64,7 @@ export default function PaymentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 flex flex-col">
+    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title="gymbara" />
 
       <div className="grid gap-8 md:grid-cols-3 lg:gap-10 max-w-6xl mx-auto px-4">
