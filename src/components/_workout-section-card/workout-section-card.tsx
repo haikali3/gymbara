@@ -1,13 +1,14 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { ExerciseList, WorkoutSections } from "@/types/type";
+import { getErrorMessage } from "@/lib/utils";
 
 interface WorkoutSectionProps {
   index: number;
   section: WorkoutSections;
   workoutListData?: ExerciseList[];
   workoutSectionsExercisesLoading: boolean;
-  workoutSectionsExercisesError: boolean;
+  workoutSectionsExercisesError: unknown; // ✅ fix: this should match React Query's `error`
   navigateToWorkout: (route: string) => void;
 }
 
@@ -32,17 +33,17 @@ const WorkoutSectionCard: React.FC<WorkoutSectionProps> = ({
             <li className="animate-pulse bg-gray-200 h-4 w-full rounded"></li>
           </>
         )}
-        {workoutSectionsExercisesError && (
+        {!!workoutSectionsExercisesError && (
           <div className="text-red-600 text-sm">
-            Error loading workout list.
+            {getErrorMessage(workoutSectionsExercisesError)}
           </div>
         )}
-        {Array.isArray(workoutListData) &&
-          workoutListData.map(
-            (
-              workoutList //! later fix unique key
-            ) => <li key={workoutList.id}>{workoutList.name}</li>
-          )}
+        {!workoutSectionsExercisesLoading &&
+          !workoutSectionsExercisesError &&
+          Array.isArray(workoutListData) &&
+          workoutListData.map((workoutList) => (
+            <li key={workoutList.id}>{workoutList.name}</li>
+          ))}
       </ul>
       <div className="mt-auto">
         <Button

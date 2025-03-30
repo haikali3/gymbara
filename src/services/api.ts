@@ -65,10 +65,14 @@ export async function fetchWorkoutSectionsWithExercises(workoutSectionIds: numbe
     });
 
     if (response.status === 401) {
-      throw new Error('Unauthorized: Please log in');
+      const error = new Error('Unauthorized: Please log in') as Error & { status?: number };
+      error.status = 401;
+      throw error;
     }
     if (!response.ok) {
-      throw new Error('Failed to fetch workouts sections with exercises');
+      const error = new Error('Failed to fetch workouts sections with exercises') as Error & { status?: number };
+      error.status = response.status;
+      throw error;
     }
 
     return await response.json();

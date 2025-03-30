@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { OrderDetails } from "@/types/payment-type";
-import { fetchVerifySession } from "@/utils/services/api";
+import { fetchVerifySession } from "@/services/api";
 
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
