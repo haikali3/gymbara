@@ -37,7 +37,9 @@ export const SubscriptionCard = ({
           </Button>
         </>
       ) : loadingSub ? (
-        <p className="text-sm text-gray-600">Checking subscription status...</p>
+        <p className="text-sm text-gray-600 animate-pulse">
+          Checking subscription status...
+        </p>
       ) : subscription?.is_active ? (
         <>
           <p className="text-sm text-green-600 font-medium pb-2">
