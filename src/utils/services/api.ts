@@ -1,3 +1,5 @@
+import { OrderDetails } from "@/types/payment-type";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function fetchWorkoutSections() {
@@ -125,12 +127,12 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
     throw new Error(message || "Failed to initiate Stripe Checkout");
   }
 
-  return res.json(); // returns { url }
+  return res.json();
 }
 
-export const fetchUserSubscription = async (): Promise<{
-  expiration_date: string | number | Date; url?: string; is_active: boolean 
-}> => {
+export async function fetchUserSubscription(): Promise<{
+  expiration_date: string | number | Date; url?: string; is_active: boolean
+}> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/get-subscription`, {
     credentials: "include",
   });
@@ -139,5 +141,19 @@ export const fetchUserSubscription = async (): Promise<{
     return { is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
   }
 
-  return res.json(); // returns { url }
-};
+  return res.json();
+}
+
+export async function fetchVerifySession(sessionId: string): Promise<OrderDetails> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/verify-session?session_id=${sessionId}`,
+    { credentials: "include" }
+  );
+
+  if(!res.ok){
+    const message = await res.text();
+    throw new Error(message);
+  }
+
+  return res.json();
+}
