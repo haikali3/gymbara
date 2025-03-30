@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { OrderDetails } from "@/types/payment-type";
+import { fetchVerifySession } from "@/utils/services/api";
 
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
@@ -36,38 +37,27 @@ export default function PaymentSuccessPage() {
       return;
     }
 
-    verifyCheckoutSession(sessionId);
-  }, [sessionId]);
-
-  const verifyCheckoutSession = async (sessionId: string) => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/verify-session?session_id=${sessionId}`,
-        { credentials: "include" }
-      );
-
-      if (!res.ok) {
-        const message = await res.text();
-        throw new Error(message);
+    const verify = async () => {
+      try {
+        const data = await fetchVerifySession(sessionId);
+        setOrderDetails(data);
+        toast({
+          title: "Payment successful",
+          description: "Welcome to Gymbara Premium!",
+        });
+      } catch (error: any) {
+        toast({
+          title: "Payment verification failed",
+          description: error?.message || "Something went wrong.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsVerifying(false);
       }
+    };
 
-      const data = await res.json();
-      setOrderDetails(data);
-
-      toast({
-        title: "Payment successful",
-        description: "Welcome to Gymbara Premium!",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Payment verification failed",
-        description: error?.message || "Something went wrong.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsVerifying(false);
-    }
-  };
+    verify();
+  }, [sessionId]);
 
   console.log(orderDetails);
 
