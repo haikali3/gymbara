@@ -2,10 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import {
-  fetchUserDetails,
-  createStripeCheckoutSession,
-} from "@/utils/services/api";
+import { fetchUserDetails, createStripeCheckoutSession } from "@/services/api";
 import { UserDetails } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/_layout/header";

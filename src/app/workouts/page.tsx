@@ -2,12 +2,13 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
-import { fetchWorkoutSectionsWithExercises } from "@/utils/services/api";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import { ExerciseList, WorkoutSections } from "../../types/type";
+import { fetchWorkoutSectionsWithExercises } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
+import { WorkoutSections } from "../../types/type";
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
 import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";
+import { getErrorMessage } from "@/lib/utils";
 
 export default function Workout() {
   const router = useRouter();
@@ -18,7 +19,8 @@ export default function Workout() {
   const {
     data: workoutSectionsExercisesData,
     isLoading: workoutSectionsExercisesLoading,
-    isError: workoutSectionsExercisesError,
+    isError,
+    error: workoutSectionsExercisesError,
     refetch: workoutSectionsExercisesRefetch,
   } = useQuery({
     queryKey: ["workoutSectionsWithExercises"],
@@ -28,7 +30,7 @@ export default function Workout() {
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
       <Header title={"workout"} />
-      <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+      <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-3">
         {/* Loading state */}
         {workoutSectionsExercisesLoading && (
           <>
@@ -38,11 +40,16 @@ export default function Workout() {
         )}
 
         {/* Error state */}
-        {workoutSectionsExercisesError && (
-          <WorkoutSectionError
-            errorMessage="Failed to load workout sections. Please try again."
-            onRetry={workoutSectionsExercisesRefetch}
-          />
+        {isError && (
+          <div className="col-span-full flex justify-center">
+            <div className="max-w-md w-full">
+              <WorkoutSectionError
+                errorMessage={getErrorMessage(workoutSectionsExercisesError)}
+                onRetry={workoutSectionsExercisesRefetch}
+                statusCode={(workoutSectionsExercisesError as any)?.status}
+              />
+            </div>
+          </div>
         )}
 
         {/* Success State */}
