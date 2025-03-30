@@ -26,6 +26,14 @@ export default function Home() {
   const { user, isLoggedIn, isLoading } = useAuth();
   const { subscription, isLoading: loadingSub } = useSubscription(isLoggedIn);
 
+  const handleStart = () => {
+    router.push("/workouts");
+  };
+
+  const handleLogin = () => {
+    router.push(`${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth/login`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <div className="flex items-center justify-center w-full relative gap-1 pb-4">
@@ -101,14 +109,26 @@ export default function Home() {
           <p className="text-sm text-gray-600 pb-2">
             Explore various workout plans for different fitness goals.
           </p>
-          <Button
-            onClick={() => router.push("/workouts")}
-            className="w-full"
-            disabled={!isLoggedIn || isLoading}
-          >
-            Start now!
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+          {!isLoggedIn ? (
+            <>
+              <p className="text-sm text-gray-600 pb-1">
+                Please sign in to access workouts.
+              </p>
+              <Button disabled onClick={handleLogin} className="w-full">
+                <Lock className="h-4 w-4 mr-1" />
+                Login Required
+              </Button>
+            </>
+          ) : (
+            <Button
+              onClick={handleStart}
+              className="w-full"
+              disabled={isLoading}
+            >
+              Start now!
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          )}
         </div>
 
         {/* Subscription Card */}
