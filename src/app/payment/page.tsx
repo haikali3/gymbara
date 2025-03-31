@@ -17,7 +17,8 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { pricingPlans } from "./pricing-plans";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/app/hooks/use-toast";
+import PageWrapper from "@/components/_layout/page-wrapper";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function PaymentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
+    <PageWrapper>
       <Header title="gymbara" />
 
       <div className="grid gap-8 md:grid-cols-3 lg:gap-10 max-w-6xl mx-auto px-4">
@@ -117,6 +118,6 @@ export default function PaymentPage() {
       </div>
 
       <Footer />
-    </div>
+    </PageWrapper>
   );
 }

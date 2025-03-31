@@ -16,6 +16,7 @@ import Image from "next/image";
 import { SubscriptionCard } from "@/components/_subscription-card/subscription-card";
 import { useSubscription } from "./hooks/useSubscription";
 import { useAuth } from "./hooks/useAuth";
+import PageWrapper from "@/components/_layout/page-wrapper";
 
 export default function Home() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
+    <PageWrapper>
       <div className="flex items-center justify-center w-full relative gap-1 pb-4">
         <Dumbbell className="h-5 w-5 text-gray-800" />
         <h2 className="pl-1 text-3xl font-semibold text-gray-800 text-center">
@@ -136,6 +137,6 @@ export default function Home() {
       </main>
 
       <Footer />
-    </div>
+    </PageWrapper>
   );
 }
