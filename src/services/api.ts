@@ -28,7 +28,17 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
       credentials: 'include', // Include cookies with the request
     }
   );
-  if (!response.ok) throw new Error('Failed to fetch workout details');
+  if (response.status === 401) {
+    const error = new Error("Unauthorized: Please log in") as Error & { status?: number };
+    error.status = 401;
+    throw error;
+  }
+
+  if (!response.ok) {
+    const error = new Error("Failed to fetch workout details") as Error & { status?: number };
+    error.status = response.status;
+    throw error;
+  }
   return await response.json();
 }
 

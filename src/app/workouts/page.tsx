@@ -8,7 +8,7 @@ import { WorkoutSections } from "../../types/type";
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
 import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage, getErrorStatusCode } from "@/lib/utils";
 
 export default function Workout() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Workout() {
   const {
     data: workoutSectionsExercisesData,
     isLoading: workoutSectionsExercisesLoading,
-    isError,
+    isError, //boolean
     error: workoutSectionsExercisesError,
     refetch: workoutSectionsExercisesRefetch,
   } = useQuery({
@@ -46,7 +46,7 @@ export default function Workout() {
               <WorkoutSectionError
                 errorMessage={getErrorMessage(workoutSectionsExercisesError)}
                 onRetry={workoutSectionsExercisesRefetch}
-                statusCode={(workoutSectionsExercisesError as any)?.status}
+                statusCode={getErrorStatusCode(workoutSectionsExercisesError)}
               />
             </div>
           </div>

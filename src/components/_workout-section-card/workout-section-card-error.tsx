@@ -6,7 +6,7 @@ import { Home, RotateCcw } from "lucide-react";
 
 interface WorkoutSectionErrorProps {
   errorMessage: string;
-  statusCode: number;
+  statusCode?: number;
   onRetry?: () => void;
 }
 
@@ -16,17 +16,13 @@ const WorkoutSectionError: React.FC<WorkoutSectionErrorProps> = ({
   onRetry,
 }) => {
   const isUnauthorized = errorMessage.toLowerCase().includes("unauthorized");
-  const router = useRouter();
-  const handleGoHomeAndLogin = () => {
-    router.push("/");
-  };
 
   return (
     <div className="bg-red-50 border border-red-200 rounded-lg shadow-md p-4">
       <div className="text-red-600 text-center mb-4">
         <p className="font-semibold">
           {statusCode ? `Error ${statusCode}: ` : ""}
-          {isUnauthorized ? "Unauthorized" : "An error occurred"}
+          {isUnauthorized ? "Unauthorized" : "Error Loading Workout Section"}
         </p>
         <p className="text-sm">{errorMessage}</p>
       </div>
@@ -41,7 +37,7 @@ const WorkoutSectionError: React.FC<WorkoutSectionErrorProps> = ({
           </Button>
         )}
 
-        <Button asChild className="gap-2 w-full" onClick={handleGoHomeAndLogin}>
+        <Button asChild className="gap-2 w-full">
           <Link href="/">
             <Home className="h-4 w-4" />
             Back to Home

@@ -19,3 +19,14 @@ export function getErrorMessage(error: unknown): string {
   }
   return "An unexpected error occurred.";
 }
+
+export function getErrorStatusCode(error: unknown): number | undefined {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    typeof (error as any).status === "number"
+  ) {
+    return (error as { status: number }).status;
+  }
+}
