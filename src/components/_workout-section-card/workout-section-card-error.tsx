@@ -16,10 +16,6 @@ const WorkoutSectionError: React.FC<WorkoutSectionErrorProps> = ({
   onRetry,
 }) => {
   const isUnauthorized = errorMessage.toLowerCase().includes("unauthorized");
-  const router = useRouter();
-  const handleGoHomeAndLogin = () => {
-    router.push("/");
-  };
 
   return (
     <div className="bg-red-50 border border-red-200 rounded-lg shadow-md p-4">
@@ -41,7 +37,7 @@ const WorkoutSectionError: React.FC<WorkoutSectionErrorProps> = ({
           </Button>
         )}
 
-        <Button asChild className="gap-2 w-full" onClick={handleGoHomeAndLogin}>
+        <Button asChild className="gap-2 w-full">
           <Link href="/">
             <Home className="h-4 w-4" />
             Back to Home

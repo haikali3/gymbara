@@ -19,7 +19,7 @@ export default function Workout() {
   const {
     data: workoutSectionsExercisesData,
     isLoading: workoutSectionsExercisesLoading,
-    isError,
+    isError, //boolean
     error: workoutSectionsExercisesError,
     refetch: workoutSectionsExercisesRefetch,
   } = useQuery({

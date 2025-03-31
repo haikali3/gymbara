@@ -59,8 +59,6 @@ export default function PaymentSuccessPage() {
     verify();
   }, [sessionId]);
 
-  console.log(orderDetails);
-
   return (
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title="gymbara" />

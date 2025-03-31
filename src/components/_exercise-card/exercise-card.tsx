@@ -27,18 +27,6 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     updateExercise(exercise.id, { custom_reps: value });
   };
 
-  // click on stepper and handle input value change
-  console.log({
-    ExerciseID: exercise.id,
-    ExerciseName: exercise.name,
-    RepsAdded: reps,
-  });
-  // console.log({
-  //   ExerciseID: exercise.id,
-  //   ExerciseName: exercise.name,
-  //   WeightAdded: weight,
-  // });
-
   return (
     <div className="bg-white border border-gray-200 pt-2 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2 sm:gap-6">
       <h2 className="text-base font-normal text-gray-800 text-center pt-1">

@@ -9,6 +9,7 @@ import { fetchWorkoutDetails } from "@/services/api";
 import ExerciseCardSkeleton from "@/components/_exercise-card/exercise-card-skeleton";
 import ExerciseCardError from "@/components/_exercise-card/exercise-card-error";
 import ExerciseForm from "@/components/_exercise-card/exercise-form-card";
+import { getErrorMessage } from "@/lib/utils";
 
 // Optional: mapping route names to section IDs
 const sectionRouteToIdMap: Record<string, number> = {
@@ -22,7 +23,13 @@ export default function DynamicWorkoutPage() {
   const sectionSlug = params.section as string;
   const sectionId = sectionRouteToIdMap[sectionSlug];
 
-  const { data, isLoading, isError, refetch } = useQuery<ExerciseDetails[]>({
+  const {
+    data: exercises,
+    isLoading: isExercisesLoading,
+    isError, //boolean
+    error: isExercisesError,
+    refetch: refetchExercises,
+  } = useQuery<ExerciseDetails[]>({
     queryKey: ["workoutSections", sectionId],
     queryFn: () => fetchWorkoutDetails(sectionId),
     enabled: !!sectionId, // only run query if valid section
@@ -32,9 +39,15 @@ export default function DynamicWorkoutPage() {
     <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
       <Header title={sectionSlug.replace("-", " ")} />
       <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-1">
-        {isLoading && <ExerciseCardSkeleton />}
-        {isError && <ExerciseCardError onRetry={refetch} />}
-        {data && <ExerciseForm exercises={data} />}
+        {isExercisesLoading && <ExerciseCardSkeleton />}
+        {isError && (
+          <ExerciseCardError
+            onRetry={refetchExercises}
+            errorMessage={getErrorMessage(isExercisesError)}
+            statusCode={(isExercisesError as any)?.status}
+          />
+        )}
+        {exercises && <ExerciseForm exercises={exercises} />}
       </div>
       <Footer />
     </div>
