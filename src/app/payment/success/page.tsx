@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/app/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
@@ -19,6 +19,7 @@ import {
 import Link from "next/link";
 import { OrderDetails } from "@/types/payment-type";
 import { fetchVerifySession } from "@/services/api";
+import PageWrapper from "@/components/_layout/page-wrapper";
 
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams();
@@ -60,7 +61,7 @@ export default function PaymentSuccessPage() {
   }, [sessionId]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
+    <PageWrapper>
       <Header title="gymbara" />
 
       <main className="flex-1 flex items-center justify-center">
@@ -153,6 +154,6 @@ export default function PaymentSuccessPage() {
       </main>
 
       <Footer />
-    </div>
+    </PageWrapper>
   );
 }

@@ -10,6 +10,7 @@ import ExerciseCardSkeleton from "@/components/_exercise-card/exercise-card-skel
 import ExerciseCardError from "@/components/_exercise-card/exercise-card-error";
 import ExerciseForm from "@/components/_exercise-card/exercise-form-card";
 import { getErrorMessage } from "@/lib/utils";
+import PageWrapper from "@/components/_layout/page-wrapper";
 
 // Optional: mapping route names to section IDs
 const sectionRouteToIdMap: Record<string, number> = {
@@ -36,7 +37,7 @@ export default function DynamicWorkoutPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col">
+    <PageWrapper>
       <Header title={sectionSlug.replace("-", " ")} />
       <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-1">
         {isExercisesLoading && <ExerciseCardSkeleton />}
@@ -50,6 +51,6 @@ export default function DynamicWorkoutPage() {
         {exercises && <ExerciseForm exercises={exercises} />}
       </div>
       <Footer />
-    </div>
+    </PageWrapper>
   );
 }
