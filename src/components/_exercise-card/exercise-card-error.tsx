@@ -7,7 +7,7 @@ import { Home, RotateCcw } from "lucide-react";
 
 interface ExerciseCardErrorProps {
   errorMessage: string;
-  statusCode: number;
+  statusCode?: number;
   onRetry?: () => void;
 }
 

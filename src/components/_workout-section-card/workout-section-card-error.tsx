@@ -6,7 +6,7 @@ import { Home, RotateCcw } from "lucide-react";
 
 interface WorkoutSectionErrorProps {
   errorMessage: string;
-  statusCode: number;
+  statusCode?: number;
   onRetry?: () => void;
 }
 
@@ -22,7 +22,7 @@ const WorkoutSectionError: React.FC<WorkoutSectionErrorProps> = ({
       <div className="text-red-600 text-center mb-4">
         <p className="font-semibold">
           {statusCode ? `Error ${statusCode}: ` : ""}
-          {isUnauthorized ? "Unauthorized" : "An error occurred"}
+          {isUnauthorized ? "Unauthorized" : "Error Loading Workout Section"}
         </p>
         <p className="text-sm">{errorMessage}</p>
       </div>
