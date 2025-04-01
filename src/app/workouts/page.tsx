@@ -53,7 +53,7 @@ export default function Workout() {
         )}
 
         {/* Success State */}
-        {workoutSectionsExercisesData?.map(
+        {workoutSectionsExercisesData?.data?.map(
           (section: WorkoutSections, index: number) => (
             <WorkoutSectionCard
               key={section.id}
