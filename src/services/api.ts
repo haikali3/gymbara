@@ -1,4 +1,5 @@
 import { OrderDetails, Subscription } from "@/types/payment-type";
+import { StandardResponse, WorkoutSections } from "@/types/type";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -64,7 +65,9 @@ export async function fetchUserDetails() {
   }
 }
 
-export async function fetchWorkoutSectionsWithExercises(workoutSectionIds: number[]) {
+export async function fetchWorkoutSectionsWithExercises(
+  workoutSectionIds: number[]
+): Promise<StandardResponse<WorkoutSections[]>> {
   try {
     // Converts the workoutSectionIds array into a query string (?workout_section_ids=1&workout_section_ids=2).
     const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
@@ -85,7 +88,8 @@ export async function fetchWorkoutSectionsWithExercises(workoutSectionIds: numbe
       throw error;
     }
 
-    return await response.json();
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     console.error('Error fetching workouts sections with exercises', error);
     throw error;

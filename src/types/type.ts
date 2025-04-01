@@ -1,3 +1,10 @@
+export interface StandardResponse<T> {
+  status: string;
+  statusCode: number;
+  message: string;
+  data: T;
+}
+
 export interface Exercise {
   id: number;
   name: string;
@@ -30,6 +37,7 @@ export interface ExerciseList {
 
 export interface ExerciseDetails extends ExerciseList {
   exercise_id: number;
+  
 }
 export interface UserDetails {
   id: string;
@@ -40,4 +48,16 @@ export interface UserDetails {
   family_name: string;
   picture: string;
   is_premium: boolean; 
+}
+
+export interface SubmittedExercise {
+  exercise_id: number;
+  reps: number;
+  load: number;
+  submitted_at: string;
+}
+
+export interface SubmittedWorkoutResponse {
+  user_workout_id: number;
+  inserted_exercises: SubmittedExercise[];
 }
