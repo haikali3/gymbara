@@ -4,6 +4,16 @@ import { useState, useEffect } from "react";
 import { Battery, Signal, Wifi } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Typography } from "../ui/typography";
+import {
+  MessageCircle,
+  Calendar,
+  Image,
+  Camera,
+  Cloud,
+  Clock,
+  MapPin,
+  FileText,
+} from "lucide-react";
 
 export default function Phone() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -26,49 +36,55 @@ export default function Phone() {
   const apps = [
     {
       name: "Messages",
-      color: "bg-gradient-to-br from-green-400 to-green-600",
-      icon: "M",
+      color:
+        "bg-gradient-to-br from-green-300 via-green-500 to-green-700 text-white",
+      icon: <MessageCircle className="w-6 h-6 text-white" />,
     },
     {
       name: "Calendar",
-      color: "bg-gradient-to-br from-gray-200 to-gray-400",
-      icon: "C",
+      color:
+        "bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 text-white",
+      icon: <Calendar className="w-6 h-6 text-white" />,
     },
     {
       name: "Photos",
-      color: "bg-gradient-to-br from-pink-400 to-orange-300",
-      icon: "P",
+      color:
+        "bg-gradient-to-br from-pink-300 via-pink-500 to-orange-400 text-white",
+      icon: <Image className="w-6 h-6 text-white" />,
     },
     {
       name: "Camera",
-      color: "bg-gradient-to-br from-zinc-700 to-zinc-900",
-      icon: "C",
+      color:
+        "bg-gradient-to-br from-zinc-600 via-zinc-800 to-zinc-900 text-white",
+      icon: <Camera className="w-6 h-6 text-white" />,
     },
     {
       name: "Weather",
-      color: "bg-gradient-to-br from-sky-400 to-sky-600",
-      icon: "W",
+      color: "bg-gradient-to-br from-sky-300 via-sky-500 to-sky-700 text-white",
+      icon: <Cloud className="w-6 h-6 text-white" />,
     },
     {
       name: "Clock",
-      color: "bg-gradient-to-br from-black to-gray-800",
-      icon: "T",
+      color: "bg-gradient-to-br from-gray-700 via-gray-900 to-black text-white",
+      icon: <Clock className="w-6 h-6 text-white" />,
     },
     {
       name: "Maps",
-      color: "bg-gradient-to-br from-slate-200 to-slate-400",
-      icon: "M",
+      color:
+        "bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 text-white",
+      icon: <MapPin className="w-6 h-6 text-white" />,
     },
     {
       name: "Notes",
-      color: "bg-gradient-to-br from-amber-100 to-amber-300",
-      icon: "N",
+      color:
+        "bg-gradient-to-br from-amber-50 via-amber-200 to-amber-400 text-white",
+      icon: <FileText className="w-6 h-6 text-white" />,
     },
   ];
 
   return (
-    <div className="flex items-center justify-center pt-10 w-full p-1 [mask-image:linear-gradient(black_50%,transparent_90%)]">
-      <div className="relative w-[320px] h-[220px] bg-black rounded-t-[45px] overflow-hidden border-[8px] border-black shadow-lg">
+    <div className="flex items-center justify-center pt-10 w-full p-1 [mask-image:linear-gradient(black_20%,transparent_90%)]">
+      <div className="relative w-[320px] h-[170px] bg-black rounded-t-[45px] overflow-hidden border-[8px] border-black shadow-lg">
         {/* Dynamic Island */}
         <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-[95px] h-[25px] bg-black rounded-full z-10"></div>
 
@@ -83,12 +99,11 @@ export default function Phone() {
               <Battery className="w-4 h-4" />
             </div>
           </div>
-          <Typography variant="h2" className="mt-4">
+          <Typography variant="h2" className="mt-6">
             gymbara
           </Typography>
-
           {/* App Grid */}
-          <div className="grid grid-cols-4 gap-5 p-8">
+          {/* <div className="grid grid-cols-4 gap-5 p-8">
             {apps.map((app, index) => (
               <div key={index} className="flex flex-col items-center">
                 <div
@@ -102,7 +117,7 @@ export default function Phone() {
                 <span className="text-xs mt-1.5 text-gray-800">{app.name}</span>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
