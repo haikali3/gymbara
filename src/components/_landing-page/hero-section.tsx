@@ -10,11 +10,9 @@ export default function HeroSection() {
         <div className="container mx-auto">
           {/* Main Hero Content */}
           <div className="text-center">
-            <div className="inline-block text-gray-800 text-sm px-4 py-1 rounded-full mb-4">
+            <div className="mx-auto flex h-7 w-fit items-center rounded-full border border-neutral-200 bg-white px-4 text-xs text-neutral-800">
               <Typography variant="small">
-                <span className="font-medium">
-                  LIMITED TIME OFFER: 30% OFF PREMIUM PLAN
-                </span>
+                LIMITED TIME OFFER: 30% OFF PREMIUM PLAN
               </Typography>
             </div>
 
