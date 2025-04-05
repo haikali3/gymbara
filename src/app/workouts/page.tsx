@@ -9,6 +9,7 @@ import WorkoutSectionLoading from "@/components/_workout-section-card/workout-se
 import WorkoutSectionError from "@/components/_workout-section-card/workout-section-card-error";
 import WorkoutSectionCard from "@/components/_workout-section-card/workout-section-card";
 import { getErrorMessage, getErrorStatusCode } from "@/lib/utils";
+import PageWrapper from "@/components/_layout/page-wrapper";
 
 export default function Workout() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function Workout() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-2 pt-4 pb-4 flex flex-col gap-2">
+    <PageWrapper>
       <Header title={"workout"} />
       <main className="grid gap-2 w-full max-w-5xl grid-cols-1 sm:grid-cols-3">
         {/* Loading state */}
@@ -68,6 +69,6 @@ export default function Workout() {
         )}
       </main>
       <Footer />
-    </div>
+    </PageWrapper>
   );
 }
