@@ -7,11 +7,11 @@ import React from "react";
 
 export default function Home() {
   return (
-    <PageWrapper>
+    <>
       <HeroSection />
       <FeaturesSection />
       <PricingSection />
       <CTASection />
-    </PageWrapper>
+    </>
   );
 }
