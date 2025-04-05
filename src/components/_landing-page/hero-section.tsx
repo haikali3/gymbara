@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { ArrowUpRight } from "lucide-react";
 import React from "react";
+import Phone from "./phone";
 
 export default function HeroSection() {
   return (
@@ -70,6 +71,7 @@ export default function HeroSection() {
               Trusted by 10,000+ users
             </Typography>
           </div> */}
+          <Phone />
         </div>
       </div>
     </section>
