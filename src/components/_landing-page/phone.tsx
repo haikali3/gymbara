@@ -33,55 +33,6 @@ export default function Phone() {
     hour12: false,
   });
 
-  const apps = [
-    {
-      name: "Messages",
-      color:
-        "bg-gradient-to-br from-green-300 via-green-500 to-green-700 text-white",
-      icon: <MessageCircle className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Calendar",
-      color:
-        "bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 text-white",
-      icon: <Calendar className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Photos",
-      color:
-        "bg-gradient-to-br from-pink-300 via-pink-500 to-orange-400 text-white",
-      icon: <Image className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Camera",
-      color:
-        "bg-gradient-to-br from-zinc-600 via-zinc-800 to-zinc-900 text-white",
-      icon: <Camera className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Weather",
-      color: "bg-gradient-to-br from-sky-300 via-sky-500 to-sky-700 text-white",
-      icon: <Cloud className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Clock",
-      color: "bg-gradient-to-br from-gray-700 via-gray-900 to-black text-white",
-      icon: <Clock className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Maps",
-      color:
-        "bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 text-white",
-      icon: <MapPin className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Notes",
-      color:
-        "bg-gradient-to-br from-amber-50 via-amber-200 to-amber-400 text-white",
-      icon: <FileText className="w-6 h-6 text-white" />,
-    },
-  ];
-
   return (
     <div className="flex items-center justify-center pt-10 w-full p-1 [mask-image:linear-gradient(black_20%,transparent_90%)]">
       <div className="relative w-[320px] h-[170px] bg-black rounded-t-[45px] overflow-hidden border-[8px] border-black shadow-lg">
