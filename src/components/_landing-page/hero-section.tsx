@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import React from "react";
 
-export default function Hero() {
+export default function HeroSection() {
   return (
     <PageWrapper>
       <section className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[90vh] flex items-center">
