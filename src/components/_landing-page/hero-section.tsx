@@ -7,7 +7,7 @@ import Phone from "./phone";
 export default function HeroSection() {
   return (
     <section
-      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[60vh] flex items-center"
+      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[70vh] flex items-center"
       style={{
         backgroundImage: `
         radial-gradient(77% 116% at 37% 67%, #A1C4FD, rgba(161, 196, 253, 0) 50%),
@@ -33,19 +33,17 @@ export default function HeroSection() {
           </Typography>
 
           <Typography
-            variant="small"
+            variant="lead"
             className="max-w-2xl mx-auto text-gray-600 mb-8 mt-3 text-pretty text-lg"
           >
             Be one of the first to experience the future of fitness tracking.
-            <br />
-            Start your today and take the first step towards your fitness goals!
           </Typography>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-md mx-auto">
             {/* <Button> */}
             <Button className="bg-black text-white hover:bg-black/90 px-6 py-6 rounded-md text-base w-full shadow-none">
               <Typography className="text-white" variant="h4">
-                Subscribe Today
+                Get Fit Now
               </Typography>
               <ArrowUpRight />
             </Button>
@@ -55,7 +53,7 @@ export default function HeroSection() {
             variant="small"
             className="mt-6 text-gray-600 flex items-center justify-center gap-2"
           >
-            <span className="w-3 h-3 bg-green-500 rounded-full inline-block animate-pulse"></span>
+            <span className="w-2 h-2 bg-green-500 rounded-full inline-block animate-pulse"></span>
             Cancel anytime, no hidden fees
           </Typography>
 
