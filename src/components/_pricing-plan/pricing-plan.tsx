@@ -79,7 +79,7 @@ export const PricingPlan = ({
       }`}
       variant={isPopular ? "default" : "outline"}
     >
-      {price === "Free" ? "Sign Up Free" : "Start 14-Day Free Trial"}
+      {price === "Free" ? "Sign Up Free" : "Start Seeing Results Today"}
     </Button>
 
     {/* {isPopular && (

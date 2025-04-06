@@ -36,7 +36,6 @@ export default function PricingSection() {
             features={[
               "Sign up for free without commitment",
               "Upgrade anytime to unlock workouts, tracking & more",
-              // "Start your fitness journey today at RM10 only!",
             ]}
           />
 
@@ -47,9 +46,11 @@ export default function PricingSection() {
             features={[
               "Full workout library access",
               "Personalized workout plans",
-              "No hidden fees",
+              "Cancel anytime - no hidden fees",
               "Instant access after sign-up",
               "Ad-free experience",
+              "Built by real gym-goers for real progress",
+              "Early access supporter - help shape the future of Gymbara",
             ]}
             isPopular
             savingsText="Save 20% with annual billing"
