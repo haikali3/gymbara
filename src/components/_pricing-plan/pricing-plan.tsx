@@ -5,6 +5,7 @@ import { Typography } from "../ui/typography";
 type PricingPlanProps = {
   name: string;
   price: string;
+  billingCycle: "month" | "year";
   description: string;
   features: string[];
   isPopular?: boolean;
@@ -14,6 +15,7 @@ type PricingPlanProps = {
 export const PricingPlan = ({
   name,
   price,
+  billingCycle,
   description,
   features,
   isPopular = false,
@@ -41,7 +43,9 @@ export const PricingPlan = ({
       <Typography variant="h2" className="text-gray-800">
         {price}
         {price !== "Free" && (
-          <span className="text-base font-normal text-gray-500">/month</span>
+          <span className="text-base font-normal text-gray-500">
+            /{billingCycle === "year" ? "year" : "month"}
+          </span>
         )}
       </Typography>
       {savingsText && (

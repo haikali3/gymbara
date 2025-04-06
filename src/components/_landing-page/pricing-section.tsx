@@ -42,6 +42,7 @@ export default function PricingSection() {
           <PricingPlan
             name="Premium"
             price="RM10"
+            billingCycle="month"
             description="The perfect balance of features for fitness enthusiasts."
             features={[
               "Full workout library access",
@@ -59,6 +60,7 @@ export default function PricingSection() {
           <PricingPlan
             name="Elite"
             price="RM99.99"
+            billingCycle="year"
             description="The ultimate fitness experience with premium coaching."
             features={[
               "Everything in Premium",
