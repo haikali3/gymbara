@@ -1,99 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { Check, Star } from "lucide-react";
-
-type PricingPlanProps = {
-  name: string;
-  price: string;
-  description: string;
-  features: string[];
-  isPopular?: boolean;
-  savingsText?: string;
-};
-
-const PricingPlan = ({
-  name,
-  price,
-  description,
-  features,
-  isPopular = false,
-  savingsText,
-}: PricingPlanProps) => (
-  <div
-    className={`p-8 border rounded-xl bg-white flex flex-col shadow-sm ${
-      isPopular ? "border-gray-300 shadow-md" : "border-gray-200"
-    }`}
-  >
-    {isPopular && (
-      <Typography
-        variant="small"
-        className="bg-gray-800 text-white text-sm font-medium py-1 px-3 rounded-full w-fit mx-auto mb-4"
-      >
-        Most Popular
-      </Typography>
-    )}
-
-    <Typography variant="h3" className="mb-2">
-      {name}
-    </Typography>
-
-    <div className="mb-4">
-      <Typography variant="h2" className="text-gray-800">
-        {price}
-        {price !== "Free" && (
-          <span className="text-base font-normal text-gray-500">/month</span>
-        )}
-      </Typography>
-      {savingsText && (
-        <Typography variant="small" className="text-gray-700 mt-1 block">
-          {savingsText}
-        </Typography>
-      )}
-    </div>
-
-    <Typography variant="muted" className="mb-6">
-      {description}
-    </Typography>
-
-    <div className="flex-grow">
-      <ul className="space-y-3 mb-8">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-start">
-            <Check
-              size={18}
-              className="text-gray-800 mr-2 mt-0.5 flex-shrink-0"
-            />
-            <Typography variant="small" className="text-gray-700">
-              {feature}
-            </Typography>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <Button
-      className={`w-full rounded-full ${
-        isPopular
-          ? "bg-gray-900 text-white hover:bg-gray-800"
-          : "bg-white text-gray-800 border border-gray-200 hover:bg-gray-100"
-      }`}
-      variant={isPopular ? "default" : "outline"}
-    >
-      {price === "Free" ? "Sign Up Free" : "Start 14-Day Free Trial"}
-    </Button>
-
-    {isPopular && (
-      <div className="mt-3 text-xs text-center text-gray-500">
-        <div className="flex justify-center mb-1">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={12} className="fill-amber-500 text-amber-500" />
-          ))}
-        </div>
-        <span>4.9/5 from 2,000+ reviews</span>
-      </div>
-    )}
-  </div>
-);
+import { PricingPlan } from "../_pricing-plan/pricing-plan";
 
 export default function PricingSection() {
   return (
@@ -115,8 +23,8 @@ export default function PricingSection() {
             variant="lead"
             className="text-gray-600 md:max-w-2xl mx-auto"
           >
-            All plans include a <strong>14-day free trial</strong> with full
-            access to premium features. No credit card required to start.
+            Gymbara Premium and get instant access to all features for just
+            <strong> RM10/month </strong> (or less with yearly billing).
           </Typography>
         </div>
 
@@ -126,25 +34,24 @@ export default function PricingSection() {
             price="Free"
             description="Perfect for beginners starting their fitness journey."
             features={[
-              "Access to basic workout library",
-              "Manual workout logging",
-              "Basic progress tracking",
-              "Community forums access",
-              "Ad-supported experience",
+              "Sign up for free without commitment",
+              "Upgrade anytime to unlock workouts, tracking & more",
             ]}
           />
 
           <PricingPlan
             name="Premium"
-            price="$9.99"
+            price="RM10"
+            billingCycle="month"
             description="The perfect balance of features for fitness enthusiasts."
             features={[
-              "Everything in Basic",
               "Full workout library access",
-              "Advanced progress analytics",
               "Personalized workout plans",
-              "Nutrition tracking & meal plans",
+              "Cancel anytime - no hidden fees",
+              "Instant access after sign-up",
               "Ad-free experience",
+              "Built by real gym-goers for real progress",
+              "Early access supporter - help shape the future of Gymbara",
             ]}
             isPopular
             savingsText="Save 20% with annual billing"
@@ -152,7 +59,8 @@ export default function PricingSection() {
 
           <PricingPlan
             name="Elite"
-            price="$19.99"
+            price="RM99.99"
+            billingCycle="year"
             description="The ultimate fitness experience with premium coaching."
             features={[
               "Everything in Premium",
