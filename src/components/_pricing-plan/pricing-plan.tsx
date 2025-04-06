@@ -5,7 +5,7 @@ import { Typography } from "../ui/typography";
 type PricingPlanProps = {
   name: string;
   price: string;
-  billingCycle: "month" | "year";
+  billingCycle?: "month" | "year";
   description: string;
   features: string[];
   isPopular?: boolean;
