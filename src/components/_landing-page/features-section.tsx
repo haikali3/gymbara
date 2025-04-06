@@ -56,7 +56,7 @@ const FeaturesSection = () => {
             title="Custom Workout Logging"
             description={
               <>
-                Track your workouts with custom reps and weights suits
+                Track your workouts with custom reps and weights suited
                 <br /> to your goals
               </>
             }
