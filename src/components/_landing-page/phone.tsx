@@ -79,7 +79,7 @@ export default function Phone({
     : "drop-shadow(rgba(0, 0, 0, 0.1) 0px 4px 6px)";
 
   return (
-    <div className="flex items-center justify-center pt-10 w-full p-1 [mask-image:linear-gradient(black_20%,transparent_90%)]">
+    <div className="flex items-center justify-center pt-12 w-full p-1 [mask-image:linear-gradient(black_20%,transparent_90%)]">
       <div
         ref={phoneRef}
         className={cn(
