@@ -45,7 +45,7 @@ export default function HeroSection() {
             {/* <Button> */}
             <Button className="bg-black text-white hover:bg-black/90 px-6 py-6 rounded-md text-base w-full shadow-none">
               <Typography className="text-white" variant="h4">
-                Subscribe Today
+                Get Fit Now
               </Typography>
               <ArrowUpRight />
             </Button>

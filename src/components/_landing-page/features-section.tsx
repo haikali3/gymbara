@@ -69,12 +69,6 @@ const FeaturesSection = () => {
           />
 
           <FeatureBox
-            icon={Utensils}
-            title="Nutrition Tracking"
-            description="Log meals and track macros with our comprehensive food database."
-          />
-
-          <FeatureBox
             icon={LineChart}
             title="Progress Analytics"
             description="Visualize your fitness journey with detailed charts and insights."
@@ -103,6 +97,12 @@ const FeaturesSection = () => {
             title="Workout Scheduler"
             description="Plan your fitness routine with our intuitive calendar."
           />
+
+          {/* <FeatureBox
+            icon={Utensils}
+            title="Nutrition Tracking"
+            description="Log meals and track macros with our comprehensive food database."
+          /> */}
         </div>
       </div>
     </section>

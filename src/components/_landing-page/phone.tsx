@@ -103,17 +103,17 @@ export default function Phone({
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Dynamic Island */}
-        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-[95px] h-[25px] bg-black rounded-full z-10"></div>
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-[95px] h-[24px] bg-black rounded-full z-10"></div>
 
         {/* Screen */}
         <div className="relative w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
           {/* Status Bar */}
           <div className="flex justify-between items-center px-8 pt-4 text-black text-xs h-8 z-20">
-            <div className="font-medium">{formattedTime}</div>
+            <div className="font-satoshi">{formattedTime}</div>
             <div className="flex items-center gap-1">
               <Signal className="w-3.5 h-3.5" />
               <Wifi className="w-3.5 h-3.5" />
-              <Battery className="w-4 h-4" />
+              <Battery className="w-3.5 h-3.5" />
             </div>
           </div>
           <Typography variant="h2" className="mt-6">
