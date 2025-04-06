@@ -103,12 +103,6 @@ const FeaturesSection = () => {
             title="Workout Scheduler"
             description="Plan your fitness routine with our intuitive calendar."
           />
-
-          <FeatureBox
-            icon={Clock}
-            title="Interval Timer"
-            description="Perfect your HIIT workouts with our customizable interval timer."
-          />
         </div>
       </div>
     </section>
