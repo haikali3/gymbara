@@ -34,11 +34,9 @@ export default function PricingSection() {
             price="Free"
             description="Perfect for beginners starting their fitness journey."
             features={[
-              "Access to basic workout library",
-              "Manual workout logging",
-              "Basic progress tracking",
-              "Community forums access",
-              "Ad-supported experience",
+              "Sign up for free without commitment",
+              "Upgrade anytime to unlock workouts, tracking & more",
+              // "Start your fitness journey today at RM10 only!",
             ]}
           />
 
@@ -47,11 +45,10 @@ export default function PricingSection() {
             price="RM10"
             description="The perfect balance of features for fitness enthusiasts."
             features={[
-              "Everything in Basic",
               "Full workout library access",
-              "Advanced progress analytics",
               "Personalized workout plans",
-              "Nutrition tracking & meal plans",
+              "No hidden fees",
+              "Instant access after sign-up",
               "Ad-free experience",
             ]}
             isPopular

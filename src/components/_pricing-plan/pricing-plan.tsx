@@ -82,7 +82,7 @@ export const PricingPlan = ({
       {price === "Free" ? "Sign Up Free" : "Start 14-Day Free Trial"}
     </Button>
 
-    {isPopular && (
+    {/* {isPopular && (
       <div className="mt-3 text-xs text-center text-gray-500">
         <div className="flex justify-center mb-1">
           {[...Array(5)].map((_, i) => (
@@ -91,6 +91,6 @@ export const PricingPlan = ({
         </div>
         <span>4.9/5 from 2,000+ reviews</span>
       </div>
-    )}
+    )} */}
   </div>
 );
