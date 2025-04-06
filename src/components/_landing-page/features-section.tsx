@@ -9,32 +9,7 @@ import {
   Clock,
 } from "lucide-react";
 import { Typography } from "@/components/ui/typography";
-
-const FeatureBox = ({
-  icon: Icon,
-  title,
-  description,
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-}) => (
-  <div className="p-6 rounded-xl border border-gray-200 bg-white hover:shadow-lg transition-shadow">
-    <div className="flex items-start">
-      <div className="flex-shrink-0 mr-4">
-        <div className="p-3 rounded-xl bg-gray-100 text-gray-800">
-          <Icon size={24} />
-        </div>
-      </div>
-      <div>
-        <Typography variant="h4" className="mb-2">
-          {title}
-        </Typography>
-        <Typography variant="muted">{description}</Typography>
-      </div>
-    </div>
-  </div>
-);
+import { FeatureBox } from "../_feature-box/feature-box";
 
 const FeaturesSection = () => {
   return (
@@ -65,19 +40,25 @@ const FeaturesSection = () => {
           <FeatureBox
             icon={Dumbbell}
             title="Workout Library"
-            description="Access hundreds of pre-built workouts or create your own custom routines."
+            description="Plan your fitness routine with our intuitive workout plan"
+          />
+
+          <FeatureBox
+            icon={Calendar}
+            title="Workout History"
+            description="Easily view your past workouts and track </br> improvements over time"
           />
 
           <FeatureBox
             icon={LineChart}
             title="Progress Analytics"
-            description="Visualize your fitness journey with detailed charts and insights."
+            description="Visualize your fitness journey with detailed insights."
           />
 
           <FeatureBox
             icon={Heart}
-            title="Health Metrics"
-            description="Monitor vital health statistics like heart rate, sleep quality, and more."
+            title="Custom Workout Logging"
+            description="Track your workouts with custom reps and weights suits to your goals"
           />
 
           <FeatureBox
@@ -91,18 +72,6 @@ const FeaturesSection = () => {
             title="Mobile Sync"
             description="Seamlessly sync your data across all your devices."
           />
-
-          <FeatureBox
-            icon={Calendar}
-            title="Workout Scheduler"
-            description="Plan your fitness routine with our intuitive calendar."
-          />
-
-          {/* <FeatureBox
-            icon={Utensils}
-            title="Nutrition Tracking"
-            description="Log meals and track macros with our comprehensive food database."
-          /> */}
         </div>
       </div>
     </section>

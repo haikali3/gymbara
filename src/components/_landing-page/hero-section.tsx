@@ -33,12 +33,10 @@ export default function HeroSection() {
           </Typography>
 
           <Typography
-            variant="small"
+            variant="lead"
             className="max-w-2xl mx-auto text-gray-600 mb-8 mt-3 text-pretty text-lg"
           >
             Be one of the first to experience the future of fitness tracking.
-            <br />
-            Start your today and take the first step towards your fitness goals!
           </Typography>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-md mx-auto">
