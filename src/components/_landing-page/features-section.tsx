@@ -1,13 +1,4 @@
-import {
-  Dumbbell,
-  Utensils,
-  LineChart,
-  Heart,
-  Badge,
-  Smartphone,
-  Calendar,
-  Clock,
-} from "lucide-react";
+import { Dumbbell, LineChart, Smartphone, Calendar, Zap } from "lucide-react";
 import { Typography } from "@/components/ui/typography";
 import { FeatureBox } from "../_feature-box/feature-box";
 
@@ -46,7 +37,12 @@ const FeaturesSection = () => {
           <FeatureBox
             icon={Calendar}
             title="Workout History"
-            description="Easily view your past workouts and track </br> improvements over time"
+            description={
+              <>
+                Easily view your past workouts and track improvements
+                <br /> over time
+              </>
+            }
           />
 
           <FeatureBox
@@ -56,15 +52,14 @@ const FeaturesSection = () => {
           />
 
           <FeatureBox
-            icon={Heart}
+            icon={Zap}
             title="Custom Workout Logging"
-            description="Track your workouts with custom reps and weights suits to your goals"
-          />
-
-          <FeatureBox
-            icon={Badge}
-            title="Achievement System"
-            description="Stay motivated with badges and rewards for reaching milestones."
+            description={
+              <>
+                Track your workouts with custom reps and weights suits
+                <br /> to your goals
+              </>
+            }
           />
 
           <FeatureBox
@@ -72,6 +67,12 @@ const FeaturesSection = () => {
             title="Mobile Sync"
             description="Seamlessly sync your data across all your devices."
           />
+
+          {/* <FeatureBox
+            icon={Badge}
+            title="Achievement System"
+            description="Stay motivated with badges and rewards for reaching milestones."
+          /> */}
         </div>
       </div>
     </section>

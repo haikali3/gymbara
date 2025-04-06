@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Typography } from "../ui/typography";
 
 export const FeatureBox = ({
@@ -7,7 +8,7 @@ export const FeatureBox = ({
 }: {
   icon: React.ElementType;
   title: string;
-  description: string;
+  description: ReactNode;
 }) => (
   <div className="p-6 rounded-xl border border-gray-200 bg-white hover:shadow-lg transition-shadow">
     <div className="flex items-start">

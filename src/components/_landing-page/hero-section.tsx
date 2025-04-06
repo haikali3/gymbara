@@ -7,7 +7,7 @@ import Phone from "./phone";
 export default function HeroSection() {
   return (
     <section
-      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[60vh] flex items-center"
+      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[70vh] flex items-center"
       style={{
         backgroundImage: `
         radial-gradient(77% 116% at 37% 67%, #A1C4FD, rgba(161, 196, 253, 0) 50%),
@@ -53,7 +53,7 @@ export default function HeroSection() {
             variant="small"
             className="mt-6 text-gray-600 flex items-center justify-center gap-2"
           >
-            <span className="w-3 h-3 bg-green-500 rounded-full inline-block animate-pulse"></span>
+            <span className="w-2 h-2 bg-green-500 rounded-full inline-block animate-pulse"></span>
             Cancel anytime, no hidden fees
           </Typography>
 
