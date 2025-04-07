@@ -3,11 +3,12 @@ import { Typography } from "@/components/ui/typography";
 import { ArrowUpRight } from "lucide-react";
 import React from "react";
 import Phone from "./phone";
+import { Badge } from "../ui/badge";
 
 export default function HeroSection() {
   return (
     <section
-      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[70vh] flex items-center"
+      className="pt-12 pb-12 px-4 md:px-8 bg-gray-50 min-h-[90vh] flex items-center"
       style={{
         backgroundImage: `
         radial-gradient(77% 116% at 37% 67%, #A1C4FD, rgba(161, 196, 253, 0) 50%),
@@ -21,11 +22,10 @@ export default function HeroSection() {
       <div className="container mx-auto">
         {/* Main Hero Content */}
         <div className="text-center">
-          <div className="mx-auto flex h-7 w-fit items-center rounded-full border border-neutral-200 bg-white px-4 text-xs text-neutral-800 mb-2">
-            <Typography variant="small">
-              LIMITED TIME OFFER: 30% OFF PREMIUM PLAN
-            </Typography>
-          </div>
+          <Badge className="mb-2">
+            {/* LIMITED TIME OFFER: 16% OFF PREMIUM PLAN */}
+            LIMITED TIME OFFER: SAVE RM20!
+          </Badge>
 
           <Typography variant="h1">
             The smarter way to <br className="hidden md:block" />

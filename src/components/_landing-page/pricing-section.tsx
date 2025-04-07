@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
-import { Check, Star } from "lucide-react";
 import { PricingPlan } from "../_pricing-plan/pricing-plan";
 
 export default function PricingSection() {
@@ -10,9 +9,9 @@ export default function PricingSection() {
         <div className="text-center mb-12">
           <Typography
             variant="small"
-            className="inline-block text-gray-800 text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gray-100"
+            className="inline-block text-white text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gradient-to-r from-orange-500 to-red-500 shadow-lg shadow-red-400/50"
           >
-            SPECIAL OFFER
+            LIMITED TIME OFFER
           </Typography>
 
           <Typography variant="h2" className="mb-4">
@@ -47,14 +46,14 @@ export default function PricingSection() {
             features={[
               "Full workout library access",
               "Personalized workout plans",
-              "Cancel anytime - no hidden fees",
               "Instant access after sign-up",
-              "Ad-free experience",
-              "Built by real gym-goers for real progress",
               "Early access supporter - help shape the future of Gymbara",
+              "Ad-free experience",
+              "Routine by real gym-goers for real progress",
+              "Cancel anytime - no hidden fees",
             ]}
             isPopular
-            savingsText="Save 20% with annual billing"
+            // savingsText="Save 20% with annual billing"
           />
 
           <PricingPlan
@@ -64,11 +63,11 @@ export default function PricingSection() {
             description="The ultimate fitness experience with premium coaching."
             features={[
               "Everything in Premium",
-              "1-on-1 virtual coaching",
-              "Advanced health metrics",
-              "Personalized nutrition advice",
+              "Unlock all upcoming exclusive workouts",
               "Exclusive elite workouts",
-              "Early access to new features",
+              "Priority support & feature requests",
+              "Early access to experimental features",
+              "1-on-1 virtual coaching",
               "Priority support",
             ]}
             savingsText="Save 20% with annual billing"
