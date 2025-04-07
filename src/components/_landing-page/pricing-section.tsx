@@ -47,14 +47,14 @@ export default function PricingSection() {
             features={[
               "Full workout library access",
               "Personalized workout plans",
-              "Cancel anytime - no hidden fees",
               "Instant access after sign-up",
-              "Ad-free experience",
-              "Built by real gym-goers for real progress",
               "Early access supporter - help shape the future of Gymbara",
+              "Ad-free experience",
+              "Routine by real gym-goers for real progress",
+              "Cancel anytime - no hidden fees",
             ]}
             isPopular
-            savingsText="Save 20% with annual billing"
+            // savingsText="Save 20% with annual billing"
           />
 
           <PricingPlan
