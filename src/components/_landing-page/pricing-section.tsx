@@ -64,11 +64,11 @@ export default function PricingSection() {
             description="The ultimate fitness experience with premium coaching."
             features={[
               "Everything in Premium",
-              "1-on-1 virtual coaching",
-              "Advanced health metrics",
-              "Personalized nutrition advice",
+              "Unlock all upcoming exclusive workouts",
               "Exclusive elite workouts",
-              "Early access to new features",
+              "Priority support & feature requests",
+              "Early access to experimental features",
+              "1-on-1 virtual coaching",
               "Priority support",
             ]}
             savingsText="Save 20% with annual billing"
