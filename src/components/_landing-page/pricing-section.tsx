@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
-import { Check, Star } from "lucide-react";
 import { PricingPlan } from "../_pricing-plan/pricing-plan";
 
 export default function PricingSection() {
@@ -10,9 +9,9 @@ export default function PricingSection() {
         <div className="text-center mb-12">
           <Typography
             variant="small"
-            className="inline-block text-gray-800 text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gray-100"
+            className="inline-block text-white text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gradient-to-r from-orange-500 to-red-500 shadow-lg shadow-red-400/50"
           >
-            SPECIAL OFFER
+            LIMITED TIME OFFER
           </Typography>
 
           <Typography variant="h2" className="mb-4">
