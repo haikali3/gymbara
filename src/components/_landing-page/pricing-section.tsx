@@ -23,7 +23,7 @@ export default function PricingSection() {
           </Typography>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <PricingPlan
             name="Basic"
             price="Free"
@@ -71,12 +71,9 @@ export default function PricingSection() {
         </div>
 
         <div className="mt-12 text-center">
-          <Typography
-            variant="small"
-            className="mb-6 inline-block rounded-full px-4 py-2 bg-gray-100 font-medium text-gray-800"
-          >
+          <Badge className="mb-6 inline-block px-4 py-2 font-medium">
             100% Money-Back Guarantee
-          </Typography>
+          </Badge>
 
           <Typography variant="muted" className="mb-2">
             Try risk-free with our 30-day money-back guarantee
