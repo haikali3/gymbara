@@ -1,6 +1,7 @@
-import { Check, Star } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "../ui/button";
 import { Typography } from "../ui/typography";
+import { BorderBeam } from "@/components/magicui/border-beam"; // Adjust if needed
 
 type PricingPlanProps = {
   name: string;
@@ -22,14 +23,31 @@ export const PricingPlan = ({
   savingsText,
 }: PricingPlanProps) => (
   <div
-    className={`p-8 border rounded-xl bg-white flex flex-col shadow-sm ${
-      isPopular ? "border-gray-300 shadow-md" : "border-gray-200"
+    className={`relative overflow-hidden rounded-xl border bg-white p-8 shadow-sm ${
+      isPopular ? "border-gray-0" : "border-gray-200"
     }`}
   >
+    {/* Only render beam borders if it's the popular plan */}
+    {isPopular && (
+      <>
+        <BorderBeam
+          duration={6}
+          size={400}
+          className="from-transparent via-orange-500 to-transparent"
+        />
+        <BorderBeam
+          duration={6}
+          delay={3}
+          size={400}
+          className="from-transparent via-red-500 to-transparent"
+        />
+      </>
+    )}
+
     {isPopular && (
       <Typography
         variant="small"
-        className="bg-gray-800 text-white text-sm font-medium py-1 px-3 rounded-full w-fit mx-auto mb-4"
+        className="mx-auto mb-4 w-fit rounded-full bg-gray-800 px-3 py-1 text-sm font-medium text-white"
       >
         Most Popular
       </Typography>
@@ -49,7 +67,7 @@ export const PricingPlan = ({
         )}
       </Typography>
       {savingsText && (
-        <Typography variant="small" className="text-gray-700 mt-1 block">
+        <Typography variant="small" className="mt-1 block text-gray-700">
           {savingsText}
         </Typography>
       )}
@@ -60,12 +78,12 @@ export const PricingPlan = ({
     </Typography>
 
     <div className="flex-grow">
-      <ul className="space-y-3 mb-8">
+      <ul className="mb-8 space-y-3">
         {features.map((feature, i) => (
           <li key={i} className="flex items-start">
             <Check
               size={18}
-              className="text-gray-800 mr-2 mt-0.5 flex-shrink-0"
+              className="mr-2 mt-0.5 flex-shrink-0 text-gray-800"
             />
             <Typography variant="small" className="text-gray-700">
               {feature}
@@ -85,16 +103,5 @@ export const PricingPlan = ({
     >
       {price === "Free" ? "Sign Up Free" : "Start Seeing Results Today"}
     </Button>
-
-    {/* {isPopular && (
-      <div className="mt-3 text-xs text-center text-gray-500">
-        <div className="flex justify-center mb-1">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={12} className="fill-amber-500 text-amber-500" />
-          ))}
-        </div>
-        <span>4.9/5 from 2,000+ reviews</span>
-      </div>
-    )} */}
   </div>
 );
