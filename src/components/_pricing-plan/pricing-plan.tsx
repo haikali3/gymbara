@@ -32,13 +32,13 @@ export const PricingPlan = ({
       <>
         <BorderBeam
           duration={6}
-          size={400}
+          size={700}
           className="from-transparent via-orange-500 to-transparent"
         />
         <BorderBeam
           duration={6}
           delay={3}
-          size={400}
+          size={700}
           className="from-transparent via-red-500 to-transparent"
         />
       </>
@@ -101,7 +101,7 @@ export const PricingPlan = ({
       }`}
       variant={isPopular ? "default" : "outline"}
     >
-      {price === "Free" ? "Sign Up Free" : "Start Seeing Results Today"}
+      {price === "Free" ? "Sign Up Free" : "Get Fit Now"}
     </Button>
   </div>
 );
