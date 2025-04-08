@@ -32,13 +32,13 @@ export const PricingPlan = ({
       <>
         <BorderBeam
           duration={6}
-          size={700}
+          size={600}
           className="from-transparent via-orange-500 to-transparent"
         />
         <BorderBeam
           duration={6}
           delay={3}
-          size={700}
+          size={600}
           className="from-transparent via-red-500 to-transparent"
         />
       </>
