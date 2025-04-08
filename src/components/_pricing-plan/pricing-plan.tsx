@@ -30,7 +30,7 @@ export const PricingPlan = ({
       </div>
     )}
     <div
-      className={`relative overflow-hidden rounded-xl bg-white p-8 shadow-sm ${
+      className={`relative flex h-full flex-col overflow-hidden rounded-xl bg-white p-8 shadow-sm ${
         isPopular ? "" : "border border-gray-200"
       }`}
     >
@@ -81,7 +81,7 @@ export const PricingPlan = ({
             <li key={i} className="flex items-start">
               <Check
                 size={18}
-                className="mr-2 mt-0.5 flex-shrink-0 text-gray-800"
+                className="mr-2 mt-0.5 flex-shrink-0 text-orange-500"
               />
               <Typography variant="small" className="text-gray-700">
                 {feature}
