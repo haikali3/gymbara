@@ -26,7 +26,7 @@ export const PricingPlan = ({
   <div className="relative">
     {isPopular && (
       <div className="absolute inset-x-0 top-0 flex justify-center -translate-y-1/2 z-10">
-        <Badge className="">Most Popular</Badge>
+        <Badge>Most Popular</Badge>
       </div>
     )}
     <div
