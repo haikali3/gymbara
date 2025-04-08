@@ -23,8 +23,8 @@ export const PricingPlan = ({
   savingsText,
 }: PricingPlanProps) => (
   <div
-    className={`relative overflow-hidden rounded-xl border bg-white p-8 shadow-sm ${
-      isPopular ? "border-gray-0" : "border-gray-200"
+    className={`relative overflow-hidden rounded-xl bg-white p-8 shadow-sm ${
+      isPopular ? "" : "border border-gray-200"
     }`}
   >
     {/* Only render beam borders if it's the popular plan */}
