@@ -22,10 +22,7 @@ export default function HeroSection() {
       <div className="container mx-auto">
         {/* Main Hero Content */}
         <div className="text-center">
-          <Badge className="mb-2">
-            {/* LIMITED TIME OFFER: 16% OFF PREMIUM PLAN */}
-            LIMITED TIME OFFER: SAVE RM20!
-          </Badge>
+          <Badge className="mb-6">LIMITED TIME OFFER: SAVE RM20!</Badge>
 
           <Typography variant="h1">
             The smarter way to <br className="hidden md:block" />

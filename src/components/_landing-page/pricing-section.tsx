@@ -1,18 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { PricingPlan } from "../_pricing-plan/pricing-plan";
+import { Badge } from "../ui/badge";
 
 export default function PricingSection() {
   return (
     <section id="pricing" className="py-16 px-4 md:px-8 bg-white">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <Typography
-            variant="small"
-            className="inline-block text-white text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gradient-to-r from-orange-500 to-red-500 shadow-lg shadow-red-400/50"
-          >
-            LIMITED TIME OFFER
-          </Typography>
+          <Badge className="mb-6">LIMITED TIME OFFER: SAVE RM20!</Badge>
 
           <Typography variant="h2" className="mb-4">
             Save 20% with Annual Plans

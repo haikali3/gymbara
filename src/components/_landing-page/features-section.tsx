@@ -1,18 +1,14 @@
 import { Dumbbell, LineChart, Smartphone, Calendar, Zap } from "lucide-react";
 import { Typography } from "@/components/ui/typography";
 import { FeatureBox } from "../_feature-box/feature-box";
+import { Badge } from "../ui/badge";
 
 const FeaturesSection = () => {
   return (
     <section id="features" className="py-16 px-4 md:px-8 bg-white">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <Typography
-            variant="small"
-            className="inline-block text-gray-800 text-sm px-4 py-1 rounded-full mb-4 font-medium bg-gray-100"
-          >
-            ALL-IN-ONE SOLUTION
-          </Typography>
+          <Badge className="mb-6">ALL-IN-ONE SOLUTION</Badge>
 
           <Typography variant="h2" className="mb-4">
             Powerful features for your fitness journey
