@@ -65,35 +65,37 @@ export async function fetchUserDetails() {
   }
 }
 
+
+// TODO: all api call follow this standard
 export async function fetchWorkoutSectionsWithExercises(
   workoutSectionIds: number[]
 ): Promise<StandardResponse<WorkoutSections[]>> {
+  // build query string…
+  const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
+  const response = await fetch(
+    `${BASE_URL}/workout-sections/exercises?${queryParams}`, 
+    { method: 'GET', credentials: 'include' }
+  );
+
+  // parse the body early so we can always pull out message/statusCode
+  let payload: { status?: string; statusCode?: number; message?: string; data?: any };
   try {
-    // Converts the workoutSectionIds array into a query string (?workout_section_ids=1&workout_section_ids=2).
-    const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
-
-    const response = await fetch(`${BASE_URL}/workout-sections/exercises?${queryParams}`, {
-      method: 'GET',
-      credentials: 'include',
-    });
-
-    if (response.status === 401) {
-      const error = new Error('Unauthorized: Please log in') as Error & { status?: number };
-      error.status = 401;
-      throw error;
-    }
-    if (!response.ok) {
-      const error = new Error('Failed to fetch workouts sections with exercises') as Error & { status?: number };
-      error.status = response.status;
-      throw error;
-    }
-
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    console.error('Error fetching workouts sections with exercises', error);
-    throw error;
+    payload = await response.json();
+  } catch {
+    // fallback if JSON parse fails
+    payload = {};
   }
+
+  if (!response.ok) {
+    // use backend’s message if available
+    const msg = payload.message ?? 'Unknown error';
+    const err = new Error(msg) as Error & { status?: number };
+    err.status = payload.statusCode ?? response.status;
+    throw err;
+  }
+
+  // at this point response.ok, payload.data should be your StandardResponse shape
+  return payload as StandardResponse<WorkoutSections[]>;
 }
 
 export async function submitUserExerciseDetails(workoutSectionId: number, exercises: { exercise_id: number; custom_reps?: number; custom_load?: number }[]) {
