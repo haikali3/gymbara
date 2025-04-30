@@ -12,7 +12,7 @@ import ExerciseForm from "@/components/_exercise-card/exercise-form-card";
 import { getErrorMessage } from "@/lib/utils";
 import PageWrapper from "@/components/_layout/page-wrapper";
 
-// Optional: mapping route names to section IDs
+// TODO: mapping route names to section IDs
 const sectionRouteToIdMap: Record<string, number> = {
   "full-body": 1,
   "upper-body": 2,
