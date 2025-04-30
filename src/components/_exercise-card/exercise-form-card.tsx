@@ -19,13 +19,13 @@ import { ExerciseDetails } from "@/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 type ExerciseFormCardProps = {
-  exercises: { data: ExerciseDetails[] };
+  exercises: ExerciseDetails[];
 };
 
 export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
   // Compute default values using the passed-in exercises data.
   const defaultValues: WorkoutFormValues = {
-    exercises: exercises.data.map((ex) => ({
+    exercises: exercises.map((ex) => ({
       exercise_id: ex.id,
       custom_reps: 10,
       custom_load: 10,
@@ -61,7 +61,7 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        {exercises.data.map((exercise, index: number) => (
+        {exercises.map((exercise, index: number) => (
           <div
             key={exercise.id}
             className="bg-white border border-gray-200 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2"

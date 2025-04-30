@@ -1,5 +1,5 @@
 import { OrderDetails, Subscription } from "@/types/payment-type";
-import { StandardResponse, WorkoutSections } from "@/types/type";
+import { ExerciseDetails, StandardResponse, WorkoutSections } from "@/types/type";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -40,7 +40,9 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
     error.status = response.status;
     throw error;
   }
-  return await response.json();
+
+  const json = await response.json() as { status: number; message: string; data: ExerciseDetails[] };
+  return json.data;
 }
 
 export async function fetchUserDetails() {
