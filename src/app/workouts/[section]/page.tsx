@@ -48,7 +48,7 @@ export default function DynamicWorkoutPage() {
             statusCode={(isExercisesError as any)?.status}
           />
         )}
-        {exercises && <ExerciseForm exercises={exercises} />}
+        {exercises && <ExerciseForm exercises={{ data: exercises }} />}
       </div>
       <Footer />
     </PageWrapper>
