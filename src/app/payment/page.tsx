@@ -65,7 +65,7 @@ export default function PaymentPage() {
     <PageWrapper>
       <Header title="gymbara" />
 
-      <div className="grid gap-8 md:grid-cols-3 lg:gap-10 max-w-6xl mx-auto px-4">
+      <div className="grid gap-8 md:grid-cols-3 lg:gap-10 max-w-6xl mx-auto">
         {pricingPlans.map((plan) => (
           <Card
             key={plan.id}
