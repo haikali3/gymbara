@@ -135,7 +135,7 @@ export async function submitUserExerciseDetails(workoutSectionId: number, exerci
 }
 
 export async function createStripeCheckoutSession(email: string): Promise<{ url: string }> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/checkout`, {
+  const res = await fetch(`${BASE_URL}/payment/checkout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

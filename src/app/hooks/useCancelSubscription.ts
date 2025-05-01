@@ -2,13 +2,16 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/app/hooks/use-toast";
-import { cancelSubscription } from "@/services/api";   // ← import the new fn
+import { cancelSubscription } from "@/services/api";
 
 export function useCancelSubscription() {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, string>({
-    // now just calls your api helper
+  return useMutation<
+    void,
+    Error & { statusCode?: number; apiStatus?: string },
+    string
+  >({
     mutationFn: cancelSubscription,
     onSuccess: () => {
       toast({ description: "Subscription cancelled. Thank you" });
@@ -16,8 +19,10 @@ export function useCancelSubscription() {
     },
     onError: (err) => {
       console.error(err);
+      const code = err.statusCode ?? 0;
       toast({
-        description: err.message ?? "Could not cancel. Please try again.",
+        title: `Error ${code}`,
+        description: err.message,
         variant: "destructive",
       });
     },
