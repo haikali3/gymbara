@@ -54,7 +54,7 @@ export default function PaymentPage() {
       });
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: `Error ${error.code || ""}`,
         description: error?.message || "Payment initiation failed.",
         variant: "destructive",
       });
