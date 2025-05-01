@@ -11,6 +11,7 @@ export interface OrderDetails {
 }
 
 export type Subscription = {
+  subscription_id: string;
   expiration_date: string | number | Date;
   url?: string;
   is_active: boolean;

@@ -49,7 +49,6 @@ export default function PricingSection() {
               "Cancel anytime - no hidden fees",
             ]}
             isPopular
-            // savingsText="Save 20% with annual billing"
           />
 
           <PricingPlan

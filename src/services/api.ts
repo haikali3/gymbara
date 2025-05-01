@@ -1,5 +1,6 @@
 import { OrderDetails, Subscription } from "@/types/payment-type";
-import { ExerciseDetails, StandardResponse, WorkoutSections } from "@/types/type";
+import { ExerciseDetails, WorkoutSections } from "@/types/type";
+import { StandardResponse } from "@/types/standard-response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -66,7 +67,6 @@ export async function fetchUserDetails() {
     throw error;
   }
 }
-
 
 // TODO: all api call follow this standard
 export async function fetchWorkoutSectionsWithExercises(
@@ -158,7 +158,7 @@ export async function fetchUserSubscription(): Promise<Subscription> {
   });
 
   if (!res.ok) {
-    return { is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
+    return { subscription_id: 'N/A', is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
   }
 
   return res.json();
@@ -176,4 +176,43 @@ export async function fetchVerifySession(sessionId: string): Promise<OrderDetail
   }
 
   return res.json();
+}
+
+export async function cancelSubscription(
+  subscriptionId: string
+): Promise<void> {
+  const response = await fetch(
+    `${BASE_URL}/payment/cancel-subscription`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ subscription_id: subscriptionId }),
+    }
+  );
+
+  let payload: StandardResponse<unknown>;
+  try {
+    payload = await response.json();
+  } catch {
+    payload = {} as StandardResponse<unknown>;
+  }
+
+  if (!response.ok) {
+    // pull out the pieces
+    const apiStatus = payload.status ?? "error";
+    const statusCode = payload.statusCode ?? response.status;
+    const message = payload.message ?? "Failed to cancel subscription";
+
+    // build an Error that carries them along
+    const err = new Error(message) as Error & {
+      statusCode?: number;
+      apiStatus?: string;
+    };
+    err.statusCode = statusCode;
+    err.apiStatus = apiStatus;
+    throw err;
+  }
+
+  // nothing returned on success
 }
