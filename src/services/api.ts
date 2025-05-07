@@ -4,6 +4,24 @@ import { CancelSubResponse, StandardResponse } from "@/types/standard-response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Helper function to handle API responses
+async function handleApiResponse<T>(response: Response): Promise<T> {
+  let data: StandardResponse<T>;
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error("Failed to parse response");
+  }
+
+  if (!response.ok || data.status === "fail") {
+    const error = new Error(data.message || "Request failed") as Error & { statusCode?: number };
+    error.statusCode = data.statusCode || response.status;
+    throw error;
+  }
+
+  return data.data;
+}
+
 export async function fetchWorkoutSections() {
   const response = await fetch(`${BASE_URL}/workout-sections`, {
     credentials: 'include', // Include cookies with the request
@@ -75,7 +93,7 @@ export async function fetchWorkoutSectionsWithExercises(
   // build query string…
   const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
   const response = await fetch(
-    `${BASE_URL}/workout-sections/exercises?${queryParams}`, 
+    `${BASE_URL}/workout-sections/exercises?${queryParams}`,
     { method: 'GET', credentials: 'include' }
   );
 
@@ -89,7 +107,7 @@ export async function fetchWorkoutSectionsWithExercises(
   }
 
   if (!response.ok) {
-    // use backend’s message if available
+    // use backend's message if available
     const msg = payload.message ?? 'Unknown error';
     const err = new Error(msg) as Error & { status?: number };
     err.status = payload.statusCode ?? response.status;
@@ -144,12 +162,7 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
     body: JSON.stringify({ email }),
   });
 
-  if (!res.ok) {
-    const message = await res.text(); // Read error body as string
-    throw new Error(message || "Failed to initiate Stripe Checkout");
-  }
-
-  return res.json();
+  return handleApiResponse<{ url: string }>(res);
 }
 
 export async function fetchUserSubscription(): Promise<Subscription> {
@@ -158,7 +171,14 @@ export async function fetchUserSubscription(): Promise<Subscription> {
   });
 
   if (!res.ok) {
-    return { subscription_id: 'N/A', is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
+    return { 
+      subscription_id: 'N/A',
+      customer_id: 'N/A', 
+      price_id: 'N/A',
+      is_active: false,
+      expiration_date: 'Missing Expiration Date',
+      cancel_at_period_end: false
+    }; // fallback if not subscribed
   }
 
   return res.json();
@@ -213,4 +233,24 @@ export async function cancelSubscription(
 
   // return the full payload so your mutation can use it
   return payload as CancelSubResponse;
+}
+
+export async function renewSubscription(): Promise<StandardResponse<{ message: string; next_renewal: string }>> {
+  const response = await fetch(
+    `${BASE_URL}/payment/renew-subscription`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }
+  );
+
+  const data = await response.json();
+  if (!response.ok || data.status === "fail") {
+    const error = new Error(data.message || "Failed to renew subscription") as Error & { statusCode?: number };
+    error.statusCode = data.statusCode || response.status;
+    throw error;
+  }
+
+  return data;
 }

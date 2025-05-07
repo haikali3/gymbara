@@ -1,20 +1,13 @@
+// src/components/_subscription-card/subscription-card.tsx
 "use client";
 import { ChevronRight, Lock, BadgeCheck, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
 import { useCancelSubscription } from "@/app/hooks/useCancelSubscription";
+import { useRenewSubscription } from "@/app/hooks/useRenewSubscription";
 import { Subscription } from "@/types/payment-type";
+import { CancelSubscriptionDialog } from "../_dialog/cancel-subscription-dialog";
+import { RenewSubscriptionDialog } from "../_dialog/renew-subscription-dialog";
 
 type Props = {
   isLoggedIn: boolean;
@@ -30,11 +23,23 @@ export const SubscriptionCard = ({
   const router = useRouter();
   const { mutate: cancelSub, isPending: cancelLoading } =
     useCancelSubscription();
+  const { mutate: renewSub, isPending: renewLoading } = useRenewSubscription();
 
-  function handleCancelSubscription() {
+  const handleCancelSubscription = () => {
     if (!subscription?.subscription_id) return;
     cancelSub(subscription.subscription_id);
-  }
+  };
+
+  const handleRenewSubscription = () => {
+    renewSub();
+  };
+
+  // helper to format e.g. "Jun 7"
+  const formatShortDate = (d: string | number | Date) =>
+    new Date(d).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+    });
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
@@ -49,7 +54,7 @@ export const SubscriptionCard = ({
             Please sign in to manage your subscription.
           </p>
           <Button disabled className="w-full">
-            <Lock className="h-4 w-4" />
+            <Lock className="h-4 w-4 mr-1" />
             Login Required
           </Button>
         </>
@@ -59,59 +64,39 @@ export const SubscriptionCard = ({
         </p>
       ) : subscription?.is_active ? (
         <>
-          <p className="text-sm text-green-600 font-medium mb-4">
-            Active until{" "}
-            {new Date(subscription.expiration_date).toLocaleDateString(
-              "en-GB",
-              {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              }
+          <div className="flex items-center gap-2 mb-4">
+            {/* Show active if subscription is active and not cancelled */}
+            <span className="inline-block bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+              Active
+            </span>
+            {/* Show cancels date if subscription is active and will cancel at period end */}
+            {subscription.cancel_at_period_end && (
+              <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">
+                Cancels {formatShortDate(subscription.expiration_date)} ⏰
+              </span>
             )}
-          </p>
-          <Button onClick={() => router.push("/payment")} className="w-full">
+          </div>
+
+          <Button
+            onClick={() => router.push("/payment")}
+            className="w-full mb-2"
+          >
             Manage Plan
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" className="w-full mt-1">
-                <X className="h-4 w-4" />
-                Cancel Subscription
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Are you sure you want to cancel your subscription?
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  You can still work out as long as your subscription is active.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction asChild>
-                  <Button
-                    variant="destructive"
-                    disabled={cancelLoading}
-                    onClick={handleCancelSubscription}
-                    className="w-full"
-                  >
-                    {cancelLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <>
-                        <X className="h-4 w-4" />
-                        Cancel Subscription
-                      </>
-                    )}
-                  </Button>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+
+          {subscription.cancel_at_period_end ? (
+            <RenewSubscriptionDialog
+              onConfirm={handleRenewSubscription}
+              loading={renewLoading}
+            />
+          ) : (
+            // No pending cancel → show Cancel dialog
+            <CancelSubscriptionDialog
+              onConfirm={handleCancelSubscription}
+              loading={cancelLoading}
+            />
+          )}
         </>
       ) : (
         <>
@@ -120,7 +105,7 @@ export const SubscriptionCard = ({
           </p>
           <Button onClick={() => router.push("/payment")} className="w-full">
             Subscribe Now
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </>
       )}

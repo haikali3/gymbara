@@ -19,6 +19,7 @@ import {
 import { pricingPlans } from "./pricing-plans";
 import { toast } from "@/app/hooks/use-toast";
 import PageWrapper from "@/components/_layout/page-wrapper";
+import { StandardResponse } from "@/types/standard-response";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -39,23 +40,17 @@ export default function PaymentPage() {
       return;
     }
 
-    toast({
-      title: "Redirecting to payment...",
-      description: "Please wait while we redirect you.",
-    });
-
     try {
       const res = await createStripeCheckoutSession(user.email);
       window.location.href = res.url;
-      toast({
-        title: "Success",
-        description: "Redirecting to payment page.",
-        variant: "default",
-      });
     } catch (error: any) {
+      // Handle both API errors and network errors
+      const errorMessage = error.message || "Payment initiation failed.";
+      const statusCode = error.statusCode || 500;
+
       toast({
-        title: `Error ${error.code || ""}`,
-        description: error?.message || "Payment initiation failed.",
+        title: `Error - ${statusCode}`,
+        description: errorMessage,
         variant: "destructive",
       });
     }
