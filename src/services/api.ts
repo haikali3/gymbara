@@ -4,6 +4,24 @@ import { CancelSubResponse, StandardResponse } from "@/types/standard-response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Helper function to handle API responses
+async function handleApiResponse<T>(response: Response): Promise<T> {
+  let data: StandardResponse<T>;
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error("Failed to parse response");
+  }
+
+  if (!response.ok || data.status === "fail") {
+    const error = new Error(data.message || "Request failed") as Error & { statusCode?: number };
+    error.statusCode = data.statusCode || response.status;
+    throw error;
+  }
+
+  return data.data;
+}
+
 export async function fetchWorkoutSections() {
   const response = await fetch(`${BASE_URL}/workout-sections`, {
     credentials: 'include', // Include cookies with the request
@@ -144,20 +162,7 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
     body: JSON.stringify({ email }),
   });
 
-  let data: StandardResponse<{ url: string }>;
-  try {
-    data = await res.json();
-  } catch {
-    throw new Error("Failed to parse response");
-  }
-
-  if (!res.ok || data.status === "fail") {
-    const error = new Error(data.message || "Failed to initiate Stripe Checkout") as Error & { statusCode?: number };
-    error.statusCode = data.statusCode || res.status;
-    throw error;
-  }
-
-  return data.data;
+  return handleApiResponse<{ url: string }>(res);
 }
 
 export async function fetchUserSubscription(): Promise<Subscription> {
@@ -240,13 +245,7 @@ export async function renewSubscription(): Promise<StandardResponse<{ message: s
     }
   );
 
-  let data: StandardResponse<{ message: string; next_renewal: string }>;
-  try {
-    data = await response.json();
-  } catch {
-    throw new Error("Failed to parse response");
-  }
-
+  const data = await response.json();
   if (!response.ok || data.status === "fail") {
     const error = new Error(data.message || "Failed to renew subscription") as Error & { statusCode?: number };
     error.statusCode = data.statusCode || response.status;
