@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RenewSubscriptionResponse } from "@/types/payment-type";
+import { toast } from "@/app/hooks/use-toast";
 
 interface RenewPayload {
   subscription_id: string;
@@ -20,10 +21,20 @@ export function useRenewSubscription() {
         if (!res.ok) throw new Error(await res.text());
         return res.json();
       }),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      toast({
+        title: `${response.statusCode} – ${response.message}`,
+        description: response.data.message,
+      });
       // refetch subscription so UI updates
       qc.invalidateQueries({ queryKey: ["subscription"] });
-      },
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     }
-  );
+  });
 }

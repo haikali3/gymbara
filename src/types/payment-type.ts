@@ -19,7 +19,11 @@ export type Subscription = {
 };
 
 export type RenewSubscriptionResponse = {
-  subscription_id: string;
-  expiration_date: string;
-  url: string;
+  status: string;
+  statusCode: number;
+  message: string;
+  data: {
+    message: string;
+    next_renewal: string;
+  };
 };
