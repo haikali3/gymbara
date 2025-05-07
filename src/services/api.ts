@@ -75,7 +75,7 @@ export async function fetchWorkoutSectionsWithExercises(
   // build query string…
   const queryParams = workoutSectionIds.map(id => `workout_section_ids=${id}`).join('&');
   const response = await fetch(
-    `${BASE_URL}/workout-sections/exercises?${queryParams}`, 
+    `${BASE_URL}/workout-sections/exercises?${queryParams}`,
     { method: 'GET', credentials: 'include' }
   );
 
@@ -158,7 +158,14 @@ export async function fetchUserSubscription(): Promise<Subscription> {
   });
 
   if (!res.ok) {
-    return { subscription_id: 'N/A', is_active: false, expiration_date: 'Missing Expiration Date', cancel_at_period_end: false }; // fallback if not subscribed
+    return { 
+      subscription_id: 'N/A',
+      customer_id: 'N/A', 
+      price_id: 'N/A',
+      is_active: false,
+      expiration_date: 'Missing Expiration Date',
+      cancel_at_period_end: false
+    }; // fallback if not subscribed
   }
 
   return res.json();
