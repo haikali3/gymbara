@@ -4,6 +4,7 @@ import { ChevronRight, Lock, BadgeCheck, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useCancelSubscription } from "@/app/hooks/useCancelSubscription";
+import { useRenewSubscription } from "@/app/hooks/useRenewSubscription";
 import { Subscription } from "@/types/payment-type";
 import { CancelSubscriptionDialog } from "../_dialog/cancel-subscription-dialog";
 import { RenewSubscriptionDialog } from "../_dialog/renew-subscription-dialog";
@@ -22,10 +23,21 @@ export const SubscriptionCard = ({
   const router = useRouter();
   const { mutate: cancelSub, isPending: cancelLoading } =
     useCancelSubscription();
+  const { mutate: renewSub, isPending: renewLoading } = useRenewSubscription();
 
   const handleCancelSubscription = () => {
     if (!subscription?.subscription_id) return;
     cancelSub(subscription.subscription_id);
+  };
+
+  const handleRenewSubscription = () => {
+    if (!subscription?.subscription_id) return;
+    renewSub({
+      subscription_id: subscription.subscription_id,
+      customer_id: subscription.customer_id,
+      price_id: subscription.price_id,
+      frontend_url: window.location.origin,
+    });
   };
 
   // helper to format e.g. "Jun 7"
@@ -79,8 +91,8 @@ export const SubscriptionCard = ({
 
           {subscription.cancel_at_period_end ? (
             <RenewSubscriptionDialog
-              onConfirm={handleCancelSubscription} // add renew subscription function from backend
-              loading={cancelLoading}
+              onConfirm={handleRenewSubscription}
+              loading={renewLoading}
             />
           ) : (
             // No pending cancel → show Cancel dialog
