@@ -5,7 +5,7 @@ import { renewSubscription } from "@/services/api";
 
 export function useRenewSubscription() {
   const qc = useQueryClient();
-  return useMutation<StandardResponse<{ message: string; next_renewal: string }>, Error>({
+  return useMutation<StandardResponse<{ message: string; next_renewal: string }>, Error & { statusCode?: number }>({
     mutationFn: renewSubscription,
     onSuccess: async (response) => {
       toast({
@@ -18,8 +18,8 @@ export function useRenewSubscription() {
     },
     onError: (error) => {
       toast({
-        title: "Error",
-        description: error.message,
+        title: `Error ${error.statusCode ?? 400}`,
+        description: error.message || "Failed to renew subscription",
         variant: "destructive",
       });
     }

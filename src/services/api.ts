@@ -144,12 +144,20 @@ export async function createStripeCheckoutSession(email: string): Promise<{ url:
     body: JSON.stringify({ email }),
   });
 
-  if (!res.ok) {
-    const message = await res.text(); // Read error body as string
-    throw new Error(message || "Failed to initiate Stripe Checkout");
+  let data: StandardResponse<{ url: string }>;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error("Failed to parse response");
   }
 
-  return res.json();
+  if (!res.ok || data.status === "fail") {
+    const error = new Error(data.message || "Failed to initiate Stripe Checkout") as Error & { statusCode?: number };
+    error.statusCode = data.statusCode || res.status;
+    throw error;
+  }
+
+  return data.data;
 }
 
 export async function fetchUserSubscription(): Promise<Subscription> {
@@ -239,7 +247,7 @@ export async function renewSubscription(): Promise<StandardResponse<{ message: s
     throw new Error("Failed to parse response");
   }
 
-  if (!response.ok) {
+  if (!response.ok || data.status === "fail") {
     const error = new Error(data.message || "Failed to renew subscription") as Error & { statusCode?: number };
     error.statusCode = data.statusCode || response.status;
     throw error;
