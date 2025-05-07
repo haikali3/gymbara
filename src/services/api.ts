@@ -158,7 +158,7 @@ export async function fetchUserSubscription(): Promise<Subscription> {
   });
 
   if (!res.ok) {
-    return { subscription_id: 'N/A', is_active: false, expiration_date: 'Missing Expiration Date' }; // fallback if not subscribed
+    return { subscription_id: 'N/A', is_active: false, expiration_date: 'Missing Expiration Date', cancel_at_period_end: false }; // fallback if not subscribed
   }
 
   return res.json();

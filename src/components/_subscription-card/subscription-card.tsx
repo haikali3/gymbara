@@ -1,3 +1,4 @@
+// src/components/_subscription-card/subscription-card.tsx
 "use client";
 import { ChevronRight, Lock, BadgeCheck, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,13 @@ export const SubscriptionCard = ({
     cancelSub(subscription.subscription_id);
   }
 
+  // helper to format e.g. "Jun 7"
+  const formatShortDate = (d: string | number | Date) =>
+    new Date(d).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+    });
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
       <div className="flex gap-1 items-center pb-2">
@@ -59,17 +67,18 @@ export const SubscriptionCard = ({
         </p>
       ) : subscription?.is_active ? (
         <>
-          <p className="text-sm text-green-600 font-medium mb-4">
-            Active until{" "}
-            {new Date(subscription.expiration_date).toLocaleDateString(
-              "en-GB",
-              {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              }
+          <div className="flex items-center gap-2 mb-4">
+            <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+              Active
+            </span>
+
+            {subscription.cancel_at_period_end && (
+              <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">
+                Cancels {formatShortDate(subscription.expiration_date)} ⏰
+              </span>
             )}
-          </p>
+          </div>
+
           <Button onClick={() => router.push("/payment")} className="w-full">
             Manage Plan
             <ChevronRight className="h-4 w-4" />
@@ -91,7 +100,7 @@ export const SubscriptionCard = ({
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Keep My Plan</AlertDialogCancel>
                 <AlertDialogAction asChild>
                   <Button
                     variant="destructive"
