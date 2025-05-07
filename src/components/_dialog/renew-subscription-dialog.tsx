@@ -25,7 +25,7 @@ export const RenewSubscriptionDialog = ({
   <AlertDialog>
     <AlertDialogTrigger asChild>
       <Button variant="outline" className="w-full mb-2">
-        <RefreshCw className="h-4 w-4 mr-1" />
+        <RefreshCw className="h-4 w-4" />
         Renew Subscription
       </Button>
     </AlertDialogTrigger>
@@ -48,9 +48,9 @@ export const RenewSubscriptionDialog = ({
             className="w-full"
           >
             {loading ? (
-              <Loader2 className="h-4 w-4 animate-spin mr-1" />
+              <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <RefreshCw className="h-4 w-4 mr-1" />
+              <RefreshCw className="h-4 w-4" />
             )}
             Yes, Resume Plan
           </Button>
