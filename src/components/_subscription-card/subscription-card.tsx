@@ -3,17 +3,6 @@
 import { ChevronRight, Lock, BadgeCheck, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
 import { useCancelSubscription } from "@/app/hooks/useCancelSubscription";
 import { Subscription } from "@/types/payment-type";
 import { CancelSubscriptionDialog } from "../_dialog/cancel-subscription-dialog";
