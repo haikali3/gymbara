@@ -65,9 +65,11 @@ export const SubscriptionCard = ({
       ) : subscription?.is_active ? (
         <>
           <div className="flex items-center gap-2 mb-4">
-            <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+            {/* Show active if subscription is active and not cancelled */}
+            <span className="inline-block bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
               Active
             </span>
+            {/* Show cancels date if subscription is active and will cancel at period end */}
             {subscription.cancel_at_period_end && (
               <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">
                 Cancels {formatShortDate(subscription.expiration_date)} ⏰

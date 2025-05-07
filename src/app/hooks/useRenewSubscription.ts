@@ -7,13 +7,14 @@ export function useRenewSubscription() {
   const qc = useQueryClient();
   return useMutation<StandardResponse<{ message: string; next_renewal: string }>, Error>({
     mutationFn: renewSubscription,
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast({
         title: `${response.statusCode} – ${response.message}`,
         description: response.data.message,
       });
-      // refetch subscription so UI updates
-      qc.invalidateQueries({ queryKey: ["subscription"] });
+      // Invalidate and refetch immediately
+      await qc.invalidateQueries({ queryKey: ["subscription"] });
+      await qc.refetchQueries({ queryKey: ["subscription"] });
     },
     onError: (error) => {
       toast({

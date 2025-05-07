@@ -8,28 +8,24 @@ import {
 import { CancelSubResponse } from "@/types/standard-response";
 
 export function useCancelSubscription() {
-  const queryClient = useQueryClient();
-
-  return useMutation<
-    CancelSubResponse,        // now we get the API payload back
-    Error & { statusCode?: number },  
-    string                    // subscription ID
-  >({
+  const qc = useQueryClient();
+  return useMutation({
     mutationFn: cancelSubscription,
-    onSuccess: (res) => {
+    onSuccess: async (response) => {
       toast({
-        title: `${res.statusCode} – ${res.message}`,  // “200 – Subscription cancellation scheduled”
-        description: res.data.message,               // “Your subscription has been cancelled…”
+        title: `${response.statusCode} – ${response.message}`,
+        description: response.data.message,
       });
-      queryClient.invalidateQueries({ queryKey: ["subscription"] });
+      // Invalidate and refetch immediately
+      await qc.invalidateQueries({ queryKey: ["subscription"] });
+      await qc.refetchQueries({ queryKey: ["subscription"] });
     },
-    onError: (err) => {
-      console.error(err);
+    onError: (error) => {
       toast({
-        title: `Error ${err.statusCode ?? 0}`,
-        description: err.message,
+        title: "Error",
+        description: error.message,
         variant: "destructive",
       });
-    },
+    }
   });
 }
