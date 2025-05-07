@@ -16,6 +16,8 @@ import {
 } from "../ui/alert-dialog";
 import { useCancelSubscription } from "@/app/hooks/useCancelSubscription";
 import { Subscription } from "@/types/payment-type";
+import { CancelSubscriptionDialog } from "../_dialog/cancel-subscription-dialog";
+import { RenewSubscriptionDialog } from "../_dialog/renew-subscription-dialog";
 
 type Props = {
   isLoggedIn: boolean;
@@ -32,10 +34,10 @@ export const SubscriptionCard = ({
   const { mutate: cancelSub, isPending: cancelLoading } =
     useCancelSubscription();
 
-  function handleCancelSubscription() {
+  const handleCancelSubscription = () => {
     if (!subscription?.subscription_id) return;
     cancelSub(subscription.subscription_id);
-  }
+  };
 
   // helper to format e.g. "Jun 7"
   const formatShortDate = (d: string | number | Date) =>
@@ -57,7 +59,7 @@ export const SubscriptionCard = ({
             Please sign in to manage your subscription.
           </p>
           <Button disabled className="w-full">
-            <Lock className="h-4 w-4" />
+            <Lock className="h-4 w-4 mr-1" />
             Login Required
           </Button>
         </>
@@ -71,7 +73,6 @@ export const SubscriptionCard = ({
             <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
               Active
             </span>
-
             {subscription.cancel_at_period_end && (
               <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">
                 Cancels {formatShortDate(subscription.expiration_date)} ⏰
@@ -79,48 +80,26 @@ export const SubscriptionCard = ({
             )}
           </div>
 
-          <Button onClick={() => router.push("/payment")} className="w-full">
+          <Button
+            onClick={() => router.push("/payment")}
+            className="w-full mb-2"
+          >
             Manage Plan
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" className="w-full mt-1">
-                <X className="h-4 w-4" />
-                Cancel Subscription
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Are you sure you want to cancel your subscription?
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  You can still work out as long as your subscription is active.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Keep My Plan</AlertDialogCancel>
-                <AlertDialogAction asChild>
-                  <Button
-                    variant="destructive"
-                    disabled={cancelLoading}
-                    onClick={handleCancelSubscription}
-                    className="w-full"
-                  >
-                    {cancelLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <>
-                        <X className="h-4 w-4" />
-                        Cancel Subscription
-                      </>
-                    )}
-                  </Button>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+
+          {subscription.cancel_at_period_end ? (
+            <RenewSubscriptionDialog
+              onConfirm={handleCancelSubscription} // add renew subscription function from backend
+              loading={cancelLoading}
+            />
+          ) : (
+            // No pending cancel → show Cancel dialog
+            <CancelSubscriptionDialog
+              onConfirm={handleCancelSubscription}
+              loading={cancelLoading}
+            />
+          )}
         </>
       ) : (
         <>
@@ -129,7 +108,7 @@ export const SubscriptionCard = ({
           </p>
           <Button onClick={() => router.push("/payment")} className="w-full">
             Subscribe Now
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </>
       )}
