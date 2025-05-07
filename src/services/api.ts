@@ -1,6 +1,6 @@
 import { OrderDetails, Subscription } from "@/types/payment-type";
 import { ExerciseDetails, WorkoutSections } from "@/types/type";
-import { StandardResponse } from "@/types/standard-response";
+import { CancelSubResponse, StandardResponse } from "@/types/standard-response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -180,7 +180,7 @@ export async function fetchVerifySession(sessionId: string): Promise<OrderDetail
 
 export async function cancelSubscription(
   subscriptionId: string
-): Promise<void> {
+): Promise<CancelSubResponse> {
   const response = await fetch(
     `${BASE_URL}/payment/cancel-subscription`,
     {
@@ -191,28 +191,26 @@ export async function cancelSubscription(
     }
   );
 
-  let payload: StandardResponse<unknown>;
+  let payload: Partial<CancelSubResponse> = {};
   try {
     payload = await response.json();
   } catch {
-    payload = {} as StandardResponse<unknown>;
+    // if JSON parse fails, payload stays {}
   }
 
-  if (!response.ok) {
-    // pull out the pieces
-    const apiStatus = payload.status ?? "error";
-    const statusCode = payload.statusCode ?? response.status;
-    const message = payload.message ?? "Failed to cancel subscription";
+  const statusCode = payload.statusCode ?? response.status;
+  const message = payload.message ?? "Failed to cancel subscription";
 
-    // build an Error that carries them along
+  if (!response.ok) {
     const err = new Error(message) as Error & {
       statusCode?: number;
       apiStatus?: string;
     };
     err.statusCode = statusCode;
-    err.apiStatus = apiStatus;
+    err.apiStatus = payload.status ?? "error";
     throw err;
   }
 
-  // nothing returned on success
+  // return the full payload so your mutation can use it
+  return payload as CancelSubResponse;
 }

@@ -2,26 +2,31 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/app/hooks/use-toast";
-import { cancelSubscription } from "@/services/api";
+import {
+  cancelSubscription,
+} from "@/services/api";
+import { CancelSubResponse } from "@/types/standard-response";
 
 export function useCancelSubscription() {
   const queryClient = useQueryClient();
 
   return useMutation<
-    void,
-    Error & { statusCode?: number; apiStatus?: string },
-    string
+    CancelSubResponse,        // now we get the API payload back
+    Error & { statusCode?: number },  
+    string                    // subscription ID
   >({
     mutationFn: cancelSubscription,
-    onSuccess: () => {
-      toast({ description: "Subscription cancelled. Thank you" });
+    onSuccess: (res) => {
+      toast({
+        title: `${res.statusCode} – ${res.message}`,  // “200 – Subscription cancellation scheduled”
+        description: res.data.message,               // “Your subscription has been cancelled…”
+      });
       queryClient.invalidateQueries({ queryKey: ["subscription"] });
     },
     onError: (err) => {
       console.error(err);
-      const code = err.statusCode ?? 0;
       toast({
-        title: `Error ${code}`,
+        title: `Error ${err.statusCode ?? 0}`,
         description: err.message,
         variant: "destructive",
       });
