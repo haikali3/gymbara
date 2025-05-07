@@ -17,3 +17,9 @@ export type Subscription = {
   url?: string;
   is_active: boolean;
 };
+
+export type RenewSubscriptionResponse = {
+  subscription_id: string;
+  expiration_date: string;
+  url: string;
+};
