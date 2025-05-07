@@ -89,7 +89,7 @@ export async function fetchWorkoutSectionsWithExercises(
   }
 
   if (!response.ok) {
-    // use backend’s message if available
+    // use backend's message if available
     const msg = payload.message ?? 'Unknown error';
     const err = new Error(msg) as Error & { status?: number };
     err.status = payload.statusCode ?? response.status;
@@ -213,4 +213,30 @@ export async function cancelSubscription(
 
   // return the full payload so your mutation can use it
   return payload as CancelSubResponse;
+}
+
+export async function renewSubscription(): Promise<StandardResponse<{ message: string; next_renewal: string }>> {
+  const response = await fetch(
+    `${BASE_URL}/payment/renew-subscription`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }
+  );
+
+  let data: StandardResponse<{ message: string; next_renewal: string }>;
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error("Failed to parse response");
+  }
+
+  if (!response.ok) {
+    const error = new Error(data.message || "Failed to renew subscription") as Error & { statusCode?: number };
+    error.statusCode = data.statusCode || response.status;
+    throw error;
+  }
+
+  return data;
 }

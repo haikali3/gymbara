@@ -19,13 +19,3 @@ export type Subscription = {
   url?: string;
   is_active: boolean;
 };
-
-export type RenewSubscriptionResponse = {
-  status: string;
-  statusCode: number;
-  message: string;
-  data: {
-    message: string;
-    next_renewal: string;
-  };
-};

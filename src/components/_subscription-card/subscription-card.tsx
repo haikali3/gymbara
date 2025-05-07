@@ -31,13 +31,7 @@ export const SubscriptionCard = ({
   };
 
   const handleRenewSubscription = () => {
-    if (!subscription?.subscription_id) return;
-    renewSub({
-      subscription_id: subscription.subscription_id,
-      customer_id: subscription.customer_id,
-      price_id: subscription.price_id,
-      frontend_url: window.location.origin,
-    });
+    renewSub();
   };
 
   // helper to format e.g. "Jun 7"
