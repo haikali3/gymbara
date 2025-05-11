@@ -4,8 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/app/hooks/use-toast";
 import {
   cancelSubscription,
-} from "@/services/api";
-import { CancelSubResponse } from "@/types/standard-response";
+} from "@/services/paymentService";
 
 export function useCancelSubscription() {
   const qc = useQueryClient();

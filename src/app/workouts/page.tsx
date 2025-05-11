@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/_layout/header";
 import Footer from "@/components/_layout/footer";
-import { fetchWorkoutSectionsWithExercises } from "@/services/api";
+import { fetchWorkoutSectionsWithExercises } from "@/services/workoutService";
 import { useQuery } from "@tanstack/react-query";
 import { WorkoutSections } from "../../types/type";
 import WorkoutSectionLoading from "@/components/_workout-section-card/workout-section-card-skeleton";

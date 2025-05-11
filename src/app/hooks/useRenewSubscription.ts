@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/app/hooks/use-toast";
 import { StandardResponse } from "@/types/standard-response";
-import { renewSubscription } from "@/services/api";
+import { renewSubscription } from "@/services/paymentService";
 
 export function useRenewSubscription() {
   const qc = useQueryClient();
