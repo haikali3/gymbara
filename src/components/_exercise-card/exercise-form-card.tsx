@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { workoutSchema, WorkoutFormValues } from "@/schema/workoutSchema";
 import {
   Form,
   FormField,
@@ -14,49 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Stepper from "../stepper";
-import { submitUserExerciseDetails } from "@/services/workoutService";
 import { ExerciseDetails } from "@/types/type";
-import { useWorkoutStore } from "@/stores/useWorkoutStore";
+import { useExerciseForm } from "@/app/hooks/useExerciseForm";
+import { Typography } from "../ui/typography";
+import { ExerciseGuideTooltip } from "./exercise-guide-tooltip";
 
 type ExerciseFormCardProps = {
   exercises: ExerciseDetails[];
 };
 
 export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
-  // Compute default values using the passed-in exercises data.
-  const defaultValues: WorkoutFormValues = {
-    exercises: exercises.map((ex) => ({
-      exercise_id: ex.id,
-      custom_reps: 10,
-      custom_load: 10,
-    })),
-  };
-
-  // Initialize the form with our schema and default values.
-  const form = useForm<WorkoutFormValues>({
-    resolver: zodResolver(workoutSchema),
-    defaultValues,
-  });
-
-  const onSubmit = async (values: WorkoutFormValues) => {
-    try {
-      const result = await submitUserExerciseDetails(1, values.exercises);
-      console.log("Workout submitted successfully:", result);
-    } catch (error) {
-      console.error("Error submitting workout:", error);
-    }
-  };
-
-  const handleResetWorkout = () => {
-    // Clear persisted state from storage and reset the in-memory state.
-    useWorkoutStore.persist.clearStorage();
-    useWorkoutStore.setState({
-      section_id: 1,
-      exercises: {},
-    });
-    // Optionally, reset the form to its default values:
-    form.reset(defaultValues);
-  };
+  const { form, onSubmit, handleResetWorkout } = useExerciseForm(exercises);
 
   return (
     <Form {...form}>
@@ -66,13 +31,18 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
             key={exercise.id}
             className="bg-white border border-gray-200 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2"
           >
-            <h2 className="text-base font-normal text-gray-800 text-center pt-1">
-              {exercise.name || "Missing Exercise Name"}
-            </h2>
+            <div className="flex items-center justify-center gap-2 pt-1">
+              <ExerciseGuideTooltip exerciseId={exercise.id} />
+              <Typography variant="p">
+                {exercise.name || "Missing Exercise Name"}
+              </Typography>
+            </div>
             <div className="flex items-center justify-between w-full p-2">
               {/* Sets (display only) */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Sets</label>
+                <Typography variant="p" className="text-gray-600">
+                  Sets
+                </Typography>
                 <Input
                   value={exercise.working_sets}
                   className="w-20 p-1 border-gray-300 rounded text-center"
@@ -81,7 +51,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
               </div>
               {/* Reps input with Stepper */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Reps</label>
+                <Typography variant="p" className="text-gray-600">
+                  Reps
+                </Typography>
                 <FormField
                   control={form.control}
                   name={`exercises.${index}.custom_reps`}
@@ -100,7 +72,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
               </div>
               {/* Weight input */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Weight</label>
+                <Typography variant="p" className="text-gray-600">
+                  Weight
+                </Typography>
                 <FormField
                   control={form.control}
                   name={`exercises.${index}.custom_load`}
@@ -128,9 +102,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
           <div className="flex justify-center">
             <div className="flex gap-2 max-w-md">
               <Button variant="outline" onClick={handleResetWorkout}>
-                Clear Workout
+                Clear Exercises
               </Button>
-              <Button type="submit">Submit Workout</Button>
+              <Button type="submit">Submit Exercises</Button>
             </div>
           </div>
         </div>
