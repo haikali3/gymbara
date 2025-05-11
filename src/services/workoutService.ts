@@ -1,8 +1,26 @@
+/**
+ * Workout Service
+ * 
+ * This service handles all workout-related API calls including:
+ * - Fetching workout sections and details
+ * - Managing workout exercises
+ * - Submitting user exercise details
+ * 
+ * All endpoints require authentication (credentials: 'include')
+ */
+
 import { ExerciseDetails, WorkoutSections } from "@/types/type";
 import { StandardResponse } from "@/types/standard-response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+/**
+ * Fetches detailed information about a specific workout section
+ * @param workoutSectionId - The ID of the workout section to fetch
+ * @returns Promise<ExerciseDetails[]> - Array of exercise details for the workout section
+ * @throws Error with status 401 if unauthorized
+ * @throws Error with status code if request fails
+ */
 export async function fetchWorkoutDetails(workoutSectionId: number) {
   const response = await fetch(
     `${BASE_URL}/workout-sections/details?workout_section_id=${workoutSectionId}`,
@@ -26,6 +44,12 @@ export async function fetchWorkoutDetails(workoutSectionId: number) {
   return json.data;
 }
 
+/**
+ * Fetches workout sections with their associated exercises
+ * @param workoutSectionIds - Array of workout section IDs to fetch
+ * @returns Promise<StandardResponse<WorkoutSections[]>> - Standard response containing workout sections with exercises
+ * @throws Error if request fails
+ */
 export async function fetchWorkoutSectionsWithExercises(
   workoutSectionIds: number[]
 ): Promise<StandardResponse<WorkoutSections[]>> {
@@ -52,6 +76,14 @@ export async function fetchWorkoutSectionsWithExercises(
   return payload as StandardResponse<WorkoutSections[]>;
 }
 
+/**
+ * Submits user's exercise details for a specific workout section
+ * @param workoutSectionId - The ID of the workout section
+ * @param exercises - Array of exercise details including custom reps and load
+ * @returns Promise with the submission response
+ * @throws Error with status 401 if unauthorized
+ * @throws Error if submission fails
+ */
 export async function submitUserExerciseDetails(
   workoutSectionId: number, 
   exercises: { exercise_id: number; custom_reps?: number; custom_load?: number }[]
