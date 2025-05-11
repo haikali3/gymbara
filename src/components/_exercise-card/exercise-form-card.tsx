@@ -14,6 +14,7 @@ import Stepper from "../stepper";
 import { ExerciseDetails } from "@/types/type";
 import { useExerciseForm } from "@/app/hooks/useExerciseForm";
 import { Typography } from "../ui/typography";
+import { ExerciseGuideTooltip } from "./exercise-guide-tooltip";
 
 type ExerciseFormCardProps = {
   exercises: ExerciseDetails[];
@@ -30,9 +31,12 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
             key={exercise.id}
             className="bg-white border border-gray-200 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2"
           >
-            <Typography variant="p" className="text-center pt-1">
-              {exercise.name || "Missing Exercise Name"}
-            </Typography>
+            <div className="flex items-center justify-center gap-2 pt-1">
+              <ExerciseGuideTooltip exerciseId={exercise.id} />
+              <Typography variant="p">
+                {exercise.name || "Missing Exercise Name"}
+              </Typography>
+            </div>
             <div className="flex items-center justify-between w-full p-2">
               {/* Sets (display only) */}
               <div className="flex flex-col items-center gap-1">

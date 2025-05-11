@@ -52,7 +52,7 @@ export const Typography: React.FC<TypographyProps> = ({
     p: "text-base",
     lead: "text-xl text-gray-700",
     large: "text-lg font-semibold",
-    small: "text-sm text-gray-600",
+    small: "text-xs text-gray-600",
     muted: "text-sm text-gray-500",
     blockquote: "border-l-4 pl-4 italic text-gray-600",
     inlineCode:

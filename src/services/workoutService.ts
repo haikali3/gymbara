@@ -119,4 +119,44 @@ export async function submitUserExerciseDetails(
     console.error('Error submitting user exercise details:', error);
     throw error;
   }
+}
+
+export interface ExerciseGuide {
+  id: number;
+  name: string;
+  notes: string;
+  substitutions: string[];
+}
+
+export interface ExerciseGuideResponse {
+  status: string;
+  statusCode: number;
+  message: string;
+  data: ExerciseGuide;
+}
+
+export async function fetchExerciseGuide(exerciseId: number): Promise<ExerciseGuideResponse> {
+  const response = await fetch(
+    `${BASE_URL}/workout-sections/exercises/${exerciseId}/guide`,
+    {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  if (response.status === 401) {
+    const error = new Error("Unauthorized: Please log in") as Error & { status?: number };
+    error.status = 401;
+    throw error;
+  }
+  
+  if (!response.ok) {
+    const error = new Error(`Failed to fetch exercise guide: ${response.statusText}`) as Error & { status?: number };
+    error.status = response.status;
+    throw error;
+  }
+  
+  return response.json();
 } 
