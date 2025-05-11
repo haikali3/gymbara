@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { workoutSchema, WorkoutFormValues } from "@/schema/workoutSchema";
 import {
   Form,
   FormField,
@@ -14,49 +11,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Stepper from "../stepper";
-import { submitUserExerciseDetails } from "@/services/workoutService";
 import { ExerciseDetails } from "@/types/type";
-import { useWorkoutStore } from "@/stores/useWorkoutStore";
+import { useExerciseForm } from "@/app/hooks/useExerciseForm";
 
 type ExerciseFormCardProps = {
   exercises: ExerciseDetails[];
 };
 
 export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
-  // Compute default values using the passed-in exercises data.
-  const defaultValues: WorkoutFormValues = {
-    exercises: exercises.map((ex) => ({
-      exercise_id: ex.id,
-      custom_reps: 10,
-      custom_load: 10,
-    })),
-  };
-
-  // Initialize the form with our schema and default values.
-  const form = useForm<WorkoutFormValues>({
-    resolver: zodResolver(workoutSchema),
-    defaultValues,
-  });
-
-  const onSubmit = async (values: WorkoutFormValues) => {
-    try {
-      const result = await submitUserExerciseDetails(1, values.exercises);
-      console.log("Workout submitted successfully:", result);
-    } catch (error) {
-      console.error("Error submitting workout:", error);
-    }
-  };
-
-  const handleResetWorkout = () => {
-    // Clear persisted state from storage and reset the in-memory state.
-    useWorkoutStore.persist.clearStorage();
-    useWorkoutStore.setState({
-      section_id: 1,
-      exercises: {},
-    });
-    // Optionally, reset the form to its default values:
-    form.reset(defaultValues);
-  };
+  const { form, onSubmit, handleResetWorkout } = useExerciseForm(exercises);
 
   return (
     <Form {...form}>
@@ -128,9 +91,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
           <div className="flex justify-center">
             <div className="flex gap-2 max-w-md">
               <Button variant="outline" onClick={handleResetWorkout}>
-                Clear Workout
+                Clear Exercises
               </Button>
-              <Button type="submit">Submit Workout</Button>
+              <Button type="submit">Submit Exercises</Button>
             </div>
           </div>
         </div>

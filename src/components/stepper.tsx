@@ -7,8 +7,15 @@ interface StepperProps {
 }
 
 const Stepper = ({ value, onChange }: StepperProps) => {
-  const increment = () => onChange(value + 1);
-  const decrement = () => onChange(value > 0 ? value - 1 : 0);
+  const increment = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    onChange(value + 1);
+  };
+
+  const decrement = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    onChange(value > 0 ? value - 1 : 0);
+  };
 
   return (
     <div className="flex items-center gap-2">
