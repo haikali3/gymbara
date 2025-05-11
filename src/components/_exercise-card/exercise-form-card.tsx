@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Stepper from "../stepper";
-import { submitUserExerciseDetails } from "@/services/api";
+import { submitUserExerciseDetails } from "@/services/workoutService";
 import { ExerciseDetails } from "@/types/type";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
