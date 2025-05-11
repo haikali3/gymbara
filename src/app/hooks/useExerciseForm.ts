@@ -49,15 +49,20 @@ export function useExerciseForm(exercises: ExerciseDetails[]) {
     }
   };
 
-  const handleResetWorkout = () => {
+  const handleResetWorkout = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault(); // Prevent form submission
+    }
+    
+    // Reset the form to its default values
+    form.reset(defaultValues);
+    
     // Clear persisted state from storage and reset the in-memory state
     useWorkoutStore.persist.clearStorage();
     useWorkoutStore.setState({
       section_id: 1,
       exercises: {},
     });
-    // Reset the form to its default values
-    form.reset(defaultValues);
     
     toast({
       title: "Workout Reset",
