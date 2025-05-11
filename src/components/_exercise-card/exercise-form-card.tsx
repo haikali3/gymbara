@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Stepper from "../stepper";
 import { ExerciseDetails } from "@/types/type";
 import { useExerciseForm } from "@/app/hooks/useExerciseForm";
+import { Typography } from "../ui/typography";
 
 type ExerciseFormCardProps = {
   exercises: ExerciseDetails[];
@@ -29,13 +30,15 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
             key={exercise.id}
             className="bg-white border border-gray-200 rounded-lg shadow-sm w-full max-w-md mx-auto flex flex-col gap-2"
           >
-            <h2 className="text-base font-normal text-gray-800 text-center pt-1">
+            <Typography variant="p" className="text-center pt-1">
               {exercise.name || "Missing Exercise Name"}
-            </h2>
+            </Typography>
             <div className="flex items-center justify-between w-full p-2">
               {/* Sets (display only) */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Sets</label>
+                <Typography variant="p" className="text-gray-600">
+                  Sets
+                </Typography>
                 <Input
                   value={exercise.working_sets}
                   className="w-20 p-1 border-gray-300 rounded text-center"
@@ -44,7 +47,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
               </div>
               {/* Reps input with Stepper */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Reps</label>
+                <Typography variant="p" className="text-gray-600">
+                  Reps
+                </Typography>
                 <FormField
                   control={form.control}
                   name={`exercises.${index}.custom_reps`}
@@ -63,7 +68,9 @@ export default function ExerciseForm({ exercises }: ExerciseFormCardProps) {
               </div>
               {/* Weight input */}
               <div className="flex flex-col items-center gap-1">
-                <label className="text-sm text-gray-600">Weight</label>
+                <Typography variant="p" className="text-gray-600">
+                  Weight
+                </Typography>
                 <FormField
                   control={form.control}
                   name={`exercises.${index}.custom_load`}

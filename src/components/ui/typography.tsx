@@ -20,16 +20,28 @@ const TYPOGRAPHY_VARIANTS = [
 type TypographyVariant = (typeof TYPOGRAPHY_VARIANTS)[number];
 
 interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
-  variant?: TypographyVariant;
+  variant: TypographyVariant;
   children: React.ReactNode;
 }
 
 export const Typography: React.FC<TypographyProps> = ({
-  variant = "p",
+  variant,
   children,
   className,
   ...props
 }) => {
+  if (!variant) {
+    throw new Error("Typography component requires a 'variant' prop");
+  }
+
+  if (!TYPOGRAPHY_VARIANTS.includes(variant)) {
+    throw new Error(
+      `Invalid variant '${variant}'. Must be one of: ${TYPOGRAPHY_VARIANTS.join(
+        ", "
+      )}`
+    );
+  }
+
   const baseClass = "font-satoshi text-gray-800";
 
   const variantClasses: Record<TypographyVariant, string> = {
@@ -63,8 +75,7 @@ export const Typography: React.FC<TypographyProps> = ({
     list: "ul",
   };
 
-  // Guard: fallback to 'p' for invalid variants
-  const TagComponent = (variantToTag[variant] || "p") as React.ElementType;
+  const TagComponent = variantToTag[variant] as React.ElementType;
 
   return (
     <TagComponent
