@@ -11,6 +11,7 @@
 
 import { ExerciseDetails, WorkoutSections } from "@/types/type";
 import { StandardResponse } from "@/types/standard-response";
+import { handleApiResponse } from "@/lib/handleApiResponse";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -85,40 +86,29 @@ export async function fetchWorkoutSectionsWithExercises(
  * @throws Error if submission fails
  */
 export async function submitUserExerciseDetails(
-  workoutSectionId: number, 
+  workoutSectionId: number,
   exercises: { exercise_id: number; custom_reps?: number; custom_load?: number }[]
-) {
-  try {
-    const requestBody = {
-      section_id: workoutSectionId,
-      exercises: exercises.map(({ exercise_id, custom_reps, custom_load }) => ({
-        exercise_id,
-        custom_reps: custom_reps ?? 0,
-        custom_load: custom_load ?? 0,
-      })),
-    };
+): Promise<StandardResponse<ExerciseDetails>> {
+  const requestBody = {
+    section_id: workoutSectionId,
+    exercises: exercises.map(({ exercise_id, custom_reps, custom_load }) => ({
+      exercise_id,
+      custom_reps: custom_reps ?? 0,
+      custom_load: custom_load ?? 0,
+    })),
+  };
 
-    const response = await fetch(`${BASE_URL}/workout-sections/user-exercise-details`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    });
+  const response = await fetch(`${BASE_URL}/workout-sections/user-exercise-details`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody)
+  });
 
-    if (response.status === 401) {
-      throw new Error('Unauthorized: Please log in');
-    }
-    if (!response.ok) {
-      throw new Error(`Failed to submit user exercise details: ${response.statusText}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error submitting user exercise details:', error);
-    throw error;
-  }
+  // This line will throw if HTTP ⛔ or payload.status==="fail"
+  return handleApiResponse<ExerciseDetails>(response);
 }
 
 export interface ExerciseGuide {
@@ -151,12 +141,12 @@ export async function fetchExerciseGuide(exerciseId: number): Promise<ExerciseGu
     error.status = 401;
     throw error;
   }
-  
+
   if (!response.ok) {
     const error = new Error(`Failed to fetch exercise guide: ${response.statusText}`) as Error & { status?: number };
     error.status = response.status;
     throw error;
   }
-  
+
   return response.json();
 } 

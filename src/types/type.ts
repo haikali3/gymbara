@@ -31,7 +31,6 @@ export interface ExerciseList {
 
 export interface ExerciseDetails extends ExerciseList {
   exercise_id: number;
-  
 }
 export interface UserDetails {
   id: string;
