@@ -31,7 +31,7 @@ export function useExerciseForm(exercises: ExerciseDetails[]) {
       
       toast({
         title: "Success!",
-        description: "Your workout has been saved successfully.",
+        description: "Your workout has been submitted successfully.",
         variant: "default",
       });
       
