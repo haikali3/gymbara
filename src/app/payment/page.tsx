@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserDetails, createStripeCheckoutSession } from "@/services/api";
+import { createStripeCheckoutSession } from "@/services/paymentService";
+import { fetchUserDetails } from "@/services/userService";
 import { UserDetails } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/_layout/header";
@@ -19,7 +20,6 @@ import {
 import { pricingPlans } from "./pricing-plans";
 import { toast } from "@/app/hooks/use-toast";
 import PageWrapper from "@/components/_layout/page-wrapper";
-import { StandardResponse } from "@/types/standard-response";
 
 export default function PaymentPage() {
   const router = useRouter();
