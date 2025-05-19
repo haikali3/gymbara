@@ -6,7 +6,10 @@ import { toast } from "@/app/hooks/use-toast";
 import { submitUserExerciseDetails } from "@/services/workoutService";
 import { ExerciseDetails } from "@/types/type";
 
-type Payload = { sectionId: number; exercises: ExerciseDetails[] };
+type Payload = { 
+  sectionId: number; 
+  exercises: ExerciseDetails[] 
+};
 
 export function useSubmitExercises() {
   const qc = useQueryClient();

@@ -23,11 +23,22 @@ export function useExerciseForm(exercises: ExerciseDetails[]) {
 
   const submitMutation = useSubmitExercises();
 
-  // wrap RHF handleSubmit around your mutation
+  const mapFormToExerciseDetails = (formEx: { exercise_id: number; custom_reps: number; custom_load: number }) => {
+    const originalEx = exercises.find(ex => ex.id === formEx.exercise_id);
+    if (!originalEx) throw new Error(`Exercise with id ${formEx.exercise_id} not found`);
+    
+    return {
+      ...originalEx,
+      exercise_id: formEx.exercise_id,
+      custom_reps: formEx.custom_reps,
+      custom_load: formEx.custom_load
+    };
+  };
+
   const onSubmit = form.handleSubmit((values) => {
     submitMutation.mutate({
       sectionId: 1,
-      exercises: values.exercises,
+      exercises: values.exercises.map(mapFormToExerciseDetails)
     });
   });
 
